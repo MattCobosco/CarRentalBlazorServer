@@ -13,7 +13,7 @@ namespace Plugins.DataStore.InMemory
         public BranchInMemoryRepository()
         {
             // Add default branches
-            _branches = new List<Branch>()
+            _branches = new List<Branch>
             {
                 new() { BranchId = 1, Name = "Gdańsk", Address = "Szklary 138", City = "Gdańsk", PostalCode = "80-835"},
                 new() { BranchId = 2, Name = "Warszawa", Address = "Rozłogi 1", City = "Warszawa", PostalCode = "01-323" },

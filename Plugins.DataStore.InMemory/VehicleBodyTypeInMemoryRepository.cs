@@ -12,8 +12,8 @@ namespace Plugins.DataStore.InMemory
 
         public VehicleBodyTypeInMemoryRepository()
         {
-            // Add default bodytypes
-            _vehicleBodyTypes = new List<VehicleBodyType>()
+            // Add default body types
+            _vehicleBodyTypes = new List<VehicleBodyType>
             {
 
                 new() {VehicleBodyTypeId = 1, Name = "Sedan"},
