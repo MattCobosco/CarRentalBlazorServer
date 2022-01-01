@@ -1,0 +1,76 @@
+﻿@page "/editbranch/{branchId}"
+
+@inject NavigationManager _navigationManager;
+@inject IAddBranchUseCase _addBranchUseCase;
+@inject IGetBranchByIdUseCase _getBranchByIdUseCase;
+@inject IEditBranchUseCase _editBranchUseCase;
+
+<h3>Edit Branch</h3>
+<br/>
+
+@if (_branch != null)
+{
+    <EditForm Model="_branch" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        <div class="form-group">
+            <label for="name">Name</label>
+            <InputText id="name" @bind-Value="_branch.Name" class="form-control"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address</label>
+            <InputText id="address" @bind-Value="_branch.Address" class="form-control"></InputText>
+        </div>
+    
+        <div class="form-group">
+            <label for="city">City</label>
+            <InputText id="city" @bind-Value="_branch.City" class="form-control"></InputText>
+        </div>
+    
+        <div class="form-group">
+            <label for="postalCode">Zip</label>
+            <InputText id="postalCode" @bind-Value="_branch.PostalCode" class="form-control"></InputText>
+        </div>
+    
+        <div class="form-group">
+            <label for="description">Description</label>
+            <InputText id="description" @bind-Value="_branch.Description" class="form-control"></InputText>
+        </div>
+    
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-primary" @onclick="OnCancel">Cancel</button>
+    </EditForm>
+}
+
+@code {
+
+    [Parameter] 
+    public string BranchId { get; set; }
+
+    private Branch _branch;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if(int.TryParse(this.BranchId, out int intBranchId))
+        {
+            var br = _getBranchByIdUseCase.Execute(intBranchId);
+            _branch = new Branch() {BranchId = br.BranchId, Name = br.Name, Address = br.Address, City = br.City, PostalCode = br.PostalCode, Description = br.Description};
+        }
+    }
+
+    private void OnValidSubmit()
+    {
+        _editBranchUseCase.Execute(_branch);
+        _navigationManager.NavigateTo("/branches");
+    }
+
+    private void OnCancel()
+    {
+        _navigationManager.NavigateTo("/branches");
+    }
+
+}

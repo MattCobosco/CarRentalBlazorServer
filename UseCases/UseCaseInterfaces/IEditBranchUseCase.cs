@@ -2,7 +2,7 @@
 
 namespace UseCases.UseCaseInterfaces
 {
-    public interface IAddBranchUseCase
+    public interface IEditBranchUseCase
     {
         void Execute(Branch branch);
     }

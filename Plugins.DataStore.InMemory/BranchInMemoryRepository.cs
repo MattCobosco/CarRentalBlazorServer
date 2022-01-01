@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using CoreBusiness;
 using UseCases.DataStorePluginInterfaces;
@@ -18,8 +17,8 @@ namespace Plugins.DataStore.InMemory
             {
                 new() { BranchId = 1, Name = "Gdańsk", Address = "Szklary 138", City = "Gdańsk", PostalCode = "80-835"},
                 new() { BranchId = 2, Name = "Warszawa", Address = "Rozłogi 1", City = "Warszawa", PostalCode = "01-323" },
-                new() { BranchId = 3, Name = "Kraków - miasto", Address = "Olszanicka 174", City = "Balice", PostalCode = "30-241" },
-                new() { BranchId = 4, Name = "Kraków - Balice", Address = "Conrada 63", City = "Kraków", PostalCode = "31-357" }
+                new() { BranchId = 3, Name = "Kraków - Balice", Address = "Olszanicka 174", City = "Balice", PostalCode = "30-241" },
+                new() { BranchId = 4, Name = "Kraków - centrum", Address = "Conrada 63", City = "Kraków", PostalCode = "31-357" }
             };
         }
 
@@ -36,6 +35,24 @@ namespace Plugins.DataStore.InMemory
 
             branch.BranchId = maxId + 1;
             _branches.Add(branch);
+        }
+
+        public void EditBranch(Branch branch)
+        {
+            var branchToEdit = GetBranchById(branch.BranchId);
+            if (branchToEdit != null)
+            {
+                branchToEdit.Name = branch.Name;
+                branchToEdit.Address = branch.Address;
+                branchToEdit.City = branch.City;
+                branchToEdit.PostalCode = branch.PostalCode;
+                branchToEdit.Description = branch.Description;
+            }
+        }
+
+        public Branch GetBranchById(int branchId)
+        {
+            return _branches?.FirstOrDefault(x => x.BranchId == branchId);
         }
     }
 }

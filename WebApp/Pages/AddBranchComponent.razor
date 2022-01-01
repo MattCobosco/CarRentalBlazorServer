@@ -1,9 +1,10 @@
 ﻿@page "/addbranch"
 
 @inject NavigationManager _navigationManager;
-@inject IAddBranchUseCase addBranchUseCase;
+@inject IAddBranchUseCase _addBranchUseCase;
 
 <h3>Add Branch</h3>
+<br/>
 
 @if (_branch != null)
 {
@@ -54,7 +55,7 @@
 
     private void OnValidSubmit()
     {
-        addBranchUseCase.Execute(_branch);
+        _addBranchUseCase.Execute(_branch);
         _navigationManager.NavigateTo("/branches");
     }
 

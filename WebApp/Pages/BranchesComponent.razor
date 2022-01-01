@@ -4,6 +4,7 @@
 @inject IViewBranchesUseCase _viewBranchesUseCase
 
 <h3>Manage Branches</h3>
+<br/>
 
 @if (_branches != null)
 {
@@ -26,6 +27,7 @@
                     <td>@branch.City</td>
                     <td>@branch.PostalCode</td>
                     <td>@branch.Description</td>
+                    <td><button type="button" class ="btn btn-link" @onclick="@(() => EditBranch(branch))">Edit</button></td>
                 </tr>
             }
         </tbody>
@@ -50,4 +52,8 @@
         _navigationManager.NavigateTo("/addbranch");
     }
 
+    private void EditBranch(Branch branch)
+    {
+        _navigationManager.NavigateTo($"/editbranch/{branch.BranchId}");
+    }
 }

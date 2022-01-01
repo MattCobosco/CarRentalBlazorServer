@@ -7,5 +7,7 @@ namespace UseCases.DataStorePluginInterfaces
     {
         IEnumerable<Branch> GetBranches();
         void AddBranch(Branch branch);
+        void EditBranch(Branch branch);
+        Branch GetBranchById(int branchId);
     }
 }
