@@ -31,10 +31,17 @@ namespace Plugins.DataStore.InMemory
         {
             if(_branches.Any(x => x.Name.Equals(branch.Name, StringComparison.OrdinalIgnoreCase))) return;
 
-            var maxId = _branches.Max(x => x.BranchId);
+            if (_branches != null && _branches.Count > 0)
+            {
+                var maxId = _branches.Max(x => x.BranchId);
 
-            branch.BranchId = maxId + 1;
-            _branches.Add(branch);
+                branch.BranchId = maxId + 1;
+                _branches.Add(branch);
+            }
+            else
+            {
+                branch.BranchId = 1;
+            }
         }
 
         public void EditBranch(Branch branch)
