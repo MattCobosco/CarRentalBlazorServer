@@ -4,7 +4,7 @@ namespace CoreBusiness
 {
     public class VehicleModel
     {
-        public int ModelId;
+        public int VehicleModelId;
         [Required]
         public string Make { get; set; }
         [Required]
