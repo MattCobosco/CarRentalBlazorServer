@@ -4,10 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Plugins.DataStore.InMemory;
-using UseCases;
+using UseCases.BranchUseCases;
 using UseCases.DataStorePluginInterfaces;
-using UseCases.UseCaseInterfaces;
-
+using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces;
+using UseCases.UseCaseInterfaces.VehicleBodyTypeUseCaseInterfaces;
+using UseCases.VehicleBodyTypeUseCases;
 using WebApp.Data;
 
 namespace WebApp
@@ -31,13 +32,21 @@ namespace WebApp
 
             // Dependency Injection - In-Memory Data Store
             services.AddScoped<IBranchRepository, BranchInMemoryRepository>();
+            services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeInMemoryRepository>();
 
             // Dependency Injection - Use Cases and Repositories
+            // Branches
             services.AddTransient<IViewBranchesUseCase, ViewBranchesUseCase>();
             services.AddTransient<IAddBranchUseCase, AddBranchUseCase>();
             services.AddTransient<IEditBranchUseCase, EditBranchUseCase>();
             services.AddTransient<IGetBranchByIdUseCase, GetBranchByIdUseCase>();
             services.AddTransient<IDeleteBranchUseCase, DeleteBranchUseCase>();
+            // Vehicle Body Types
+            services.AddTransient<IViewVehicleBodyTypesUseCase, ViewVehicleBodyTypesUseCase>();
+            services.AddTransient<IAddVehicleBodyTypeUseCase, AddVehicleBodyTypeUseCase>();
+            services.AddTransient<IEditVehicleBodyTypeUseCase, EditVehicleBodyTypeUseCase>();
+            services.AddTransient<IGetVehicleBodyTypeByIdUseCase, GetVehicleBodyTypeByIdUseCase>();
+            services.AddTransient<IDeleteVehicleBodyTypeUseCase, DeleteVehicleBodyTypeUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
