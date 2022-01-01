@@ -8,4 +8,8 @@
     <ProjectReference Include="..\CoreBusiness\CoreBusiness.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="VehicleModelUseCases\" />
+  </ItemGroup>
+
 </Project>
