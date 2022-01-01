@@ -35,6 +35,7 @@ namespace WebApp
             // Dependency Injection - In-Memory Data Store
             services.AddScoped<IBranchRepository, BranchInMemoryRepository>();
             services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeInMemoryRepository>();
+            services.AddScoped<IVehicleModelRepository, VehicleModelInMemoryRepository>();
 
             // Dependency Injection - Use Cases and Repositories
             // Branches
