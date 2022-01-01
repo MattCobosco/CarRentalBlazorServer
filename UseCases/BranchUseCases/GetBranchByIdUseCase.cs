@@ -1,12 +1,13 @@
 ﻿using CoreBusiness;
 using UseCases.DataStorePluginInterfaces;
-using UseCases.UseCaseInterfaces;
+using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces;
 
-namespace UseCases
+namespace UseCases.BranchUseCases
 {
     public class GetBranchByIdUseCase : IGetBranchByIdUseCase
     {
-        private IBranchRepository _branchRepository;
+        private readonly IBranchRepository _branchRepository;
+
         public GetBranchByIdUseCase(IBranchRepository branchRepository)
         {
             _branchRepository = branchRepository;

@@ -1,9 +1,9 @@
-﻿using CoreBusiness;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using CoreBusiness;
 using UseCases.DataStorePluginInterfaces;
-using UseCases.UseCaseInterfaces;
+using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces;
 
-namespace UseCases
+namespace UseCases.BranchUseCases
 {
     public class ViewBranchesUseCase : IViewBranchesUseCase
     {
