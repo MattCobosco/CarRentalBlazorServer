@@ -1,22 +1,21 @@
 ﻿using CoreBusiness;
-using System.Collections.Generic;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.UseCaseInterfaces;
 
 namespace UseCases
 {
-    public class ViewBranchesUseCase : IViewBranchesUseCase
+    public class AddBranchUseCase : IAddBranchUseCase
     {
         private readonly IBranchRepository _branchRepository;
 
-        public ViewBranchesUseCase(IBranchRepository branchesRepository)
+        public AddBranchUseCase(IBranchRepository branchesRepository)
         {
             _branchRepository = branchesRepository;
         }
 
-        public IEnumerable<Branch> Execute()
+        public void Execute(Branch branch)
         {
-            return _branchRepository.GetBranches();
+            _branchRepository.AddBranch(branch);
         }
     }
 }

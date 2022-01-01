@@ -1,0 +1,66 @@
+﻿@page "/addbranch"
+
+@inject NavigationManager _navigationManager;
+@inject IAddBranchUseCase addBranchUseCase;
+
+<h3>Add Branch</h3>
+
+@if (_branch != null)
+{
+<EditForm Model="_branch" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+
+    <div class="form-group">
+        <label for="name">Name</label>
+        <InputText id="name" @bind-Value="_branch.Name" class="form-control"></InputText>
+    </div>
+
+    <div class="form-group">
+        <label for="address">Address</label>
+        <InputText id="address" @bind-Value="_branch.Address" class="form-control"></InputText>
+    </div>
+    
+    <div class="form-group">
+        <label for="city">City</label>
+        <InputText id="city" @bind-Value="_branch.City" class="form-control"></InputText>
+    </div>
+    
+    <div class="form-group">
+        <label for="postalCode">Zip</label>
+        <InputText id="postalCode" @bind-Value="_branch.PostalCode" class="form-control"></InputText>
+    </div>
+    
+    <div class="form-group">
+        <label for="description">Description</label>
+        <InputText id="description" @bind-Value="_branch.Description" class="form-control"></InputText>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-primary" @onclick="OnCancel">Cancel</button>
+</EditForm>
+}
+
+@code {
+
+    private Branch _branch;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        _branch = new Branch();
+    }
+
+    private void OnValidSubmit()
+    {
+        addBranchUseCase.Execute(_branch);
+        _navigationManager.NavigateTo("/branches");
+    }
+
+    private void OnCancel()
+    {
+        _navigationManager.NavigateTo("/branches");
+    }
+
+}

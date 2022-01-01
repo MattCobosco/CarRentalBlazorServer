@@ -1,6 +1,7 @@
 ﻿@page "/branches"
 
-@inject UseCases.UseCaseInterfaces.IViewBranchesUseCase ViewBranchesUseCase
+@inject NavigationManager _navigationManager
+@inject IViewBranchesUseCase _viewBranchesUseCase
 
 <h3>Manage Branches</h3>
 
@@ -30,6 +31,8 @@
         </tbody>
     </table>
 }
+<br/>
+<button type="button" @onclick="AddBranchOnClick" class="btn btn-primary">Add Branch</button>
 
 @code {
 
@@ -39,6 +42,12 @@
     {
         base.OnInitialized();
 
-        _branches = ViewBranchesUseCase.Execute().ToList();
+        _branches = _viewBranchesUseCase.Execute().ToList();
     }
+
+    private void AddBranchOnClick()
+    {
+        _navigationManager.NavigateTo("/addbranch");
+    }
+
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using CoreBusiness;
 using UseCases.DataStorePluginInterfaces;
 
@@ -24,6 +26,16 @@ namespace Plugins.DataStore.InMemory
         public IEnumerable<Branch> GetBranches()
         {
             return _branches;
+        }
+
+        public void AddBranch(Branch branch)
+        {
+            if(_branches.Any(x => x.Name.Equals(branch.Name, StringComparison.OrdinalIgnoreCase))) return;
+
+            var maxId = _branches.Max(x => x.BranchId);
+
+            branch.BranchId = maxId + 1;
+            _branches.Add(branch);
         }
     }
 }
