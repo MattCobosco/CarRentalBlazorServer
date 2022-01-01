@@ -54,5 +54,10 @@ namespace Plugins.DataStore.InMemory
         {
             return _branches?.FirstOrDefault(x => x.BranchId == branchId);
         }
+
+        public void DeleteBranch(int branchId)
+        {
+            _branches?.Remove(GetBranchById(branchId));
+        }
     }
 }

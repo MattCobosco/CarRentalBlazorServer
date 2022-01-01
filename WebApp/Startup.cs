@@ -37,6 +37,7 @@ namespace WebApp
             services.AddTransient<IAddBranchUseCase, AddBranchUseCase>();
             services.AddTransient<IEditBranchUseCase, EditBranchUseCase>();
             services.AddTransient<IGetBranchByIdUseCase, GetBranchByIdUseCase>();
+            services.AddTransient<IDeleteBranchUseCase, DeleteBranchUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

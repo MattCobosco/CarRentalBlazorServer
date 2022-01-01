@@ -2,6 +2,7 @@
 
 @inject NavigationManager _navigationManager
 @inject IViewBranchesUseCase _viewBranchesUseCase
+@inject IDeleteBranchUseCase _deleteBranchUseCase
 
 <h3>Manage Branches</h3>
 <br/>
@@ -28,6 +29,7 @@
                     <td>@branch.PostalCode</td>
                     <td>@branch.Description</td>
                     <td><button type="button" class ="btn btn-link" @onclick="@(() => EditBranch(branch))">Edit</button></td>
+                    <td><button type="button" class="btn btn-link" @onclick="@(() => DeleteBranch(branch.BranchId))">Delete</button></td>
                 </tr>
             }
         </tbody>
@@ -43,8 +45,7 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-
-        _branches = _viewBranchesUseCase.Execute().ToList();
+        LoadBranches();
     }
 
     private void AddBranchOnClick()
@@ -55,5 +56,16 @@
     private void EditBranch(Branch branch)
     {
         _navigationManager.NavigateTo($"/editbranch/{branch.BranchId}");
+    }
+
+    private void DeleteBranch(int branchId)
+    {
+        _deleteBranchUseCase.Delete(branchId);
+        LoadBranches();
+    }
+
+    private void LoadBranches()
+    {
+        _branches = _viewBranchesUseCase.Execute()?.ToList();
     }
 }

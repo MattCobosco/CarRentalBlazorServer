@@ -9,5 +9,6 @@ namespace UseCases.DataStorePluginInterfaces
         void AddBranch(Branch branch);
         void EditBranch(Branch branch);
         Branch GetBranchById(int branchId);
+        void DeleteBranch(int branchId);
     }
 }
