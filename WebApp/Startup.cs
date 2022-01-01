@@ -50,7 +50,7 @@ namespace WebApp
             services.AddTransient<IEditVehicleBodyTypeUseCase, EditVehicleBodyTypeUseCase>();
             services.AddTransient<IGetVehicleBodyTypeByIdUseCase, GetVehicleBodyTypeByIdUseCase>();
             services.AddTransient<IDeleteVehicleBodyTypeUseCase, DeleteVehicleBodyTypeUseCase>();
-            //Vehicle Models
+            // Vehicle Models
             services.AddTransient<IViewVehicleModelsUseCase, ViewVehicleModelsUseCase>();
             services.AddTransient<IAddVehicleModelUseCase, AddVehicleModelUseCase>();
             services.AddTransient<IEditVehicleModelUseCase, EditVehicleModelUseCase>();
