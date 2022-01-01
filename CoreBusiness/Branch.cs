@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CoreBusiness
+﻿namespace CoreBusiness
 {
     public class Branch
     {
