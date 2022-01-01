@@ -3,7 +3,7 @@ using CoreBusiness;
 
 namespace UseCases.UseCaseInterfaces.VehicleBodyTypeUseCaseInterfaces
 {
-    interface IViewVehicleBodyTypesUseCase
+    public interface IViewVehicleBodyTypesUseCase
     {
         IEnumerable<VehicleBodyType> Execute();
     }

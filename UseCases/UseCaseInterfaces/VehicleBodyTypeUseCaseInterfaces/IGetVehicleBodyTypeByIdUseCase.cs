@@ -2,7 +2,7 @@
 
 namespace UseCases.UseCaseInterfaces.VehicleBodyTypeUseCaseInterfaces
 {
-    interface IGetVehicleBodyTypeUseCase
+    public interface IGetVehicleBodyTypeByIdUseCase
     {
         VehicleBodyType Execute(int vehicleBodyTypeId);
     }
