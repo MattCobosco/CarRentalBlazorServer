@@ -23,7 +23,7 @@ namespace Plugins.DataStore.InMemory
 
         public IEnumerable<Branch> GetBranches()
         {
-            throw new NotImplementedException();
+            return _branches;
         }
     }
 }

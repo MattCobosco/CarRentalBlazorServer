@@ -1,0 +1,44 @@
+﻿@page "/branches"
+
+@inject UseCases.UseCaseInterfaces.IViewBranchesUseCase ViewBranchesUseCase
+
+<h3>Manage Branches</h3>
+
+@if (_branches != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Zip</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var branch in _branches)
+            {
+                <tr>
+                    <td>@branch.Name</td>
+                    <td>@branch.Address</td>
+                    <td>@branch.City</td>
+                    <td>@branch.PostalCode</td>
+                    <td>@branch.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private List<Branch> _branches;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        _branches = ViewBranchesUseCase.Execute().ToList();
+    }
+}

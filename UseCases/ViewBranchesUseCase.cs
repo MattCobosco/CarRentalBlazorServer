@@ -6,13 +6,12 @@ using UseCases.UseCaseInterfaces;
 namespace UseCases
 {
     public class ViewBranchesUseCase : IViewBranchesUseCase
-
     {
         private readonly IBranchRepository _branchRepository;
 
         public ViewBranchesUseCase(IBranchRepository _branchesRepository)
         {
-            this._branchRepository = _branchesRepository;
+            _branchRepository = _branchesRepository;
         }
 
         public IEnumerable<Branch> Execute()
