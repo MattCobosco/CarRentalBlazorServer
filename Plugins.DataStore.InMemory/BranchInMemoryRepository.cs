@@ -1,7 +1,7 @@
-﻿using System;
+﻿using CoreBusiness;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using CoreBusiness;
 using UseCases.DataStorePluginInterfaces;
 
 namespace Plugins.DataStore.InMemory
@@ -29,7 +29,10 @@ namespace Plugins.DataStore.InMemory
 
         public void AddBranch(Branch branch)
         {
-            if(_branches.Any(x => x.Name.Equals(branch.Name, StringComparison.OrdinalIgnoreCase))) return;
+            if (_branches.Any(x => x.Name.Equals(branch.Name, StringComparison.OrdinalIgnoreCase)))
+            {
+                return;
+            }
 
             if (_branches != null && _branches.Count > 0)
             {

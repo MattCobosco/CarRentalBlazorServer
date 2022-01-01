@@ -44,9 +44,12 @@ namespace Plugins.DataStore.InMemory
         public void AddVehicleModel(VehicleModel vehicleModel)
         {
             if (_vehicleModels.Any(x => x.Model.Equals(vehicleModel.Model, StringComparison.OrdinalIgnoreCase))
-            &&_vehicleModels.Any(x=>x.AutomaticGearbox.Equals(vehicleModel.AutomaticGearbox))
-            && _vehicleModels.Any(x=>x.BodyTypeId.Equals(vehicleModel.BodyTypeId))
-            && _vehicleModels.Any(x=>x.Horsepower.Equals(vehicleModel.Horsepower))) return;
+            && _vehicleModels.Any(x => x.AutomaticGearbox.Equals(vehicleModel.AutomaticGearbox))
+            && _vehicleModels.Any(x => x.BodyTypeId.Equals(vehicleModel.BodyTypeId))
+            && _vehicleModels.Any(x => x.Horsepower.Equals(vehicleModel.Horsepower)))
+            {
+                return;
+            }
 
             if (_vehicleModels != null && _vehicleModels.Count > 0)
             {

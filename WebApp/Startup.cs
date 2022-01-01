@@ -8,7 +8,9 @@ using UseCases.BranchUseCases;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.VehicleBodyTypeUseCaseInterfaces;
+using UseCases.UseCaseInterfaces.VehicleModelsUseCaseInterfaces;
 using UseCases.VehicleBodyTypeUseCases;
+using UseCases.VehicleModelUseCases;
 using WebApp.Data;
 
 namespace WebApp
@@ -47,6 +49,12 @@ namespace WebApp
             services.AddTransient<IEditVehicleBodyTypeUseCase, EditVehicleBodyTypeUseCase>();
             services.AddTransient<IGetVehicleBodyTypeByIdUseCase, GetVehicleBodyTypeByIdUseCase>();
             services.AddTransient<IDeleteVehicleBodyTypeUseCase, DeleteVehicleBodyTypeUseCase>();
+            //Vehicle Models
+            services.AddTransient<IViewVehicleModelsUseCase, ViewVehicleModelsUseCase>();
+            services.AddTransient<IAddVehicleModelUseCase, AddVehicleModelUseCase>();
+            services.AddTransient<IEditVehicleModelUseCase, EditVehicleModelUseCase>();
+            services.AddTransient<IGetVehicleModelByIdUseCase, GetVehicleModelByIdUseCase>();
+            services.AddTransient<IDeleteVehicleModelUseCase, DeleteVehicleModelUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using CoreBusiness;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using CoreBusiness;
 using UseCases.DataStorePluginInterfaces;
 
 namespace Plugins.DataStore.InMemory
@@ -32,7 +32,10 @@ namespace Plugins.DataStore.InMemory
 
         public void AddVehicleBodyType(VehicleBodyType bodyType)
         {
-            if (_vehicleBodyTypes.Any(x => x.Name.Equals(bodyType.Name, StringComparison.OrdinalIgnoreCase))) return;
+            if (_vehicleBodyTypes.Any(x => x.Name.Equals(bodyType.Name, StringComparison.OrdinalIgnoreCase)))
+            {
+                return;
+            }
 
             if (_vehicleBodyTypes != null && _vehicleBodyTypes.Count > 0)
             {
