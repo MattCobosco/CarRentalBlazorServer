@@ -1,5 +1,4 @@
-﻿
-using CoreBusiness;
+﻿using CoreBusiness;
 
 namespace UseCases.UseCaseInterfaces.VehicleBodyTypeUseCaseInterfaces
 {
