@@ -1,6 +1,6 @@
 ﻿using CoreBusiness;
 
-namespace UseCases.UseCaseInterfaces.VehicleModelsUseCaseInterfaces
+namespace UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 {
     public interface IGetVehicleModelByIdUseCase
     {

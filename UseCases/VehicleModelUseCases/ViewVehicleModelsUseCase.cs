@@ -1,7 +1,7 @@
 ﻿using CoreBusiness;
 using System.Collections.Generic;
 using UseCases.DataStorePluginInterfaces;
-using UseCases.UseCaseInterfaces.VehicleModelsUseCaseInterfaces;
+using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces;
 
 namespace UseCases.VehicleModelUseCases
 {
