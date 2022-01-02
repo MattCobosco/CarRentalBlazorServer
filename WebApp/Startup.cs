@@ -8,8 +8,10 @@ using Plugins.DataStore.InMemory;
 using UseCases.BranchUseCases;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.FleetVehicleUseCases;
+using UseCases.ReservationUseCases;
 using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces;
+using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.VehicleBodyTypeUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces;
 using UseCases.VehicleBodyTypeUseCases;
@@ -45,6 +47,7 @@ namespace WebApp
             // Dependency Injection - In-Memory Data Store
             services.AddScoped<IBranchRepository, BranchInMemoryRepository>();
             services.AddScoped<IFleetVehicleRepository, FleetVehicleInMemoryRepository>();
+            services.AddScoped<IReservationRepository, ReservationInMemoryRepository>();
             services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeInMemoryRepository>();
             services.AddScoped<IVehicleModelRepository, VehicleModelInMemoryRepository>();
 
@@ -73,6 +76,9 @@ namespace WebApp
             services.AddTransient<IEditFleetVehicleUseCase, EditFleetVehicleUseCase>();
             services.AddTransient<IGetFleetVehicleByIdUseCase, GetFleetVehicleByIdUseCase>();
             services.AddTransient<IViewFleetVehiclesUseCase, ViewFleetVehiclesUseCase>();
+            //Reservations
+            services.AddTransient<IRecordReservationUseCase, RecordReservationUseCase>();
+            services.AddTransient<IViewReservationsUseCase, ViewReservationsUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -108,6 +114,9 @@ namespace WebApp
             {
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
+
+                // Controllers
+                endpoints.MapControllers();
             });
         }
     }

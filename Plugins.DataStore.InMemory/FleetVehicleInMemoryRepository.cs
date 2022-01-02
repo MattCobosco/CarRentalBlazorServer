@@ -48,7 +48,7 @@ namespace Plugins.DataStore.InMemory
                 return;
             }
 
-            if (_fleetVehicles != null && _fleetVehicles.Count > 0)
+            if (_fleetVehicles is {Count: > 0})
             {
                 var MaxId = _fleetVehicles.Max(x => x.ModelVehicleId);
 

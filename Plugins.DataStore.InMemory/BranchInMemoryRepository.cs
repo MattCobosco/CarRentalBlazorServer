@@ -34,7 +34,7 @@ namespace Plugins.DataStore.InMemory
                 return;
             }
 
-            if (_branches != null && _branches.Count > 0)
+            if (_branches is {Count: > 0})
             {
                 var maxId = _branches.Max(x => x.BranchId);
 

@@ -1,0 +1,51 @@
+﻿@page "/reservations"
+@using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
+
+@inject NavigationManager _navigationManager
+@inject IViewReservationsUseCase _viewReservationsUseCase
+
+
+<h3>Manage Reservations</h3>
+<br/>
+
+@if (_reservations != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Branch</th>
+                <th>Start Date&Time</th>
+                <th>End Date&Time</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var reservation in _reservations)
+        {   <tr>
+                <td>@reservation.ReservationGUID</td>
+                <td>@reservation.BranchName</td>
+                <td>@reservation.StartDateTime</td>
+                <td>@reservation.EndDateTime</td>
+                <td>@reservation.Price</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+}
+
+@code {
+    private List<Reservation> _reservations;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        LoadReservations();
+    }
+
+    private void LoadReservations()
+    {
+        _reservations = _viewReservationsUseCase.Execute()?.ToList();
+    }
+}
