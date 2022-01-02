@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Plugins.DataStore.InMemory;
 using UseCases.BranchUseCases;
 using UseCases.DataStorePluginInterfaces;
@@ -11,7 +12,7 @@ using UseCases.UseCaseInterfaces.VehicleBodyTypeUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.VehicleModelsUseCaseInterfaces;
 using UseCases.VehicleBodyTypeUseCases;
 using UseCases.VehicleModelUseCases;
-using WebApp.Data;
+using WebApp.Swagger;
 
 namespace WebApp
 {
@@ -30,7 +31,14 @@ namespace WebApp
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+
+            services.AddControllers();
+
+            // Swagger
+            services.AddSwaggerGen(x =>
+            {
+                x.SwaggerDoc("v1", new OpenApiInfo { Title = "Car Rental API", Version = "v1" });
+            });
 
             // Dependency Injection - In-Memory Data Store
             services.AddScoped<IBranchRepository, BranchInMemoryRepository>();
@@ -76,6 +84,16 @@ namespace WebApp
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            // Swagger
+            var swaggerOptions = new SwaggerOptions();
+            Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
+            app.UseSwagger(option => { option.RouteTemplate = swaggerOptions.JsonRoute; });
+            app.UseSwaggerUI(option =>
+            {
+                option.SwaggerEndpoint(swaggerOptions.UIEndpoint,
+                    swaggerOptions.Description);
+            });
 
             app.UseEndpoints(endpoints =>
             {
