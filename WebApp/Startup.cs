@@ -7,9 +7,11 @@ using Microsoft.OpenApi.Models;
 using Plugins.DataStore.InMemory;
 using UseCases.BranchUseCases;
 using UseCases.DataStorePluginInterfaces;
+using UseCases.FleetVehicleUseCases;
 using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces;
+using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.VehicleBodyTypeUseCaseInterfaces;
-using UseCases.UseCaseInterfaces.VehicleModelsUseCaseInterfaces;
+using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces;
 using UseCases.VehicleBodyTypeUseCases;
 using UseCases.VehicleModelUseCases;
 using WebApp.Swagger;
@@ -42,28 +44,35 @@ namespace WebApp
 
             // Dependency Injection - In-Memory Data Store
             services.AddScoped<IBranchRepository, BranchInMemoryRepository>();
+            services.AddScoped<IFleetVehicleRepository, FleetVehicleInMemoryRepository>();
             services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeInMemoryRepository>();
             services.AddScoped<IVehicleModelRepository, VehicleModelInMemoryRepository>();
 
             // Dependency Injection - Use Cases and Repositories
             // Branches
-            services.AddTransient<IViewBranchesUseCase, ViewBranchesUseCase>();
             services.AddTransient<IAddBranchUseCase, AddBranchUseCase>();
+            services.AddTransient<IDeleteBranchUseCase, DeleteBranchUseCase>();
             services.AddTransient<IEditBranchUseCase, EditBranchUseCase>();
             services.AddTransient<IGetBranchByIdUseCase, GetBranchByIdUseCase>();
-            services.AddTransient<IDeleteBranchUseCase, DeleteBranchUseCase>();
+            services.AddTransient<IViewBranchesUseCase, ViewBranchesUseCase>();
             // Vehicle Body Types
-            services.AddTransient<IViewVehicleBodyTypesUseCase, ViewVehicleBodyTypesUseCase>();
             services.AddTransient<IAddVehicleBodyTypeUseCase, AddVehicleBodyTypeUseCase>();
+            services.AddTransient<IDeleteVehicleBodyTypeUseCase, DeleteVehicleBodyTypeUseCase>();
             services.AddTransient<IEditVehicleBodyTypeUseCase, EditVehicleBodyTypeUseCase>();
             services.AddTransient<IGetVehicleBodyTypeByIdUseCase, GetVehicleBodyTypeByIdUseCase>();
-            services.AddTransient<IDeleteVehicleBodyTypeUseCase, DeleteVehicleBodyTypeUseCase>();
+            services.AddTransient<IViewVehicleBodyTypesUseCase, ViewVehicleBodyTypesUseCase>();
             // Vehicle Models
-            services.AddTransient<IViewVehicleModelsUseCase, ViewVehicleModelsUseCase>();
             services.AddTransient<IAddVehicleModelUseCase, AddVehicleModelUseCase>();
+            services.AddTransient<IDeleteVehicleModelUseCase, DeleteVehicleModelUseCase>();
             services.AddTransient<IEditVehicleModelUseCase, EditVehicleModelUseCase>();
             services.AddTransient<IGetVehicleModelByIdUseCase, GetVehicleModelByIdUseCase>();
-            services.AddTransient<IDeleteVehicleModelUseCase, DeleteVehicleModelUseCase>();
+            services.AddTransient<IViewVehicleModelsUseCase, ViewVehicleModelsUseCase>();
+            // Fleet Vehicles
+            services.AddTransient<IAddFleetVehicleUseCase, AddFleetVehicleUseCase>();
+            services.AddTransient<IDeleteFleetVehicleUseCase, DeleteFleetVehicleUseCase>();
+            services.AddTransient<IEditFleetVehicleUseCase, EditFleetVehicleUseCase>();
+            services.AddTransient<IGetFleetVehicleByIdUseCase, GetFleetVehicleByIdUseCase>();
+            services.AddTransient<IViewFleetVehiclesUseCase, ViewFleetVehiclesUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
