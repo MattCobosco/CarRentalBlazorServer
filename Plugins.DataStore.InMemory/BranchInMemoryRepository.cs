@@ -17,8 +17,8 @@ namespace Plugins.DataStore.InMemory
             {
                 new() { BranchId = 1, Name = "Gdańsk", Address = "Szklary 138", City = "Gdańsk", PostalCode = "80-835"},
                 new() { BranchId = 2, Name = "Warszawa", Address = "Rozłogi 1", City = "Warszawa", PostalCode = "01-323" },
-                new() { BranchId = 3, Name = "Kraków - Balice", Address = "Olszanicka 174", City = "Balice", PostalCode = "30-241" },
-                new() { BranchId = 4, Name = "Kraków - centrum", Address = "Conrada 63", City = "Kraków", PostalCode = "31-357" }
+                new() { BranchId = 3, Name = "Kraków - Airport", Address = "Olszanicka 174", City = "Balice", PostalCode = "30-241" },
+                new() { BranchId = 4, Name = "Kraków - City", Address = "Conrada 63", City = "Kraków", PostalCode = "31-357" }
             };
         }
 
