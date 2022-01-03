@@ -3,18 +3,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UseCases.DataStorePluginInterfaces;
+using UseCases.FleetVehicleUseCases;
+using UseCases.VehicleModelUseCases;
 
 namespace Plugins.DataStore.InMemory
 {
     public class ReservationInMemoryRepository : IReservationRepository
     {
-        private List<Reservation> _reservations;
+        private readonly List<Reservation> _reservations;
 
         public ReservationInMemoryRepository()
         {
             _reservations = new List<Reservation>
             {
-                new() {ReservationId = 1, ReservationGUID = Guid.NewGuid(), StartDateTime = DateTime.Now, EndDateTime = DateTime.Now.AddDays(2), Price = 69, BranchName = "Warszawa", FleetVehicleId = 1}
+                new() {ReservationId = 1, ReservationGuid = Guid.NewGuid(), StartDateTime = DateTime.Now, EndDateTime = DateTime.Now.AddDays(2), Price = 69, BranchName = "Warszawa", FleetVehicleLicensePlate = "GD19791"}
             };
         }
 
@@ -23,9 +25,9 @@ namespace Plugins.DataStore.InMemory
             return _reservations;
         }
 
-        public void Save(int fleetVehicleId, DateTime startDateTime, DateTime endDateTime, int baseDailyPrice)
+        public void AddReservation(string fleetVehicleLicensePlate, DateTime startDateTime, DateTime endDateTime, string branchName, int price)
         {
-            int reservationId = 0;
+            int reservationId;
 
             if (_reservations is { Count: > 0 })
             {
@@ -40,17 +42,18 @@ namespace Plugins.DataStore.InMemory
             _reservations.Add(new Reservation
             {
                 ReservationId = reservationId,
-                ReservationGUID = Guid.NewGuid(),
-                FleetVehicleId = fleetVehicleId,
+                ReservationGuid = Guid.NewGuid(),
+                BranchName = branchName,
+                FleetVehicleLicensePlate = fleetVehicleLicensePlate,
                 StartDateTime = startDateTime,
                 EndDateTime = endDateTime,
-                Price = baseDailyPrice * (int)(endDateTime - startDateTime).TotalDays
+                Price = price
             });
         }
 
         public Reservation GetReservationByGuid(Guid reservationGuid)
         {
-            return _reservations.FirstOrDefault(x => x.ReservationGUID == reservationGuid);
+            return _reservations.FirstOrDefault(x => x.ReservationGuid == reservationGuid);
         }
     }
 }

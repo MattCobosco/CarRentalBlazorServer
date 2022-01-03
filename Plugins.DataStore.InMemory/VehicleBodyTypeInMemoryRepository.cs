@@ -8,7 +8,7 @@ namespace Plugins.DataStore.InMemory
 {
     public class VehicleBodyTypeInMemoryRepository : IVehicleBodyTypeRepository
     {
-        private List<VehicleBodyType> _vehicleBodyTypes;
+        private readonly List<VehicleBodyType> _vehicleBodyTypes;
 
         public VehicleBodyTypeInMemoryRepository()
         {

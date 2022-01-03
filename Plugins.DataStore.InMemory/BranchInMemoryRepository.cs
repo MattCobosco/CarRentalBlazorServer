@@ -8,17 +8,17 @@ namespace Plugins.DataStore.InMemory
 {
     public class BranchInMemoryRepository : IBranchRepository
     {
-        private List<Branch> _branches;
+        private readonly List<Branch> _branches;
 
         public BranchInMemoryRepository()
         {
             // Add default branches
             _branches = new List<Branch>
             {
-                new() { BranchId = 1, Name = "Gdańsk", Address = "Szklary 138", City = "Gdańsk", PostalCode = "80-835"},
-                new() { BranchId = 2, Name = "Warszawa", Address = "Rozłogi 1", City = "Warszawa", PostalCode = "01-323" },
-                new() { BranchId = 3, Name = "Kraków - Airport", Address = "Olszanicka 174", City = "Balice", PostalCode = "30-241" },
-                new() { BranchId = 4, Name = "Kraków - City", Address = "Conrada 63", City = "Kraków", PostalCode = "31-357" }
+                new() { BranchId = 1, Name = "Gdańsk", Address = "Szklary 138 80-835 Gdańsk" },
+                new() { BranchId = 2, Name = "Warszawa", Address = "Rozłogi 1 01-323 Warszawa" },
+                new() { BranchId = 3, Name = "Kraków - Airport", Address = "Olszanicka 174 30-241 Kraków" },
+                new() { BranchId = 4, Name = "Kraków - City", Address = "Conrada 63 31-357 Kraków" }
             };
         }
 
@@ -50,14 +50,12 @@ namespace Plugins.DataStore.InMemory
         public void EditBranch(Branch branch)
         {
             var branchToEdit = GetBranchById(branch.BranchId);
-            if (branchToEdit != null)
-            {
-                branchToEdit.Name = branch.Name;
-                branchToEdit.Address = branch.Address;
-                branchToEdit.City = branch.City;
-                branchToEdit.PostalCode = branch.PostalCode;
-                branchToEdit.Description = branch.Description;
-            }
+
+            if (branchToEdit == null) return;
+
+            branchToEdit.Name = branch.Name;
+            branchToEdit.Address = branch.Address;
+            branchToEdit.Description = branch.Description;
         }
 
         public Branch GetBranchById(int branchId)
