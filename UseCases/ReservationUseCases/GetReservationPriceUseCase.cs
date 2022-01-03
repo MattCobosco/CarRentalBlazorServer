@@ -2,28 +2,23 @@
 using CoreBusiness;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces;
+using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces;
 
 namespace UseCases.ReservationUseCases
 {
     public class GetReservationPriceUseCase : IGetReservationPriceUseCase
     {
-        private readonly IVehicleModelRepository _vehicleModelRepository;
-        private readonly IFleetVehicleRepository _fleetVehicleRepository;
+        private readonly IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase;
 
-        public GetReservationPriceUseCase(
-            IVehicleModelRepository vehicleModelRepository,
-            IFleetVehicleRepository fleetVehicleRepository)
+        public GetReservationPriceUseCase(IGetVehicleModelByLicensePlateUseCase getVehicleModelByLicensePlateUseCase)
         {
-            _vehicleModelRepository = vehicleModelRepository;
-            _fleetVehicleRepository = fleetVehicleRepository;
+            _getVehicleModelByLicensePlateUseCase = getVehicleModelByLicensePlateUseCase;
         }
-
-        // TODO: Fix price calculation => modelVehicle is null
+        
         public int Execute(string licensePlate, DateTime startDate, DateTime endDate)
         {
             var numberOfDays = (int)(endDate - startDate).TotalDays;
-            var fleetVehicle = _fleetVehicleRepository.GetFleetVehicleByLicensePlate(licensePlate);
-            var vehicleModel = _vehicleModelRepository.GetVehicleModelById(fleetVehicle.ModelVehicleId);
+            var vehicleModel = _getVehicleModelByLicensePlateUseCase.Execute(licensePlate);
             var basePrice = vehicleModel.BaseDailyPrice;
             return numberOfDays * basePrice;
         }
