@@ -7,37 +7,37 @@
 
 <h3>Manage Branches</h3>
 <br/>
+<button type="button" @onclick="AddBranchOnClick" class="btn btn-primary">Add Branch</button>
+<br/>
+<br/>
 
 @if (_branches != null)
 {
     <table class="table">
         <thead>
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>City</th>
-                <th>Zip</th>
-                <th>Description</th>
-            </tr>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Description</th>
+        </tr>
         </thead>
         <tbody>
             @foreach (var branch in _branches)
             {
                 <tr>
+                    <td>@branch.BranchId</td>
                     <td>@branch.Name</td>
                     <td>@branch.Address</td>
-                    <td>@branch.City</td>
-                    <td>@branch.PostalCode</td>
                     <td>@branch.Description</td>
-                    <td><button type="button" class ="btn btn-link" @onclick="@(() => EditBranch(branch))">Edit</button></td>
+                    <td><button type="button" class="btn btn-link" @onclick="@(() => EditBranch(branch))">Edit</button></td>
                     <td><button type="button" class="btn btn-link" @onclick="@(() => DeleteBranch(branch.BranchId))">Delete</button></td>
                 </tr>
             }
         </tbody>
     </table>
 }
-<br/>
-<button type="button" @onclick="AddBranchOnClick" class="btn btn-primary">Add Branch</button>
+
 
 @code {
 
