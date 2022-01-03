@@ -2,12 +2,14 @@
 @using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 
 @inject NavigationManager _navigationManager;
 @inject IAddReservationUseCase _addReservationUseCase;
 @inject IViewBranchesUseCase _viewBranchesUseCase;
 @inject IViewFleetVehiclesUseCase _viewFleetVehiclesUseCase;
 @inject IGetReservationPriceUseCase _getReservationPriceUseCase;
+@inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase;
 
 <h3>Add Reservation</h3>
 <br/>
@@ -39,11 +41,11 @@
     </div>
 
     <div class="form-group">
-        <label for="description">License Plate</label>
+        <label for="description">Vehicle</label>
         <InputSelect id="description" @bind-Value="_reservation.FleetVehicleLicensePlate" class="form-control">
             @foreach (var vehicle in _fleetVehicles)
             {
-                <option value="@vehicle.FleetVehicleLicensePlate">@vehicle.FleetVehicleLicensePlate</option>
+                <option value="@vehicle.FleetVehicleLicensePlate">@vehicle.FleetVehicleLicensePlate @GetModelMake(vehicle.FleetVehicleLicensePlate).Make @GetModelMake(vehicle.FleetVehicleLicensePlate).Model</option>
             }
         </InputSelect>
     </div>
@@ -71,6 +73,11 @@
         _reservation.EndDateTime = DateTime.Today.AddDays(1);
         _reservation.BranchName = "";
         _reservation.FleetVehicleLicensePlate = "";
+    }
+
+    private VehicleModel GetModelMake(string licensePlate)
+    {
+        return _getVehicleModelByLicensePlateUseCase.Execute(licensePlate);
     }
 
     private void OnValidSubmit()
