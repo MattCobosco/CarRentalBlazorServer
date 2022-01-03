@@ -46,6 +46,7 @@ namespace WebApp
 
             // Dependency Injection - In-Memory Data Store
             services.AddScoped<IBranchRepository, BranchInMemoryRepository>();
+            services.AddScoped<ICustomerRepository, CustomerInMemoryRepository>();
             services.AddScoped<IFleetVehicleRepository, FleetVehicleInMemoryRepository>();
             services.AddScoped<IReservationRepository, ReservationInMemoryRepository>();
             services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeInMemoryRepository>();
@@ -74,11 +75,13 @@ namespace WebApp
             services.AddTransient<IAddFleetVehicleUseCase, AddFleetVehicleUseCase>();
             services.AddTransient<IDeleteFleetVehicleUseCase, DeleteFleetVehicleUseCase>();
             services.AddTransient<IEditFleetVehicleUseCase, EditFleetVehicleUseCase>();
-            services.AddTransient<IGetFleetVehicleByIdUseCase, GetFleetVehicleByIdUseCase>();
+            services.AddTransient<IGetFleetVehicleByLicensePlateUseCase, GetFleetVehicleByLicensePlate>();
             services.AddTransient<IViewFleetVehiclesUseCase, ViewFleetVehiclesUseCase>();
             //Reservations
-            services.AddTransient<IRecordReservationUseCase, RecordReservationUseCase>();
+            services.AddTransient<IAddReservationUseCase, AddReservationUseCase>();
+            services.AddTransient<IGetReservationByGuidUseCase, GetReservationByGuidUseCase>();
             services.AddTransient<IViewReservationsUseCase, ViewReservationsUseCase>();
+            services.AddTransient<IGetReservationPriceUseCase, GetReservationPriceUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
