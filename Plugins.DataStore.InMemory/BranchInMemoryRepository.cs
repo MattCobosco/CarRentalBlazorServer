@@ -8,7 +8,7 @@ namespace Plugins.DataStore.InMemory
 {
     public class BranchInMemoryRepository : IBranchRepository
     {
-        private List<Branch> _branches;
+        private readonly List<Branch> _branches;
 
         public BranchInMemoryRepository()
         {
@@ -50,14 +50,13 @@ namespace Plugins.DataStore.InMemory
         public void EditBranch(Branch branch)
         {
             var branchToEdit = GetBranchById(branch.BranchId);
-            if (branchToEdit != null)
-            {
-                branchToEdit.Name = branch.Name;
-                branchToEdit.Address = branch.Address;
-                branchToEdit.City = branch.City;
-                branchToEdit.PostalCode = branch.PostalCode;
-                branchToEdit.Description = branch.Description;
-            }
+
+            if (branchToEdit == null) return;
+            branchToEdit.Name = branch.Name;
+            branchToEdit.Address = branch.Address;
+            branchToEdit.City = branch.City;
+            branchToEdit.PostalCode = branch.PostalCode;
+            branchToEdit.Description = branch.Description;
         }
 
         public Branch GetBranchById(int branchId)

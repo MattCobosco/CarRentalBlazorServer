@@ -8,7 +8,7 @@ namespace Plugins.DataStore.InMemory
 {
     public class VehicleBodyTypeInMemoryRepository : IVehicleBodyTypeRepository
     {
-        private List<VehicleBodyType> _vehicleBodyTypes;
+        private readonly List<VehicleBodyType> _vehicleBodyTypes;
 
         public VehicleBodyTypeInMemoryRepository()
         {
@@ -52,6 +52,7 @@ namespace Plugins.DataStore.InMemory
         public void EditVehicleBodyType(VehicleBodyType vehicleBodyType)
         {
             var vehicleBodyTypeToEdit = GetVehicleBodyTypeById(vehicleBodyType.VehicleBodyTypeId);
+
             if (vehicleBodyTypeToEdit != null)
             {
                 vehicleBodyTypeToEdit.Name = vehicleBodyType.Name;

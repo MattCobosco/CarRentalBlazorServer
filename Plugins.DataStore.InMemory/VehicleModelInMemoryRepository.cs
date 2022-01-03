@@ -8,7 +8,7 @@ namespace Plugins.DataStore.InMemory
 {
     public class VehicleModelInMemoryRepository : IVehicleModelRepository
     {
-        private List<VehicleModel> _vehicleModels;
+        private readonly List<VehicleModel> _vehicleModels;
 
         public VehicleModelInMemoryRepository()
         {
@@ -66,20 +66,19 @@ namespace Plugins.DataStore.InMemory
         public void EditVehicleModel(VehicleModel vehicleModel)
         {
             var vehicleModelToEdit = GetVehicleModelById(vehicleModel.VehicleModelId);
-            if (vehicleModelToEdit != null)
-            {
-                vehicleModelToEdit.Make = vehicleModel.Make;
-                vehicleModelToEdit.Model = vehicleModel.Model;
-                vehicleModelToEdit.ModelYear = vehicleModel.ModelYear;
-                vehicleModelToEdit.BodyTypeId = vehicleModel.BodyTypeId;
-                vehicleModelToEdit.Segment = vehicleModel.Segment;
-                vehicleModelToEdit.EngineType = vehicleModel.EngineType;
-                vehicleModelToEdit.Horsepower = vehicleModel.Horsepower;
-                vehicleModelToEdit.AutomaticGearbox = vehicleModel.AutomaticGearbox;
-                vehicleModelToEdit.Doors = vehicleModel.Doors;
-                vehicleModelToEdit.Seats = vehicleModel.Seats;
-                vehicleModelToEdit.BaseDailyPrice = vehicleModel.BaseDailyPrice;
-            }
+
+            if (vehicleModelToEdit == null) return;
+            vehicleModelToEdit.Make = vehicleModel.Make;
+            vehicleModelToEdit.Model = vehicleModel.Model;
+            vehicleModelToEdit.ModelYear = vehicleModel.ModelYear;
+            vehicleModelToEdit.BodyTypeId = vehicleModel.BodyTypeId;
+            vehicleModelToEdit.Segment = vehicleModel.Segment;
+            vehicleModelToEdit.EngineType = vehicleModel.EngineType;
+            vehicleModelToEdit.Horsepower = vehicleModel.Horsepower;
+            vehicleModelToEdit.AutomaticGearbox = vehicleModel.AutomaticGearbox;
+            vehicleModelToEdit.Doors = vehicleModel.Doors;
+            vehicleModelToEdit.Seats = vehicleModel.Seats;
+            vehicleModelToEdit.BaseDailyPrice = vehicleModel.BaseDailyPrice;
         }
 
         public VehicleModel GetVehicleModelById(int vehicleModel)

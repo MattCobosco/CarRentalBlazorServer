@@ -8,13 +8,13 @@ namespace Plugins.DataStore.InMemory
 {
     public class ReservationInMemoryRepository : IReservationRepository
     {
-        private List<Reservation> _reservations;
+        private readonly List<Reservation> _reservations;
 
         public ReservationInMemoryRepository()
         {
             _reservations = new List<Reservation>
             {
-                new() {ReservationId = 1, ReservationGUID = Guid.NewGuid(), StartDateTime = DateTime.Now, EndDateTime = DateTime.Now.AddDays(2), Price = 69, BranchName = "Warszawa", FleetVehicleId = 1}
+                new() {ReservationId = 1, ReservationGuid = Guid.NewGuid(), StartDateTime = DateTime.Now, EndDateTime = DateTime.Now.AddDays(2), Price = 69, BranchName = "Warszawa", FleetVehicleId = 1}
             };
         }
 
@@ -25,7 +25,7 @@ namespace Plugins.DataStore.InMemory
 
         public void Save(int fleetVehicleId, DateTime startDateTime, DateTime endDateTime, int baseDailyPrice)
         {
-            int reservationId = 0;
+            int reservationId;
 
             if (_reservations is { Count: > 0 })
             {
@@ -40,7 +40,7 @@ namespace Plugins.DataStore.InMemory
             _reservations.Add(new Reservation
             {
                 ReservationId = reservationId,
-                ReservationGUID = Guid.NewGuid(),
+                ReservationGuid = Guid.NewGuid(),
                 FleetVehicleId = fleetVehicleId,
                 StartDateTime = startDateTime,
                 EndDateTime = endDateTime,
@@ -50,7 +50,7 @@ namespace Plugins.DataStore.InMemory
 
         public Reservation GetReservationByGuid(Guid reservationGuid)
         {
-            return _reservations.FirstOrDefault(x => x.ReservationGUID == reservationGuid);
+            return _reservations.FirstOrDefault(x => x.ReservationGuid == reservationGuid);
         }
     }
 }

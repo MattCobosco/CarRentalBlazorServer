@@ -8,7 +8,7 @@ namespace Plugins.DataStore.InMemory
 {
     public class FleetVehicleInMemoryRepository : IFleetVehicleRepository
     {
-        private List<FleetVehicle> _fleetVehicles;
+        private readonly List<FleetVehicle> _fleetVehicles;
 
         public FleetVehicleInMemoryRepository()
         {
@@ -65,17 +65,15 @@ namespace Plugins.DataStore.InMemory
         {
             var fleetVehicleToEdit = GetFleetVehicleById(fleetVehicle.FleetVehicleId);
 
-            if (fleetVehicleToEdit != null)
-            {
-                fleetVehicleToEdit.RegistrationPlate = fleetVehicle.RegistrationPlate;
-                fleetVehicleToEdit.Odometer = fleetVehicle.Odometer;
-                fleetVehicleToEdit.Vin = fleetVehicle.Vin;
-                fleetVehicleToEdit.MaintenanceDate = fleetVehicle.MaintenanceDate;
-                fleetVehicleToEdit.MaintenanceOdometer = fleetVehicle.MaintenanceOdometer;
-                fleetVehicle.DateAdded = fleetVehicle.DateAdded;
-                fleetVehicleToEdit.ModelVehicleId = fleetVehicle.ModelVehicleId;
-                fleetVehicleToEdit.CurrentBranchId = fleetVehicle.CurrentBranchId;
-            }
+            if (fleetVehicleToEdit == null) return;
+            fleetVehicleToEdit.RegistrationPlate = fleetVehicle.RegistrationPlate;
+            fleetVehicleToEdit.Odometer = fleetVehicle.Odometer;
+            fleetVehicleToEdit.Vin = fleetVehicle.Vin;
+            fleetVehicleToEdit.MaintenanceDate = fleetVehicle.MaintenanceDate;
+            fleetVehicleToEdit.MaintenanceOdometer = fleetVehicle.MaintenanceOdometer;
+            fleetVehicle.DateAdded = fleetVehicle.DateAdded;
+            fleetVehicleToEdit.ModelVehicleId = fleetVehicle.ModelVehicleId;
+            fleetVehicleToEdit.CurrentBranchId = fleetVehicle.CurrentBranchId;
         }
 
         public FleetVehicle GetFleetVehicleById(int fleetVehicleId)
