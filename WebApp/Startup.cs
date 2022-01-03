@@ -70,6 +70,7 @@ namespace WebApp
             services.AddTransient<IDeleteVehicleModelUseCase, DeleteVehicleModelUseCase>();
             services.AddTransient<IEditVehicleModelUseCase, EditVehicleModelUseCase>();
             services.AddTransient<IGetVehicleModelByIdUseCase, GetVehicleModelByIdUseCase>();
+            services.AddTransient<IGetVehicleModelByLicensePlateUseCase, GetVehicleModelByLicensePlateUseCase>();
             services.AddTransient<IViewVehicleModelsUseCase, ViewVehicleModelsUseCase>();
             // Fleet Vehicles
             services.AddTransient<IAddFleetVehicleUseCase, AddFleetVehicleUseCase>();
@@ -80,8 +81,8 @@ namespace WebApp
             //Reservations
             services.AddTransient<IAddReservationUseCase, AddReservationUseCase>();
             services.AddTransient<IGetReservationByGuidUseCase, GetReservationByGuidUseCase>();
-            services.AddTransient<IViewReservationsUseCase, ViewReservationsUseCase>();
             services.AddTransient<IGetReservationPriceUseCase, GetReservationPriceUseCase>();
+            services.AddTransient<IViewReservationsUseCase, ViewReservationsUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
