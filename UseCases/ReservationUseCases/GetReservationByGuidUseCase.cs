@@ -1,10 +1,11 @@
 ﻿using CoreBusiness;
 using System;
 using UseCases.DataStorePluginInterfaces;
+using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces;
 
 namespace UseCases.ReservationUseCases
 {
-    public class GetReservationByGuidUseCase
+    public class GetReservationByGuidUseCase : IGetReservationByGuidUseCase
     {
         private readonly IReservationRepository _reservationRepository;
 

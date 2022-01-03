@@ -8,6 +8,10 @@
 <h3>Manage Reservations</h3>
 <br/>
 
+<button type="button" @onclick="AddReservationOnClick" class="btn btn-primary">Add Reservation</button>
+<br/>
+<br/>
+
 @if (_reservations != null)
 {
     <table class="table">
@@ -18,18 +22,21 @@
                 <th>Start Date&Time</th>
                 <th>End Date&Time</th>
                 <th>Price</th>
+                <th>Vehicle</th>
             </tr>
         </thead>
         <tbody>
-        @foreach (var reservation in _reservations)
-        {   <tr>
-                <td>@reservation.ReservationGUID</td>
-                <td>@reservation.BranchName</td>
-                <td>@reservation.StartDateTime</td>
-                <td>@reservation.EndDateTime</td>
-                <td>@reservation.Price</td>
-            </tr>
-        }
+            @foreach (var reservation in _reservations)
+            {
+                <tr>
+                    <td>@reservation.ReservationGuid</td>
+                    <td>@reservation.BranchName</td>
+                    <td>@reservation.StartDateTime</td>
+                    <td>@reservation.EndDateTime</td>
+                    <td>@reservation.Price</td>
+                    <td>@reservation.FleetVehicleLicensePlate</td>
+                </tr>
+            }
         </tbody>
     </table>
 
@@ -41,10 +48,15 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        LoadReservations();
+        LoadData();
     }
 
-    private void LoadReservations()
+    private void AddReservationOnClick()
+    {
+        _navigationManager.NavigateTo("/addreservation");
+    }
+
+    private void LoadData()
     {
         _reservations = _viewReservationsUseCase.Execute()?.ToList();
     }

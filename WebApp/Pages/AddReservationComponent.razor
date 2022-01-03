@@ -1,0 +1,96 @@
+﻿@page "/addreservation"
+@using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
+
+@inject NavigationManager _navigationManager;
+@inject IAddReservationUseCase _addReservationUseCase;
+@inject IViewBranchesUseCase _viewBranchesUseCase;
+@inject IViewFleetVehiclesUseCase _viewFleetVehiclesUseCase;
+@inject IGetReservationPriceUseCase _getReservationPriceUseCase;
+
+<h3>Add Reservation</h3>
+<br/>
+
+@if (_reservation != null)
+{
+<EditForm Model="_reservation" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+
+    <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <InputDate id="startDate" @bind-Value="_reservation.StartDateTime" class="form-control"></InputDate>
+    </div>
+
+    <div class="form-group">
+        <label for="endDate">End Date</label>
+        <InputDate id="endDate" @bind-Value="_reservation.EndDateTime" class="form-control"></InputDate>
+    </div>
+
+    <div class="form-group">
+        <label for="branchName">Branch</label>
+        <InputSelect id="branchName" @bind-Value="_reservation.BranchName" class="form-control">
+            @foreach (var branch in _branches)
+            {
+                <option value="@branch.Name">@branch.Name</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="form-group">
+        <label for="description">License Plate</label>
+        <InputSelect id="description" @bind-Value="_reservation.FleetVehicleLicensePlate" class="form-control">
+            @foreach (var vehicle in _fleetVehicles)
+            {
+                <option value="@vehicle.FleetVehicleLicensePlate">@vehicle.FleetVehicleLicensePlate</option>
+            }
+        </InputSelect>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-primary" @onclick="OnCancel">Cancel</button>
+</EditForm>
+}
+
+@code {
+
+    private Reservation _reservation;
+    private List<FleetVehicle> _fleetVehicles;
+    private List<Branch> _branches;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        _reservation = new Reservation();
+        LoadLists();
+
+        // Set calendar input to default dates
+
+        _reservation.StartDateTime = DateTime.Today;
+        _reservation.EndDateTime = DateTime.Today.AddDays(1);
+        _reservation.BranchName = "";
+        _reservation.FleetVehicleLicensePlate = "";
+    }
+
+    private void OnValidSubmit()
+    {
+        _reservation.Price = _getReservationPriceUseCase.Execute(_reservation.FleetVehicleLicensePlate, _reservation.StartDateTime, _reservation.EndDateTime);
+        _addReservationUseCase.Execute(_reservation.FleetVehicleLicensePlate, _reservation.StartDateTime, _reservation.EndDateTime, _reservation.BranchName, _reservation.Price);
+        _navigationManager.NavigateTo("/reservations");
+    }
+
+    private void OnCancel()
+    {
+        _navigationManager.NavigateTo("/reservations");
+    }
+
+    private void LoadLists()
+    {
+        _fleetVehicles = _viewFleetVehiclesUseCase.Execute()?.ToList();
+        _branches = _viewBranchesUseCase.Execute()?.ToList();
+    }
+
+}
+
