@@ -1,34 +1,95 @@
 ﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">WebApp</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+    <a class="navbar-brand" href="">System</a>
+    <button class="navbar-toggler" @onclick="() => ToggleNavMenu(_navSubmenu)">
         <span class="navbar-toggler-icon"></span>
     </button>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+<div class="@NavMenuCssClass">
     <ul class="nav flex-column">
         <li class="nav-item px-3">
-        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-            <span class="oi oi-home" aria-hidden="true"></span> Home
-        </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="branches">
-                <span class="oi oi-plus" aria-hidden="true"></span> Manage Branches
+            <NavLink class="nav-link" @onclick="() => ToggleNavMenu(NavSubmenu.None)" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" @onclick="() => ToggleSubmenu(NavSubmenu.First)">
+                <span class="oi oi-transfer" aria-hidden="true"></span> Manage Fleet
+            </NavLink>
+        </li>
+
+        @if (_navSubmenu == NavSubmenu.First)
+        {
+            <li class="nav-item px-5">
+                <NavLink class="nav-link" @onclick="() => ToggleNavMenu()" href="counter">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Models
+                </NavLink>
+            </li>
+            <li class="nav-item px-5">
+                <NavLink class="nav-link" @onclick="() => ToggleNavMenu()" href="fetchdata">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Fleet
+                </NavLink>
+            </li>
+            <li class="nav-item px-5">
+                <NavLink class="nav-link" @onclick="() => ToggleNavMenu()" href="fetchdata">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Maintenance
+                </NavLink>
+            </li>
+            <li class="nav-item px-5">
+                <NavLink class="nav-link" @onclick="() => ToggleNavMenu()" href="transfers">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Transfers
+                </NavLink>
+            </li>
+        }
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" @onclick="() => ToggleSubmenu(NavSubmenu.Second)">
+                <span class="oi oi-cog" aria-hidden="true"></span> Manage Company
+            </NavLink>
+        </li>
+
+        @if (_navSubmenu == NavSubmenu.Second)
+        { // TODO: customer
+            <li class="nav-item px-5">
+                <NavLink class="nav-link" @onclick="() => ToggleNavMenu()" href="counter">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Customers
+                </NavLink>
+            </li>
+            <li class="nav-item px-5">
+                <NavLink class="nav-link" @onclick="() => ToggleNavMenu()" href="reservations">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Reservations
+                </NavLink>
+            </li>
+            <li class="nav-item px-5">
+                <NavLink class="nav-link" @onclick="() => ToggleNavMenu()" href="branches">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Branches
+                </NavLink>
+            </li>
+        }
     </ul>
 </div>
 
 @code {
-
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
+    private enum NavSubmenu
     {
-        collapseNavMenu = !collapseNavMenu;
+        None,
+        First,
+        Second
     }
 
+    private string NavMenuCssClass => _collapseNavMenu ? "collapse" : null;
+    private NavSubmenu _navSubmenu = NavSubmenu.None;
+    private bool _collapseNavMenu = true;
+
+
+    private void ToggleNavMenu(NavSubmenu? submenu = null)
+    {
+        _collapseNavMenu = !_collapseNavMenu;
+        _navSubmenu = submenu ?? _navSubmenu;
+    }
+
+    private void ToggleSubmenu(NavSubmenu submenu)
+    {
+        _navSubmenu = _navSubmenu == submenu ? NavSubmenu.None : submenu;
+    }
 }
