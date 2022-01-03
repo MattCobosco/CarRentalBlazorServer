@@ -43,19 +43,20 @@ namespace Plugins.DataStore.InMemory
 
         public void AddVehicleModel(VehicleModel vehicleModel)
         {
-            /*if (_vehicleModels.Any(x => x.Model.Equals(vehicleModel.Model, StringComparison.OrdinalIgnoreCase))
+            if (_vehicleModels.Any(x => x.Model.Equals(vehicleModel.Model, StringComparison.OrdinalIgnoreCase))
             && _vehicleModels.Any(x => x.AutomaticGearbox.Equals(vehicleModel.AutomaticGearbox))
             && _vehicleModels.Any(x => x.BodyTypeName.Equals(vehicleModel.BodyTypeName))
             && _vehicleModels.Any(x => x.Horsepower.Equals(vehicleModel.Horsepower)))
             {
                 return;
-            }*/
+            }
 
             if (_vehicleModels is {Count: > 0})
             {
                 var maxId = _vehicleModels.Max(x => x.VehicleModelId);
 
                 vehicleModel.VehicleModelId = maxId + 1;
+                _vehicleModels.Add(vehicleModel);
             }
             else
             {
@@ -66,20 +67,19 @@ namespace Plugins.DataStore.InMemory
         public void EditVehicleModel(VehicleModel vehicleModel)
         {
             var vehicleModelToEdit = GetVehicleModelById(vehicleModel.VehicleModelId);
-            if (vehicleModelToEdit != null)
-            {
-                vehicleModelToEdit.Make = vehicleModel.Make;
-                vehicleModelToEdit.Model = vehicleModel.Model;
-                vehicleModelToEdit.ModelYear = vehicleModel.ModelYear;
-                vehicleModelToEdit.BodyTypeName = vehicleModel.BodyTypeName;
-                vehicleModelToEdit.Segment = vehicleModel.Segment;
-                vehicleModelToEdit.EngineType = vehicleModel.EngineType;
-                vehicleModelToEdit.Horsepower = vehicleModel.Horsepower;
-                vehicleModelToEdit.AutomaticGearbox = vehicleModel.AutomaticGearbox;
-                vehicleModelToEdit.Doors = vehicleModel.Doors;
-                vehicleModelToEdit.Seats = vehicleModel.Seats;
-                vehicleModelToEdit.BaseDailyPrice = vehicleModel.BaseDailyPrice;
-            }
+
+            if (vehicleModelToEdit == null) return;
+            vehicleModelToEdit.Make = vehicleModel.Make;
+            vehicleModelToEdit.Model = vehicleModel.Model;
+            vehicleModelToEdit.ModelYear = vehicleModel.ModelYear;
+            vehicleModelToEdit.BodyTypeName = vehicleModel.BodyTypeName;
+            vehicleModelToEdit.Segment = vehicleModel.Segment;
+            vehicleModelToEdit.EngineType = vehicleModel.EngineType;
+            vehicleModelToEdit.Horsepower = vehicleModel.Horsepower;
+            vehicleModelToEdit.AutomaticGearbox = vehicleModel.AutomaticGearbox;
+            vehicleModelToEdit.Doors = vehicleModel.Doors;
+            vehicleModelToEdit.Seats = vehicleModel.Seats;
+            vehicleModelToEdit.BaseDailyPrice = vehicleModel.BaseDailyPrice;
         }
 
         public VehicleModel GetVehicleModelById(int vehicleModel)
