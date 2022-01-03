@@ -1,4 +1,5 @@
 ﻿using System;
+using CoreBusiness;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces;
 
@@ -22,8 +23,8 @@ namespace UseCases.ReservationUseCases
         {
             var numberOfDays = (int)(endDate - startDate).TotalDays;
             var fleetVehicle = _fleetVehicleRepository.GetFleetVehicleByLicensePlate(licensePlate);
-            var modelVehicle = _vehicleModelRepository.GetVehicleModelById(fleetVehicle.ModelVehicleId);
-            var basePrice = modelVehicle.BaseDailyPrice;
+            var vehicleModel = _vehicleModelRepository.GetVehicleModelById(fleetVehicle.ModelVehicleId);
+            var basePrice = vehicleModel.BaseDailyPrice;
             return numberOfDays * basePrice;
         }
     }
