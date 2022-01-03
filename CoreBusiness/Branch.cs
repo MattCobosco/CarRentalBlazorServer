@@ -9,10 +9,6 @@ namespace CoreBusiness
         public string Name { get; set; }
         [Required]
         public string Address { get; set; }
-        [Required]
-        public string City { get; set; }
-        [Required]
-        public string PostalCode { get; set; }
         public string Description { get; set; }
     }
 }

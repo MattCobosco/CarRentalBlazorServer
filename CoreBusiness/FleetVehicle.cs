@@ -5,7 +5,8 @@ namespace CoreBusiness
 {
     public class FleetVehicle
     {
-        public int FleetVehicleId;
+        [Required]
+        public string FleetVehicleLicensePlate;
         [Required]
         public string RegistrationPlate { get; set; }
         [Required]

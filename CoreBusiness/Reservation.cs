@@ -6,7 +6,7 @@ namespace CoreBusiness
     public class Reservation
     {
         public int ReservationId { get; set; }
-        public Guid ReservationGUID { get; set; }
+        public Guid ReservationGuid { get; set; }
         [Required]
         public DateTime StartDateTime { get; set; }
         [Required]
@@ -17,6 +17,6 @@ namespace CoreBusiness
         public string BranchName { get; set; }
         public int EmployeeName { get; set; }
         [Required]
-        public int FleetVehicleId { get; set; }
+        public string FleetVehicleLicensePlate { get; set; }
     }
 }

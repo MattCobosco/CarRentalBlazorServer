@@ -12,7 +12,7 @@ namespace CoreBusiness
         [Required]
         public string ModelYear { get; set; }
         [Required]
-        public int BodyTypeId { get; set; }
+        public string BodyTypeName { get; set; }
         [Required]
         public string Segment { get; set; }
         [Required]
