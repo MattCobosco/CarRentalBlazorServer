@@ -43,13 +43,13 @@ namespace Plugins.DataStore.InMemory
 
         public void AddVehicleModel(VehicleModel vehicleModel)
         {
-            if (_vehicleModels.Any(x => x.Model.Equals(vehicleModel.Model, StringComparison.OrdinalIgnoreCase))
+            /*if (_vehicleModels.Any(x => x.Model.Equals(vehicleModel.Model, StringComparison.OrdinalIgnoreCase))
             && _vehicleModels.Any(x => x.AutomaticGearbox.Equals(vehicleModel.AutomaticGearbox))
             && _vehicleModels.Any(x => x.BodyTypeName.Equals(vehicleModel.BodyTypeName))
             && _vehicleModels.Any(x => x.Horsepower.Equals(vehicleModel.Horsepower)))
             {
                 return;
-            }
+            }*/
 
             if (_vehicleModels is {Count: > 0})
             {
