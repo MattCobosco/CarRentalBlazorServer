@@ -1,0 +1,111 @@
+﻿@page "/addvehiclemodel"
+@using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.VehicleBodyTypeUseCaseInterfaces
+
+@inject NavigationManager _navigationManager;
+@inject IAddVehicleModelUseCase _addVehicleModelUseCase;
+@inject IViewVehicleBodyTypesUseCase _viewVehicleBodyTypesUseCase;
+
+<h3>Add Model</h3>
+<br />
+
+@if (_vehicleModel != null)
+{
+    <EditForm Model="_vehicleModel" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        <div class="form-group">
+            <label for="make">Make</label>
+            <InputText id="make" @bind-Value="_vehicleModel.Make" class="form-control"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="model">Model</label>
+            <InputText id="model" @bind-Value="_vehicleModel.Model" class="form-control"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="modelYear">Model Year</label>
+            <InputText id="modelYear" @bind-Value="_vehicleModel.ModelYear" class="form-control"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="bodyType">Body Type</label>
+            <InputSelect id="bodyType" @bind-Value="_vehicleModel.BodyTypeName" class="form-control">
+                @foreach (var bodyType in _vehicleBodyTypes)
+                    {
+                    <option value="@bodyType.Name">@bodyType.Name</option>
+                    }
+            </InputSelect>
+        </div>
+
+        <div class="form-group">
+            <label for="segment">Segment</label>
+            <InputText id="segment" @bind-Value="_vehicleModel.Segment" class="form-control"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="engineType">Engine Type</label>
+            <InputText id="engineType" @bind-Value="_vehicleModel.EngineType" class="form-control"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="horsepower">Horsepower</label>
+            <InputText id="horsepower" @bind-Value="_vehicleModel.Horsepower" class="form-control"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="automaticGearbox">Automatic Gearbox</label>
+            <InputCheckbox id="automaticGearbox" @bind-Value="_vehicleModel.AutomaticGearbox" class="form-control"></InputCheckbox>
+        </div>
+
+        <div class="form-group">
+            <label for="doors">Doors</label>
+            <InputNumber id="doors" @bind-Value="_vehicleModel.Doors" class="form-control"></InputNumber>
+        </div>
+
+        <div class="form-group">
+            <label for="seats">Seats</label>
+            <InputNumber id="seats" @bind-Value="_vehicleModel.Seats" class="form-control"></InputNumber>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Base Daily Price</label>
+            <InputNumber id="price" @bind-Value="_vehicleModel.BaseDailyPrice" class="form-control"></InputNumber>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-primary" @onclick="OnCancel">Cancel</button>
+    </EditForm>
+}
+
+@code {
+
+    private VehicleModel _vehicleModel;
+    private List<VehicleBodyType> _vehicleBodyTypes;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        _vehicleModel = new VehicleModel();
+        LoadLists();
+    }
+
+    private void OnValidSubmit()
+    {
+        _addVehicleModelUseCase.Execute(_vehicleModel);
+        _navigationManager.NavigateTo("/branches");
+    }
+
+    private void OnCancel()
+    {
+        _navigationManager.NavigateTo("/branches");
+    }
+
+    private void LoadLists()
+    {
+        _vehicleBodyTypes = _viewVehicleBodyTypesUseCase.Execute()?.ToList();
+    }
+}

@@ -1,0 +1,80 @@
+﻿@page "/vehiclemodels"
+@using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.VehicleBodyTypeUseCaseInterfaces
+
+@inject NavigationManager _navigationManager
+@inject IViewVehicleModelsUseCase _viewVehicleModelsUseCase
+@inject IDeleteVehicleModelUseCase _deleteVehicleModelUseCase
+@inject IViewVehicleBodyTypesUseCase _viewVehicleBodyTypesUseCase;
+
+<h3>Manage Vehicle Models</h3>
+<br/>
+<button type="button" @onclick="AddModelOnClick" class="btn btn-primary">Add Model</button>
+<br/>
+<br/>
+
+@if (_vehicleModels != null)
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>ModelYear</th>
+            <th>Body Type</th>
+            <th>Automatic Gearbox</th>
+            <th>Daily Price</th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var model in _vehicleModels)
+            {
+                <tr>
+                    <td>@model.VehicleModelId</td>
+                    <td>@model.Make</td>
+                    <td>@model.Model</td>
+                    <td>@model.ModelYear</td>
+                    <td>@model.BodyTypeName</td>
+                    <td>@model.AutomaticGearbox</td>
+                    <td>@model.BaseDailyPrice</td>
+                    <td><button type="button" class="btn btn-link" @onclick="@(() => EditModel(model))">Edit</button></td>
+                    <td><button type="button" class="btn btn-link" @onclick="@(() => DeleteModel(model.VehicleModelId))">Delete</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+
+    private List<VehicleModel> _vehicleModels;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        LoadBranches();
+    }
+
+    private void AddModelOnClick()
+    {
+        _navigationManager.NavigateTo("/addvehiclemodel");
+    }
+
+    private void EditModel(VehicleModel vehicleModel)
+    {
+        _navigationManager.NavigateTo($"/editvehiclemodel/{vehicleModel.VehicleModelId}");
+    }
+
+    private void DeleteModel(int vehicleModelId)
+    {
+        _deleteVehicleModelUseCase.Delete(vehicleModelId);
+        LoadBranches();
+    }
+
+    private void LoadBranches()
+    {
+        _vehicleModels = _viewVehicleModelsUseCase.Execute()?.ToList();
+    }
+}
