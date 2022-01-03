@@ -7,7 +7,7 @@ namespace UseCases.DataStorePluginInterfaces
     public interface IReservationRepository
     {
         IEnumerable<Reservation> GetReservations();
-        void Save(int fleetVehicleId, DateTime startDateTime, DateTime endDateTime, int baseDailyPrice);
+        void AddReservation(string fleetVehicleLicensePlate, DateTime startDateTime, DateTime endDateTime, string branchName, int price);
         Reservation GetReservationByGuid(Guid reservationGuid);
     }
 }

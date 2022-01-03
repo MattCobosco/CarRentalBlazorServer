@@ -8,7 +8,7 @@ namespace UseCases.DataStorePluginInterfaces
         IEnumerable<FleetVehicle> GetFleetVehicles();
         void AddFleetVehicle(FleetVehicle fleetVehicle);
         void EditFleetVehicle(FleetVehicle fleetVehicle);
-        FleetVehicle GetFleetVehicleById(int fleetVehicleId);
-        void DeleteFleetVehicle(int fleetVehicleId);
+        FleetVehicle GetFleetVehicleByLicensePlate(string fleetVehicleId);
+        void DeleteFleetVehicle(string fleetVehicleId);
     }
 }
