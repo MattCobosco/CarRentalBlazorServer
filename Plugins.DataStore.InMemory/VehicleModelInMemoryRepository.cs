@@ -82,9 +82,9 @@ namespace Plugins.DataStore.InMemory
             vehicleModelToEdit.BaseDailyPrice = vehicleModel.BaseDailyPrice;
         }
 
-        public VehicleModel GetVehicleModelById(int vehicleModel)
+        public VehicleModel GetVehicleModelById(int vehicleModelId)
         {
-            return _vehicleModels?.FirstOrDefault(x => x.VehicleModelId == vehicleModel);
+            return _vehicleModels?.FirstOrDefault(x => x.VehicleModelId == vehicleModelId);
         }
 
         public void DeleteVehicleModel(int vehicleModelId)
