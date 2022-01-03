@@ -6,7 +6,6 @@ namespace UseCases.FleetVehicleUseCases
 {
     public class AddFleetVehicleUseCase : IAddFleetVehicleUseCase
     {
-
         private readonly IFleetVehicleRepository _fleetVehicleRepository;
 
         public AddFleetVehicleUseCase(IFleetVehicleRepository fleetVehicleRepository)

@@ -2,6 +2,6 @@
 {
     public interface IDeleteFleetVehicleUseCase
     {
-        void Delete(int fleetVehicleId);
+        void Delete(string fleetVehicleLicensePlate);
     }
 }

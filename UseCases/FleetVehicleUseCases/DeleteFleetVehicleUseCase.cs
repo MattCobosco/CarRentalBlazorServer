@@ -12,9 +12,9 @@ namespace UseCases.FleetVehicleUseCases
             _fleetVehicleRepository = fleetVehicleRepository;
         }
 
-        public void Delete(int fleetVehicleId)
+        public void Delete(string fleetVehicleLicensePlate)
         {
-            _fleetVehicleRepository.DeleteFleetVehicle(fleetVehicleId);
+            _fleetVehicleRepository.DeleteFleetVehicle(fleetVehicleLicensePlate);
         }
     }
 }

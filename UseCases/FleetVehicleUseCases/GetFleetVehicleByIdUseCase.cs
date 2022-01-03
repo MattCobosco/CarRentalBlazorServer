@@ -4,18 +4,18 @@ using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces;
 
 namespace UseCases.FleetVehicleUseCases
 {
-    public class GetFleetVehicleByIdUseCase : IGetFleetVehicleByIdUseCase
+    public class GetFleetVehicleByLicensePlate : IGetFleetVehicleByLicensePlateUseCase
     {
         private readonly IFleetVehicleRepository _fleetVehicleRepository;
 
-        public GetFleetVehicleByIdUseCase(IFleetVehicleRepository fleetVehicleRepository)
+        public GetFleetVehicleByLicensePlate(IFleetVehicleRepository fleetVehicleRepository)
         {
             _fleetVehicleRepository = fleetVehicleRepository;
         }
 
-        public FleetVehicle Execute(int fleetVehicleId)
+        public FleetVehicle Execute(string fleetVehicleLicensePlate)
         {
-            return _fleetVehicleRepository.GetFleetVehicleById(fleetVehicleId);
+            return _fleetVehicleRepository.GetFleetVehicleByLicensePlate(fleetVehicleLicensePlate);
         }
     }
 }
