@@ -96,12 +96,12 @@
     private void OnValidSubmit()
     {
         _addVehicleModelUseCase.Execute(_vehicleModel);
-        _navigationManager.NavigateTo("/branches");
+        _navigationManager.NavigateTo("/vehiclemodels");
     }
 
     private void OnCancel()
     {
-        _navigationManager.NavigateTo("/branches");
+        _navigationManager.NavigateTo("/vehiclemodels");
     }
 
     private void LoadLists()
