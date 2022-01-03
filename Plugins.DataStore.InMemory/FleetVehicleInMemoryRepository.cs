@@ -53,17 +53,15 @@ namespace Plugins.DataStore.InMemory
         {
             var fleetVehicleToEdit = GetFleetVehicleByLicensePlate(fleetVehicle.FleetVehicleLicensePlate);
 
-            if (fleetVehicleToEdit != null)
-            {
-                fleetVehicleToEdit.RegistrationPlate = fleetVehicle.RegistrationPlate;
-                fleetVehicleToEdit.Odometer = fleetVehicle.Odometer;
-                fleetVehicleToEdit.Vin = fleetVehicle.Vin;
-                fleetVehicleToEdit.MaintenanceDate = fleetVehicle.MaintenanceDate;
-                fleetVehicleToEdit.MaintenanceOdometer = fleetVehicle.MaintenanceOdometer;
-                fleetVehicle.DateAdded = fleetVehicle.DateAdded;
-                fleetVehicleToEdit.ModelVehicleId = fleetVehicle.ModelVehicleId;
-                fleetVehicleToEdit.CurrentBranchId = fleetVehicle.CurrentBranchId;
-            }
+            if (fleetVehicleToEdit == null) return;
+            fleetVehicleToEdit.RegistrationPlate = fleetVehicle.RegistrationPlate;
+            fleetVehicleToEdit.Odometer = fleetVehicle.Odometer;
+            fleetVehicleToEdit.Vin = fleetVehicle.Vin;
+            fleetVehicleToEdit.MaintenanceDate = fleetVehicle.MaintenanceDate;
+            fleetVehicleToEdit.MaintenanceOdometer = fleetVehicle.MaintenanceOdometer;
+            fleetVehicle.DateAdded = fleetVehicle.DateAdded;
+            fleetVehicleToEdit.ModelVehicleId = fleetVehicle.ModelVehicleId;
+            fleetVehicleToEdit.CurrentBranchId = fleetVehicle.CurrentBranchId;
         }
 
         public FleetVehicle GetFleetVehicleByLicensePlate(string fleetVehicleLicensePlate)

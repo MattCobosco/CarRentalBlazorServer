@@ -57,6 +57,8 @@ namespace Plugins.DataStore.InMemory
             branchToEdit.Address = branch.Address;
             branchToEdit.Description = branch.Description;
         }
+        }
+        }
 
         public Branch GetBranchById(int branchId)
         {

@@ -42,9 +42,8 @@ namespace Plugins.DataStore.InMemory
             _reservations.Add(new Reservation
             {
                 ReservationId = reservationId,
-                ReservationGuid = Guid.NewGuid(),
-                BranchName = branchName,
-                FleetVehicleLicensePlate = fleetVehicleLicensePlate,
+                ReservationGUID = Guid.NewGuid(),
+                FleetVehicleId = fleetVehicleId,
                 StartDateTime = startDateTime,
                 EndDateTime = endDateTime,
                 Price = price

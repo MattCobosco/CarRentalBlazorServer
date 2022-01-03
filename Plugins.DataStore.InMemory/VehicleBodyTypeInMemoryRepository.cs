@@ -52,6 +52,7 @@ namespace Plugins.DataStore.InMemory
         public void EditVehicleBodyType(VehicleBodyType vehicleBodyType)
         {
             var vehicleBodyTypeToEdit = GetVehicleBodyTypeById(vehicleBodyType.VehicleBodyTypeId);
+
             if (vehicleBodyTypeToEdit != null)
             {
                 vehicleBodyTypeToEdit.Name = vehicleBodyType.Name;
