@@ -25,6 +25,7 @@
             <th>Body Type</th>
             <th>Automatic Gearbox</th>
             <th>Daily Price</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -38,8 +39,10 @@
                     <td>@model.BodyTypeName</td>
                     <td>@model.AutomaticGearbox</td>
                     <td>@model.BaseDailyPrice</td>
-                    <td><button type="button" class="btn btn-link" @onclick="@(() => EditModel(model))">Edit</button></td>
-                    <td><button type="button" class="btn btn-link" @onclick="@(() => DeleteModel(model.VehicleModelId))">Delete</button></td>
+                    <td>
+                        <button type="button" class="btn btn-link" @onclick="@(() => EditModel(model))">Edit</button>
+                        <button type="button" class="btn btn-link" @onclick="@(() => DeleteModel(model.VehicleModelId))">Delete</button>
+                    </td>
                 </tr>
             }
         </tbody>

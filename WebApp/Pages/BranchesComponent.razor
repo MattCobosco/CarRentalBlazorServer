@@ -20,6 +20,7 @@
             <th>Name</th>
             <th>Address</th>
             <th>Description</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -30,14 +31,15 @@
                     <td>@branch.Name</td>
                     <td>@branch.Address</td>
                     <td>@branch.Description</td>
-                    <td><button type="button" class="btn btn-link" @onclick="@(() => EditBranch(branch))">Edit</button></td>
-                    <td><button type="button" class="btn btn-link" @onclick="@(() => DeleteBranch(branch.BranchId))">Delete</button></td>
+                    <td>
+                        <button type="button" class="btn btn-link" @onclick="@(() => EditBranch(branch))">Edit</button>
+                        <button type="button" class="btn btn-link" @onclick="@(() => DeleteBranch(branch.BranchId))">Delete</button>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
 }
-
 
 @code {
 
