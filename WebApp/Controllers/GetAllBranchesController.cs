@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CoreBusiness;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using CoreBusiness;
 using UseCases.DataStorePluginInterfaces;
 
 namespace WebApp.Controllers
