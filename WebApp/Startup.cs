@@ -6,10 +6,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Plugins.DataStore.InMemory;
 using UseCases.BranchUseCases;
+using UseCases.CustomerUseCases;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.FleetVehicleUseCases;
 using UseCases.ReservationUseCases;
 using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces;
+using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.VehicleBodyTypeUseCaseInterfaces;
@@ -59,6 +61,23 @@ namespace WebApp
             services.AddTransient<IEditBranchUseCase, EditBranchUseCase>();
             services.AddTransient<IGetBranchByIdUseCase, GetBranchByIdUseCase>();
             services.AddTransient<IViewBranchesUseCase, ViewBranchesUseCase>();
+            // Customers
+            services.AddTransient<IAddCustomerUseCase, AddCustomerUseCase>();
+            services.AddTransient<IDeleteCustomerUseCase, DeleteCustomerUseCase>();
+            services.AddTransient<IEditCustomerUseCase, EditCustomerUseCase>();
+            services.AddTransient<IGetCustomerByIdUseCase, GetCustomerByIdUseCase>();
+            services.AddTransient<IViewCustomersUseCase, ViewCustomersUseCase>();
+            // Fleet Vehicles
+            services.AddTransient<IAddFleetVehicleUseCase, AddFleetVehicleUseCase>();
+            services.AddTransient<IDeleteFleetVehicleUseCase, DeleteFleetVehicleUseCase>();
+            services.AddTransient<IEditFleetVehicleUseCase, EditFleetVehicleUseCase>();
+            services.AddTransient<IGetFleetVehicleByLicensePlateUseCase, GetFleetVehicleByLicensePlate>();
+            services.AddTransient<IViewFleetVehiclesUseCase, ViewFleetVehiclesUseCase>();
+            //Reservations
+            services.AddTransient<IAddReservationUseCase, AddReservationUseCase>();
+            services.AddTransient<IGetReservationByGuidUseCase, GetReservationByGuidUseCase>();
+            services.AddTransient<IGetReservationPriceUseCase, GetReservationPriceUseCase>();
+            services.AddTransient<IViewReservationsUseCase, ViewReservationsUseCase>();
             // Vehicle Body Types
             services.AddTransient<IAddVehicleBodyTypeUseCase, AddVehicleBodyTypeUseCase>();
             services.AddTransient<IDeleteVehicleBodyTypeUseCase, DeleteVehicleBodyTypeUseCase>();
@@ -72,17 +91,6 @@ namespace WebApp
             services.AddTransient<IGetVehicleModelByIdUseCase, GetVehicleModelByIdUseCase>();
             services.AddTransient<IGetVehicleModelByLicensePlateUseCase, GetVehicleModelByLicensePlateUseCase>();
             services.AddTransient<IViewVehicleModelsUseCase, ViewVehicleModelsUseCase>();
-            // Fleet Vehicles
-            services.AddTransient<IAddFleetVehicleUseCase, AddFleetVehicleUseCase>();
-            services.AddTransient<IDeleteFleetVehicleUseCase, DeleteFleetVehicleUseCase>();
-            services.AddTransient<IEditFleetVehicleUseCase, EditFleetVehicleUseCase>();
-            services.AddTransient<IGetFleetVehicleByLicensePlateUseCase, GetFleetVehicleByLicensePlate>();
-            services.AddTransient<IViewFleetVehiclesUseCase, ViewFleetVehiclesUseCase>();
-            //Reservations
-            services.AddTransient<IAddReservationUseCase, AddReservationUseCase>();
-            services.AddTransient<IGetReservationByGuidUseCase, GetReservationByGuidUseCase>();
-            services.AddTransient<IGetReservationPriceUseCase, GetReservationPriceUseCase>();
-            services.AddTransient<IViewReservationsUseCase, ViewReservationsUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
