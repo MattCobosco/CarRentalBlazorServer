@@ -17,5 +17,7 @@ namespace CoreBusiness
         public string PersonalDocumentNumber { get; set; }
         [Required]
         public string DrivingLicenseNumber { get; set; }
+        [Required]
+        public string Pesel { get; set; }
     }
 }

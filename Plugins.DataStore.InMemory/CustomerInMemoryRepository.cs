@@ -19,13 +19,13 @@ namespace Plugins.DataStore.InMemory
                 {
                     CustomerId = 1, FirstName = "Kamil", LastName = "Kozłowski", ContactDetails = "+48 534899994",
                     Address = "Pogodna 52/96 03-213 Sanok",
-                    PersonalDocumentNumber = "MFG419865", DrivingLicenseNumber = "5928319937"
+                    PersonalDocumentNumber = "MFG419865", DrivingLicenseNumber = "FHW32847", Pesel = "89112629714"
                 },
                 new()
                 {
                     CustomerId = 2, FirstName = "Klaudia", LastName = "Makowska", ContactDetails = "+48 665701481",
                     Address = "Gdyńska 95A/41 77-347 Zamość",
-                    PersonalDocumentNumber = "BCG815631", DrivingLicenseNumber = "8937598391"
+                    PersonalDocumentNumber = "BCG815631", DrivingLicenseNumber = "ASD34532", Pesel = "92033048579"
                 }
             };
         }
@@ -66,6 +66,9 @@ namespace Plugins.DataStore.InMemory
             customerToEdit.LastName = customer.LastName;
             customerToEdit.ContactDetails = customer.ContactDetails;
             customerToEdit.Address = customer.Address;
+            customer.PersonalDocumentNumber = customer.PersonalDocumentNumber;
+            customerToEdit.DrivingLicenseNumber = customer.DrivingLicenseNumber;
+            customerToEdit.Pesel = customer.Pesel;
         }
 
         public Customer GetCustomerById(int customerId)
