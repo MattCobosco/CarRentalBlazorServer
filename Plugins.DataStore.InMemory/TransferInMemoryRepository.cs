@@ -18,7 +18,7 @@ namespace Plugins.DataStore.InMemory
                 new()
                 {
                     TransferId = 1, Date = DateTime.Today.Date, FromBranch = "Gdańsk", ToBranch = "Kraków",
-                    EmployeeId = 1, FleetVehicleId = 1
+                    EmployeeId = 1, FleetVehicleLicensePlate = "GD23372"
                 }
             };
         }
@@ -30,7 +30,7 @@ namespace Plugins.DataStore.InMemory
         
         public void AddTransfer(Transfer transfer)
         {
-            if (_transfers.Any(x => x.FleetVehicleId.Equals(transfer.FleetVehicleId))
+            if (_transfers.Any(x => x.FleetVehicleLicensePlate.Equals(transfer.FleetVehicleLicensePlate))
                 && _transfers.Any(x=>x.Date.Equals(transfer.Date)))
             {
                 return;
@@ -60,7 +60,7 @@ namespace Plugins.DataStore.InMemory
             transferToEdit.ToBranch = transfer.ToBranch;
             transferToEdit.Date = transfer.Date;
             transferToEdit.EmployeeId = transfer.EmployeeId;
-            transferToEdit.FleetVehicleId = transferToEdit.FleetVehicleId;
+            transferToEdit.FleetVehicleLicensePlate = transferToEdit.FleetVehicleLicensePlate;
 
         }
 

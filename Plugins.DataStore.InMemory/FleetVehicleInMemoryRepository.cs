@@ -55,9 +55,12 @@ namespace Plugins.DataStore.InMemory
         {
             var fleetVehicleToEdit = GetFleetVehicleByLicensePlate(fleetVehicle.FleetVehicleLicensePlate);
 
-            if (fleetVehicleToEdit == null) return;
+            if (fleetVehicleToEdit == null)
+            {
+                return;
+            }
 
-            fleetVehicleToEdit.RegistrationPlate = fleetVehicle.RegistrationPlate;
+            fleetVehicleToEdit.FleetVehicleLicensePlate = fleetVehicle.FleetVehicleLicensePlate;
             fleetVehicleToEdit.Odometer = fleetVehicle.Odometer;
             fleetVehicleToEdit.Vin = fleetVehicle.Vin;
             fleetVehicleToEdit.MaintenanceDate = fleetVehicle.MaintenanceDate;
