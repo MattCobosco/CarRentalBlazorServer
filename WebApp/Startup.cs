@@ -53,13 +53,18 @@ namespace WebApp
                 x.SwaggerDoc("v1", new OpenApiInfo { Title = "Car Rental API", Version = "v1" });
             });
 
-            // Dependency Injection - In-Memory Data Store
+            /* Dependency Injection - In-Memory Data Store
             services.AddScoped<IBranchRepository, BranchInMemoryRepository>();
+            */
             services.AddScoped<ICustomerRepository, CustomerInMemoryRepository>();
             services.AddScoped<IFleetVehicleRepository, FleetVehicleInMemoryRepository>();
             services.AddScoped<IReservationRepository, ReservationInMemoryRepository>();
             services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeInMemoryRepository>();
-            services.AddScoped<IVehicleModelRepository, VehicleModelInMemoryRepository>();
+            //services.AddScoped<IVehicleModelRepository, VehicleModelInMemoryRepository>();
+
+            // Dependency Injection - EF Core Data Store for SQL
+            services.AddScoped<IBranchRepository, BranchRepository>();
+            services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
 
             // Dependency Injection - Use Cases and Repositories
             // Branches
