@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Plugins.DataStore.InMemory;
+using Plugins.DataStore.SQL;
 using UseCases.BranchUseCases;
 using UseCases.CustomerUseCases;
 using UseCases.DataStorePluginInterfaces;
@@ -39,6 +41,11 @@ namespace WebApp
             services.AddServerSideBlazor();
 
             services.AddControllers();
+
+            services.AddDbContext<CarRentalContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultDbConnection"));
+            });
 
             // Swagger
             services.AddSwaggerGen(x =>
