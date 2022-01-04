@@ -5,7 +5,6 @@ namespace CoreBusiness
 {
     public class Reservation
     {
-        public int ReservationId { get; set; }
         public Guid ReservationGuid { get; set; }
         [Required]
         public DateTime StartDateTime { get; set; }
