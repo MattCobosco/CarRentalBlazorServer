@@ -4,7 +4,7 @@ namespace CoreBusiness
 {
     public class VehicleBodyType
     {
-        public int VehicleBodyTypeId;
+        public int VehicleBodyTypeId { get; set; }
         [Required]
         public string Name { get; set; }
     }

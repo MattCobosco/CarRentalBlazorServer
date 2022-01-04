@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CoreBusiness
 {
     public class VehicleModel
     {
-        public int VehicleModelId;
+        public int VehicleModelId { get; set; }
         [Required]
         public string Make { get; set; }
         [Required]
@@ -27,5 +28,9 @@ namespace CoreBusiness
         public int Seats { get; set; }
         [Required]
         public int BaseDailyPrice { get; set; }
+
+        //Navigation property for EF Core
+
+        public List<FleetVehicle> FleetVehicles { get; set; }
     }
 }

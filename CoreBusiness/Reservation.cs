@@ -1,10 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoreBusiness
 {
     public class Reservation
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid ReservationGuid { get; set; }
         [Required]
         public DateTime StartDateTime { get; set; }

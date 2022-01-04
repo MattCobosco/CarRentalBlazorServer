@@ -1,14 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoreBusiness
 {
     public class FleetVehicle
     {
-        [Required]
-        public string FleetVehicleLicensePlate;
-        [Required]
-        public string RegistrationPlate { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public string FleetVehicleLicensePlate { get; set; }
         [Required]
         public int Odometer { get; set; }
         [Required]
@@ -19,10 +19,12 @@ namespace CoreBusiness
         public int MaintenanceOdometer { get; set; }
         [Required]
         public DateTime DateAdded { get; set; }
-
         [Required]
         public int ModelVehicleId { get; set; }
         [Required]
         public int CurrentBranchId { get; set; }
+
+        // Navigation property for EF Core
+        public VehicleModel VehicleModel { get; set; }
     }
 }
