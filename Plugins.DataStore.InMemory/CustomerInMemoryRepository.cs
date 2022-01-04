@@ -47,12 +47,13 @@ namespace Plugins.DataStore.InMemory
                 var maxId = _customers.Max(x => x.CustomerId);
 
                 customer.CustomerId = maxId + 1;
-                _customers.Add(customer);
             }
             else
             {
                 customer.CustomerId = 1;
             }
+
+            _customers.Add(customer);
         }
 
         public void EditCustomer(Customer customer)

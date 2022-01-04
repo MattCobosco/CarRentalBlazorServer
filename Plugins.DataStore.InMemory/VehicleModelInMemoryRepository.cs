@@ -56,12 +56,13 @@ namespace Plugins.DataStore.InMemory
                 var maxId = _vehicleModels.Max(x => x.VehicleModelId);
 
                 vehicleModel.VehicleModelId = maxId + 1;
-                _vehicleModels.Add(vehicleModel);
             }
             else
             {
                 vehicleModel.VehicleModelId = 1;
             }
+
+            _vehicleModels.Add(vehicleModel);
         }
 
         public void EditVehicleModel(VehicleModel vehicleModel)

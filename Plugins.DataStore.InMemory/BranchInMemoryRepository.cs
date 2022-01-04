@@ -39,12 +39,13 @@ namespace Plugins.DataStore.InMemory
                 var maxId = _branches.Max(x => x.BranchId);
 
                 branch.BranchId = maxId + 1;
-                _branches.Add(branch);
             }
             else
             {
                 branch.BranchId = 1;
             }
+
+            _branches.Add(branch);
         }
 
         public void EditBranch(Branch branch)

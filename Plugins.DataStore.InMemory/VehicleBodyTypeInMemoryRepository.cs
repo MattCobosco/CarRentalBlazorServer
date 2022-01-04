@@ -47,6 +47,8 @@ namespace Plugins.DataStore.InMemory
             {
                 bodyType.VehicleBodyTypeId = 1;
             }
+
+            _vehicleBodyTypes.Add(bodyType);
         }
 
         public void EditVehicleBodyType(VehicleBodyType vehicleBodyType)
