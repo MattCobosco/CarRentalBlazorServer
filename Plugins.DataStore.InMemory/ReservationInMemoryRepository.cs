@@ -55,5 +55,7 @@ namespace Plugins.DataStore.InMemory
         {
             return _reservations.FirstOrDefault(x => x.ReservationGuid == reservationGuid);
         }
+
+        //TODO: EditReservation, AddReservation methods
     }
 }
