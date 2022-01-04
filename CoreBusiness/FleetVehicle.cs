@@ -24,7 +24,8 @@ namespace CoreBusiness
         [Required]
         public int CurrentBranchId { get; set; }
 
-        // Navigation property for EF Core
+        // Navigation properties for EF Core
         public VehicleModel VehicleModel { get; set; }
+        public Branch Branch { get; set; }
     }
 }
