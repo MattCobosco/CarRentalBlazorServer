@@ -25,7 +25,38 @@ namespace Plugins.DataStore.SQL
                 .WithOne(fv => fv.VehicleModel)
                 .HasForeignKey(fv => fv.ModelVehicleId);
 
+            modelBuilder.Entity<Branch>()
+                .HasMany(fv => fv.FleetVehicles)
+                .WithOne(br => br.Branch)
+                .HasForeignKey(br => br.CurrentBranchId);
+
             // Data seed
+            modelBuilder.Entity<Branch>().HasData(
+                new Branch
+                {
+                    BranchId = 1, 
+                    Name = "Gdańsk", 
+                    Address = "Szklary 138 80-835 Gdańsk"
+                },
+                new Branch
+                {
+                    BranchId = 2, 
+                    Name = "Warszawa", 
+                    Address = "Rozłogi 1 01-323 Warszawa"
+                },
+                new Branch
+                {
+                    BranchId = 3, 
+                    Name = "Kraków - Airport", 
+                    Address = "Olszanicka 174 30-241 Kraków"
+                },
+                new Branch
+                {
+                    BranchId = 4, 
+                    Name = "Kraków - City", 
+                    Address = "Conrada 63 31-357 Kraków"
+                });
+
             modelBuilder.Entity<VehicleModel>().HasData(
                 new VehicleModel
                 {
