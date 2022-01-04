@@ -96,7 +96,7 @@
     private void OnValidSubmit()
     {
         _reservation.Price = _getReservationPriceUseCase.Execute(_reservation.FleetVehicleLicensePlate, _reservation.StartDateTime, _reservation.EndDateTime);
-        _addReservationUseCase.Execute(_reservation.FleetVehicleLicensePlate, _reservation.StartDateTime, _reservation.EndDateTime, _reservation.BranchName, _reservation.Price);
+        _addReservationUseCase.Execute(_reservation);
         _navigationManager.NavigateTo("/reservations");
     }
 

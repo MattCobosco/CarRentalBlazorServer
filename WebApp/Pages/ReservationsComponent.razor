@@ -1,10 +1,12 @@
 ﻿@page "/reservations"
 @using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
 @inject IViewReservationsUseCase _viewReservationsUseCase
 @inject IGetCustomerByIdUseCase _getCustomerByIdUseCase;
+@inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase;
 
 
 <h3>Manage Reservations</h3>
@@ -19,7 +21,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Branch</th>
                 <th>Start Date&Time</th>
                 <th>End Date&Time</th>
@@ -32,13 +33,12 @@
             @foreach (var reservation in _reservations)
             {
                 <tr>
-                    <td>@reservation.ReservationGuid</td>
                     <td>@reservation.BranchName</td>
                     <td>@reservation.StartDateTime</td>
                     <td>@reservation.EndDateTime</td>
                     <td>@reservation.Price</td>
-                    <td>@reservation.FleetVehicleLicensePlate</td>
-                    <td>@reservation.CustomerId</td>
+                    <td>@reservation.FleetVehicleLicensePlate @GetModelByLicensePlate(reservation.FleetVehicleLicensePlate)</td>
+                    <td>@GetCustomerById(reservation.CustomerId).FirstName @GetCustomerById(reservation.CustomerId).LastName @GetCustomerById(reservation.CustomerId).Pesel</td>
                 </tr>
             }
         </tbody>
@@ -48,7 +48,6 @@
 
 @code {
     private List<Reservation> _reservations;
-    private Customer _customer;
 
     protected override void OnInitialized()
     {
@@ -64,5 +63,15 @@
     private void LoadData()
     {
         _reservations = _viewReservationsUseCase.Execute()?.ToList();
+    }
+
+    private string GetModelByLicensePlate(string licensePlate)
+    {
+        return _getVehicleModelByLicensePlateUseCase.Execute(licensePlate).Model;
+    }
+
+    private Customer GetCustomerById(int customerId)
+    {
+        return _getCustomerByIdUseCase.Execute(customerId);
     }
 }

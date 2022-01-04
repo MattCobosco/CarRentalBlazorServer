@@ -13,9 +13,9 @@ namespace UseCases.CustomerUseCases
             _customerRepository = customerRepository;
         }
 
-        public void Execute(Customer customer)
+        public Customer Execute(int customerId)
         {
-            _customerRepository.EditCustomer(customer);
+            return _customerRepository.GetCustomerById(customerId);
         }
     }
 }

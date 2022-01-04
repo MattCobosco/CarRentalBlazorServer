@@ -1,4 +1,4 @@
-﻿using System;
+﻿using CoreBusiness;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces;
 
@@ -13,9 +13,9 @@ namespace UseCases.ReservationUseCases
             _reservationRepository = reservationRepository;
         }
 
-        public void Execute(string fleetVehicleLicensePlate, DateTime startDateTime, DateTime endDateTime, string branchName, int price)
+        public void Execute(Reservation reservation)
         {
-            _reservationRepository.AddReservation(fleetVehicleLicensePlate, startDateTime,  endDateTime, branchName, price);
+            _reservationRepository.AddReservation(reservation);
         }
     }
 }

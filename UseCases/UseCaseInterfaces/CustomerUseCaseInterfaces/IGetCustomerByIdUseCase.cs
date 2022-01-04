@@ -4,6 +4,6 @@ namespace UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
 {
     public interface IGetCustomerByIdUseCase
     {
-        void Execute(Customer customer);
+        Customer Execute(int customerId);
     }
 }

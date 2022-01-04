@@ -23,24 +23,19 @@ namespace Plugins.DataStore.InMemory
             return _reservations;
         }
 
-        public void AddReservation(string fleetVehicleLicensePlate, DateTime startDateTime, DateTime endDateTime, string branchName, int price)
+        public void AddReservation(Reservation reservation)
         {
-            _reservations.Add(new Reservation
-            {
-                ReservationGuid = Guid.NewGuid(),
-                FleetVehicleLicensePlate = fleetVehicleLicensePlate,
-                BranchName = branchName,
-                StartDateTime = startDateTime,
-                EndDateTime = endDateTime,
-                Price = price
-            });
+            _reservations.Add(reservation);
         }
 
         public void EditReservation(Reservation reservation)
         {
             var reservationToEdit = GetReservationByGuid(reservation.ReservationGuid);
 
-            if (reservationToEdit == null) return;
+            if (reservationToEdit == null)
+            {
+                return;
+            }
 
             reservationToEdit.StartDateTime = reservation.StartDateTime;
             reservationToEdit.EndDateTime = reservation.EndDateTime;
