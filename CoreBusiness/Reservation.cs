@@ -17,5 +17,7 @@ namespace CoreBusiness
         public int EmployeeName { get; set; }
         [Required]
         public string FleetVehicleLicensePlate { get; set; }
+        [Required]
+        public int CustomerId { get; set; }
     }
 }

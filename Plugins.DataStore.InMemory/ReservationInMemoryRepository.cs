@@ -14,7 +14,7 @@ namespace Plugins.DataStore.InMemory
         {
             _reservations = new List<Reservation>
             {
-                new() {ReservationGuid = Guid.NewGuid(), StartDateTime = DateTime.Now, EndDateTime = DateTime.Now.AddDays(2), Price = 69, BranchName = "Warszawa", FleetVehicleLicensePlate = "GD19791"}
+                new() {ReservationGuid = Guid.NewGuid(), StartDateTime = DateTime.Now, EndDateTime = DateTime.Now.AddDays(2), Price = 69, BranchName = "Warszawa", FleetVehicleLicensePlate = "GD19791", CustomerId = 1}
             };
         }
 

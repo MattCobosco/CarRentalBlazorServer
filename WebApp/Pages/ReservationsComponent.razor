@@ -1,8 +1,10 @@
 ﻿@page "/reservations"
 @using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
 @inject IViewReservationsUseCase _viewReservationsUseCase
+@inject IGetCustomerByIdUseCase _getCustomerByIdUseCase;
 
 
 <h3>Manage Reservations</h3>
@@ -23,6 +25,7 @@
                 <th>End Date&Time</th>
                 <th>Price</th>
                 <th>Vehicle</th>
+                <th>Customer</th>
             </tr>
         </thead>
         <tbody>
@@ -35,6 +38,7 @@
                     <td>@reservation.EndDateTime</td>
                     <td>@reservation.Price</td>
                     <td>@reservation.FleetVehicleLicensePlate</td>
+                    <td>@reservation.CustomerId</td>
                 </tr>
             }
         </tbody>
@@ -44,6 +48,7 @@
 
 @code {
     private List<Reservation> _reservations;
+    private Customer _customer;
 
     protected override void OnInitialized()
     {

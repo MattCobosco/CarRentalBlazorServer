@@ -1,6 +1,7 @@
 ﻿@page "/addreservation"
 @using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 
@@ -10,6 +11,7 @@
 @inject IViewFleetVehiclesUseCase _viewFleetVehiclesUseCase;
 @inject IGetReservationPriceUseCase _getReservationPriceUseCase;
 @inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase;
+@inject IViewCustomersUseCase _viewCustomersUseCase;
 
 <h3>Add Reservation</h3>
 <br/>
@@ -34,9 +36,9 @@
         <label for="branchName">Branch</label>
         <InputSelect id="branchName" @bind-Value="_reservation.BranchName" class="form-control">
             @foreach (var branch in _branches)
-            {
+                {
                 <option value="@branch.Name">@branch.Name</option>
-            }
+                }
         </InputSelect>
     </div>
 
@@ -44,9 +46,19 @@
         <label for="fleetVehicleLicensePlate">Vehicle</label>
         <InputSelect id="fleetVehicleLicensePlate" @bind-Value="_reservation.FleetVehicleLicensePlate" class="form-control">
             @foreach (var vehicle in _fleetVehicles)
-            {
+                {
                 <option value="@vehicle.FleetVehicleLicensePlate">@vehicle.FleetVehicleLicensePlate - @GetModelMake(vehicle.FleetVehicleLicensePlate).Make @GetModelMake(vehicle.FleetVehicleLicensePlate).Model</option>
-            }
+                }
+        </InputSelect>
+    </div>
+
+    <div class="form-group">
+        <label for="fleetVehicleLicensePlate">Customer</label>
+        <InputSelect id="customerId" @bind-Value="_reservation.CustomerId" class="form-control">
+            @foreach (var customer in _customers)
+                {
+                <option value="@customer.CustomerId">@customer.LastName @customer.FirstName - @customer.Pesel</option>
+                }
         </InputSelect>
     </div>
 
@@ -60,6 +72,7 @@
     private Reservation _reservation;
     private List<FleetVehicle> _fleetVehicles;
     private List<Branch> _branches;
+    private List<Customer> _customers;
 
     protected override void OnInitialized()
     {
@@ -96,6 +109,7 @@
     {
         _fleetVehicles = _viewFleetVehiclesUseCase.Execute()?.ToList();
         _branches = _viewBranchesUseCase.Execute()?.ToList();
+        _customers = _viewCustomersUseCase.Execute()?.ToList();
     }
 
 }
