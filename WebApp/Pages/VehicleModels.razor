@@ -54,7 +54,7 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        LoadBranches();
+        LoadVehicleModels();
     }
 
     private void AddModelOnClick()
@@ -70,10 +70,10 @@
     private void DeleteModel(int vehicleModelId)
     {
         _deleteVehicleModelUseCase.Delete(vehicleModelId);
-        LoadBranches();
+        LoadVehicleModels();
     }
 
-    private void LoadBranches()
+    private void LoadVehicleModels()
     {
         _vehicleModels = _viewVehicleModelsUseCase.Execute()?.ToList();
     }
