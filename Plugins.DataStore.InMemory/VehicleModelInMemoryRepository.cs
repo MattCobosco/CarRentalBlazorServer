@@ -70,6 +70,7 @@ namespace Plugins.DataStore.InMemory
             var vehicleModelToEdit = GetVehicleModelById(vehicleModel.VehicleModelId);
 
             if (vehicleModelToEdit == null) return;
+
             vehicleModelToEdit.Make = vehicleModel.Make;
             vehicleModelToEdit.Model = vehicleModel.Model;
             vehicleModelToEdit.ModelYear = vehicleModel.ModelYear;
