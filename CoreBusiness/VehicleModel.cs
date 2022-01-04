@@ -29,8 +29,7 @@ namespace CoreBusiness
         [Required]
         public int BaseDailyPrice { get; set; }
 
-        //Navigation property for EF Core
-
+        //Navigation properties for EF Core
         public List<FleetVehicle> FleetVehicles { get; set; }
     }
 }
