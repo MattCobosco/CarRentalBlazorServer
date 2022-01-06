@@ -1,14 +1,13 @@
 ﻿@page "/reservations"
 @using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
-@using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
 @inject IViewReservationsUseCase _viewReservationsUseCase
-@inject IGetCustomerByIdUseCase _getCustomerByIdUseCase
 @inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase
 @inject IGetBranchByIdUseCase _getBranchByIdUseCase
+@inject IDeleteReservationUseCase _deleteReservationUseCase
 
 
 <h3>Manage Reservations</h3>
@@ -18,7 +17,7 @@
 <br/>
 <br/>
 
-@if (_reservations != null)
+@if(_reservations != null)
 {
     <table class="table">
         <thead>
@@ -29,6 +28,7 @@
                 <th>End Date&Time</th>
                 <th>Price</th>
                 <th>Vehicle</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -41,7 +41,11 @@
                     <td>@reservation.EndDateTime</td>
                     <td>@reservation.Price</td>
                     <td>@reservation.FleetVehicleLicensePlate @GetModelByLicensePlate(reservation.FleetVehicleLicensePlate)</td>
-                </tr>
+                    <td>
+                        <button type="button" class="btn btn-link" @onclick="@(() => EditReservation(reservation))">Edit</button>
+                        <button type="button" class="btn btn-link" @onclick="@(() => DeleteReservation(reservation.ReservationGuid))">Delete</button>
+                    </td>
+                    </tr>
             }
         </tbody>
     </table>
@@ -62,6 +66,17 @@
         _navigationManager.NavigateTo("/addreservation");
     }
 
+    private void EditReservation(Reservation reservation)
+    {
+        _navigationManager.NavigateTo($"/editreservation/{reservation.ReservationGuid}");
+    }
+
+    private void DeleteReservation(Guid reservationGuid)
+    {
+        _deleteReservationUseCase.Delete(reservationGuid);
+        LoadData();
+    }
+
     private void LoadData()
     {
         _reservations = _viewReservationsUseCase.Execute()?.ToList();
@@ -70,11 +85,6 @@
     private string GetModelByLicensePlate(string licensePlate)
     {
         return _getVehicleModelByLicensePlateUseCase.Execute(licensePlate).Model;
-    }
-
-    private Customer GetCustomerById(int customerId)
-    {
-        return _getCustomerByIdUseCase.Execute(customerId);
     }
 
     private Branch GetBranchById(int branchId)

@@ -14,7 +14,7 @@
 <h3>Add Reservation</h3>
 <br/>
 
-@if (_reservation != null)
+@if(_reservation != null)
 {
 <EditForm Model="_reservation" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator></DataAnnotationsValidator>
@@ -42,7 +42,7 @@
     
     <div class="form-group">
         <label for="endBranchName">End Branch</label>
-        <InputSelect id="branchName" @bind-Value="_reservation.EndBranchId" class="form-control">
+        <InputSelect id="endBranchName" @bind-Value="_reservation.EndBranchId" class="form-control">
             @foreach (var branch in _branches)
             {
                 <option value="@branch.BranchId">@branch.Name</option>
@@ -84,11 +84,6 @@
         _reservation.FleetVehicleLicensePlate = "";
     }
 
-    private VehicleModel GetModelMake(string licensePlate)
-    {
-        return _getVehicleModelByLicensePlateUseCase.Execute(licensePlate);
-    }
-
     private void OnValidSubmit()
     {
         _reservation.Price = _getReservationPriceUseCase.Execute(_reservation.FleetVehicleLicensePlate, _reservation.StartDateTime, _reservation.EndDateTime);
@@ -105,6 +100,11 @@
     {
         _fleetVehicles = _viewFleetVehiclesUseCase.Execute()?.ToList();
         _branches = _viewBranchesUseCase.Execute()?.ToList();
+    }
+
+    private VehicleModel GetModelMake(string licensePlate)
+    {
+        return _getVehicleModelByLicensePlateUseCase.Execute(licensePlate);
     }
 
 }

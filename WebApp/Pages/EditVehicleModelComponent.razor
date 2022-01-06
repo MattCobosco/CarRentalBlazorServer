@@ -11,7 +11,7 @@
 <h3>Edit Vehicle Model</h3>
 <br/>
 
-@if (_vehicleModel != null)
+@if(_vehicleModel != null)
 {
 <EditForm Model="_vehicleModel" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator></DataAnnotationsValidator>
@@ -100,24 +100,23 @@
     {
         base.OnParametersSet();
 
-        if(int.TryParse(this.VehicleModelId, out int intVehicleModelId))
-        {
-            var model = _getVehicleModelByIdUseCase.Execute(intVehicleModelId);
-            _vehicleModel = new VehicleModel {
-                VehicleModelId = model.VehicleModelId,
-                Make = model.Make,
-                Model = model.Model,
-                ModelYear = model.ModelYear,
-                BodyTypeId = model.BodyTypeId,
-                Segment = model.Segment,
-                EngineType = model.EngineType,
-                Horsepower = model.Horsepower,
-                AutomaticGearbox = model.AutomaticGearbox,
-                Doors = model.Doors,
-                Seats = model.Seats,
-                BaseDailyPrice = model.BaseDailyPrice
-            };
-        }
+        if (!int.TryParse(VehicleModelId, out int intVehicleModelId)) return;
+
+        var model = _getVehicleModelByIdUseCase.Execute(intVehicleModelId);
+        _vehicleModel = new VehicleModel {
+            VehicleModelId = model.VehicleModelId,
+            Make = model.Make,
+            Model = model.Model,
+            ModelYear = model.ModelYear,
+            BodyTypeId = model.BodyTypeId,
+            Segment = model.Segment,
+            EngineType = model.EngineType,
+            Horsepower = model.Horsepower,
+            AutomaticGearbox = model.AutomaticGearbox,
+            Doors = model.Doors,
+            Seats = model.Seats,
+            BaseDailyPrice = model.BaseDailyPrice
+        };
     }
 
     private void OnValidSubmit()

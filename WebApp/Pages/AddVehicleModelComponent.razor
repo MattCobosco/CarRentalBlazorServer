@@ -9,7 +9,7 @@
 <h3>Add Vehicle Model</h3>
 <br />
 
-@if (_vehicleModel != null)
+@if(_vehicleModel != null)
 {
     <EditForm Model="_vehicleModel" OnValidSubmit="OnValidSubmit">
         <DataAnnotationsValidator></DataAnnotationsValidator>
@@ -108,4 +108,5 @@
     {
         _vehicleBodyTypes = _viewVehicleBodyTypesUseCase.Execute()?.ToList();
     }
+
 }

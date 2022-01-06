@@ -14,7 +14,7 @@
 <br/>
 <br/>
 
-@if (_vehicleModels != null)
+@if(_vehicleModels != null)
 {
     <table class="table">
         <thead>
@@ -41,8 +41,8 @@
                     <td>@model.AutomaticGearbox</td>
                     <td>@model.BaseDailyPrice</td>
                     <td>
-                        <button type="button" class="btn btn-link" @onclick="@(() => EditModel(model))">Edit</button>
-                        <button type="button" class="btn btn-link" @onclick="@(() => DeleteModel(model.VehicleModelId))">Delete</button>
+                        <button type="button" class="btn btn-link" @onclick="@(() => EditVehicleModel(model))">Edit</button>
+                        <button type="button" class="btn btn-link" @onclick="@(() => DeleteVehicleModel(model.VehicleModelId))">Delete</button>
                     </td>
                 </tr>
             }
@@ -58,7 +58,7 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        LoadVehicleModels();
+        LoadData();
     }
 
     private void AddModelOnClick()
@@ -66,18 +66,18 @@
         _navigationManager.NavigateTo("/addvehiclemodel");
     }
 
-    private void EditModel(VehicleModel vehicleModel)
+    private void EditVehicleModel(VehicleModel vehicleModel)
     {
         _navigationManager.NavigateTo($"/editvehiclemodel/{vehicleModel.VehicleModelId}");
     }
 
-    private void DeleteModel(int vehicleModelId)
+    private void DeleteVehicleModel(int vehicleModelId)
     {
         _deleteVehicleModelUseCase.Delete(vehicleModelId);
-        LoadVehicleModels();
+        LoadData();
     }
 
-    private void LoadVehicleModels()
+    private void LoadData()
     {
         _vehicleModels = _viewVehicleModelsUseCase.Execute()?.ToList();
     }
@@ -86,4 +86,5 @@
     {
         return _getVehicleBodyTypeByIdUseCase.Execute(vehicleBodyTypeId);
     }
+
 }

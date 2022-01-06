@@ -9,7 +9,7 @@
 <h3>Edit Branch</h3>
 <br/>
 
-@if (_branch != null)
+@if(_branch != null)
 {
     <EditForm Model="_branch" OnValidSubmit="OnValidSubmit">
         <DataAnnotationsValidator></DataAnnotationsValidator>
@@ -46,11 +46,16 @@
     {
         base.OnParametersSet();
 
-        if(int.TryParse(this.BranchId, out int intBranchId))
+        if (!int.TryParse(this.BranchId, out int intBranchId)) return;
+
+        var br = _getBranchByIdUseCase.Execute(intBranchId);
+        _branch = new Branch
         {
-            var br = _getBranchByIdUseCase.Execute(intBranchId);
-            _branch = new Branch() {BranchId = br.BranchId, Name = br.Name, Address = br.Address, Description = br.Description};
-        }
+            BranchId = br.BranchId, 
+            Name = br.Name, 
+            Address = br.Address, 
+            Description = br.Description
+        };
     }
 
     private void OnValidSubmit()
