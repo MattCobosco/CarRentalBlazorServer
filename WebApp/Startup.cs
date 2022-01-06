@@ -58,7 +58,7 @@ namespace WebApp
             */
             services.AddScoped<ICustomerRepository, CustomerInMemoryRepository>();
             services.AddScoped<IFleetVehicleRepository, FleetVehicleInMemoryRepository>();
-            services.AddScoped<IReservationRepository, ReservationInMemoryRepository>();
+            //services.AddScoped<IReservationRepository, ReservationInMemoryRepository>();
             //services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeInMemoryRepository>();
             //services.AddScoped<IVehicleModelRepository, VehicleModelInMemoryRepository>();
 
@@ -66,6 +66,7 @@ namespace WebApp
             services.AddScoped<IBranchRepository, BranchRepository>();
             services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
             services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeRepository>();
+            services.AddScoped<IReservationRepository, ReservationRepository>();
 
             // Dependency Injection - Use Cases and Repositories
             // Branches
