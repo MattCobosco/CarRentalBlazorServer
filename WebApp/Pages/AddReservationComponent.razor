@@ -35,7 +35,7 @@
         <InputSelect id="startBranchName" @bind-Value="_reservation.StartBranchId" class="form-control">
             @foreach (var branch in _branches)
             {
-                <option value="@branch.Name">@branch.Name</option>
+                <option value="@branch.BranchId">@branch.Name</option>
             }
         </InputSelect>
     </div>
@@ -45,7 +45,7 @@
         <InputSelect id="branchName" @bind-Value="_reservation.EndBranchId" class="form-control">
             @foreach (var branch in _branches)
             {
-                <option value="@branch.Name">@branch.Name</option>
+                <option value="@branch.BranchId">@branch.Name</option>
             }
         </InputSelect>
     </div>
