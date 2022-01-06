@@ -2,11 +2,13 @@
 @using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
 @inject IViewReservationsUseCase _viewReservationsUseCase
-@inject IGetCustomerByIdUseCase _getCustomerByIdUseCase;
-@inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase;
+@inject IGetCustomerByIdUseCase _getCustomerByIdUseCase
+@inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase
+@inject IGetBranchByIdUseCase _getBranchByIdUseCase
 
 
 <h3>Manage Reservations</h3>
@@ -21,7 +23,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Branch</th>
+                <th>Start Branch</th>
+                <th>End Branch</th>
                 <th>Start Date&Time</th>
                 <th>End Date&Time</th>
                 <th>Price</th>
@@ -33,20 +36,21 @@
             @foreach (var reservation in _reservations)
             {
                 <tr>
-                    <td>@reservation.BranchName</td>
+                    <td>@GetBranchById(reservation.StartBranchId).Name</td>
+                    <td>@GetBranchById(reservation.EndBranchId).Name</td>
+                    <td>@reservation.EndBranchId</td>
                     <td>@reservation.StartDateTime</td>
                     <td>@reservation.EndDateTime</td>
                     <td>@reservation.Price</td>
                     <td>@reservation.FleetVehicleLicensePlate @GetModelByLicensePlate(reservation.FleetVehicleLicensePlate)</td>
-                    <td>@GetCustomerById(reservation.CustomerId).FirstName @GetCustomerById(reservation.CustomerId).LastName @GetCustomerById(reservation.CustomerId).Pesel</td>
                 </tr>
             }
         </tbody>
     </table>
-
 }
 
 @code {
+
     private List<Reservation> _reservations;
 
     protected override void OnInitialized()
@@ -74,4 +78,10 @@
     {
         return _getCustomerByIdUseCase.Execute(customerId);
     }
+
+    private Branch GetBranchById(int branchId)
+    {
+        return _getBranchByIdUseCase.Execute(branchId);
+    }
+
 }

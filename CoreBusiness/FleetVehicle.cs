@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -26,6 +27,7 @@ namespace CoreBusiness
 
         // Navigation properties for EF Core
         public VehicleModel VehicleModel { get; set; }
-        public Branch Branch { get; set; }
+        public Branch CurrentBranch { get; set; }
+        public List<Reservation> Reservations { get; set; }
     }
 }

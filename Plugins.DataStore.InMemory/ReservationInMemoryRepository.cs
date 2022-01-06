@@ -14,7 +14,7 @@ namespace Plugins.DataStore.InMemory
         {
             _reservations = new List<Reservation>
             {
-                new() {ReservationGuid = Guid.NewGuid(), StartDateTime = DateTime.Now, EndDateTime = DateTime.Now.AddDays(2), Price = 69, BranchName = "Warszawa", FleetVehicleLicensePlate = "GD19791", CustomerId = 1}
+                new() { ReservationGuid = Guid.NewGuid(), StartDateTime = DateTime.Now, EndDateTime = DateTime.Now.AddDays(2), Price = 69, StartBranchId = 2, EndBranchId = 1, FleetVehicleLicensePlate = "GD19791" }
             };
         }
 
@@ -40,8 +40,8 @@ namespace Plugins.DataStore.InMemory
             reservationToEdit.StartDateTime = reservation.StartDateTime;
             reservationToEdit.EndDateTime = reservation.EndDateTime;
             reservationToEdit.Price = reservation.Price;
-            reservationToEdit.BranchName = reservation.BranchName;
-            reservationToEdit.EmployeeName = reservation.EmployeeName;
+            reservationToEdit.StartBranchId = reservation.StartBranchId;
+            reservationToEdit.EndBranchId = reservation.EndBranchId;
             reservationToEdit.FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate;
         }
 

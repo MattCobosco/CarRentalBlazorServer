@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,11 +17,16 @@ namespace CoreBusiness
         [Required]
         public int Price { get; set; }
         [Required]
-        public string BranchName { get; set; }
-        public int EmployeeName { get; set; }
+        public int StartBranchId { get; set; }
+        [Required]
+        public int EndBranchId { get; set; }
         [Required]
         public string FleetVehicleLicensePlate { get; set; }
-        [Required]
-        public int CustomerId { get; set; }
+
+        // Navigation properties for EF Core
+        public Branch StartBranch { get; set; }
+        public Branch EndBranch { get; set; }
+        public FleetVehicle FleetVehicle { get; set; }
+        //TODO: Customer, Employee with Identity
     }
 }

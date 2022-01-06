@@ -20,16 +20,37 @@ namespace Plugins.DataStore.SQL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Branch
             modelBuilder.Entity<Branch>()
-                .HasMany(fv => fv.FleetVehicles)
-                .WithOne(br => br.Branch)
-                .HasForeignKey(br => br.CurrentBranchId);
+                .HasMany(br => br.FleetVehicles)
+                .WithOne(fv => fv.CurrentBranch)
+                .HasForeignKey(fv => fv.CurrentBranchId);
 
+            // Reservation
+            modelBuilder.Entity<Reservation>()
+                .HasOne(res => res.StartBranch)
+                .WithMany(br => br.StartReservations)
+                .HasForeignKey(res => res.StartBranchId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(res => res.EndBranch)
+                .WithMany(br => br.EndReservations)
+                .HasForeignKey(res => res.EndBranchId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(res => res.FleetVehicle)
+                .WithMany(fv => fv.Reservations)
+                .HasForeignKey(res => res.FleetVehicleLicensePlate);
+
+            // Vehicle Body Type
             modelBuilder.Entity<VehicleBodyType>()
                 .HasMany(vbt => vbt.VehicleModels)
                 .WithOne(vm => vm.VehicleBodyType)
                 .HasForeignKey(vm => vm.BodyTypeId);
 
+            // Vehicle Model
             modelBuilder.Entity<VehicleModel>()
                 .HasMany(vm => vm.FleetVehicles)
                 .WithOne(fv => fv.VehicleModel)

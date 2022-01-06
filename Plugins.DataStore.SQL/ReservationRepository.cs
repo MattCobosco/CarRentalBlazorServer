@@ -71,8 +71,8 @@ namespace Plugins.DataStore.SQL
                 reservationToEdit.StartDateTime = reservation.StartDateTime;
                 reservationToEdit.EndDateTime = reservation.EndDateTime;
                 reservationToEdit.Price = reservation.Price;
-                reservationToEdit.BranchName = reservation.BranchName;
-                reservationToEdit.EmployeeName = reservation.EmployeeName;
+                reservationToEdit.StartBranchId = reservation.StartBranchId;
+                reservationToEdit.EndBranch = reservation.EndBranch;
                 reservationToEdit.FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate;
 
                 _carRentalContext.SaveChanges();

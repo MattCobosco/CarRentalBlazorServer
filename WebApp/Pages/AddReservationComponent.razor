@@ -1,17 +1,15 @@
 ﻿@page "/addreservation"
 @using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
-@using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 
-@inject NavigationManager _navigationManager;
-@inject IAddReservationUseCase _addReservationUseCase;
-@inject IViewBranchesUseCase _viewBranchesUseCase;
-@inject IViewFleetVehiclesUseCase _viewFleetVehiclesUseCase;
-@inject IGetReservationPriceUseCase _getReservationPriceUseCase;
-@inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase;
-@inject IViewCustomersUseCase _viewCustomersUseCase;
+@inject NavigationManager _navigationManager
+@inject IAddReservationUseCase _addReservationUseCase
+@inject IViewBranchesUseCase _viewBranchesUseCase
+@inject IViewFleetVehiclesUseCase _viewFleetVehiclesUseCase
+@inject IGetReservationPriceUseCase _getReservationPriceUseCase
+@inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase
 
 <h3>Add Reservation</h3>
 <br/>
@@ -33,12 +31,22 @@
     </div>
 
     <div class="form-group">
-        <label for="branchName">Branch</label>
-        <InputSelect id="branchName" @bind-Value="_reservation.BranchName" class="form-control">
+        <label for="startBranchName">Start Branch</label>
+        <InputSelect id="startBranchName" @bind-Value="_reservation.StartBranchId" class="form-control">
             @foreach (var branch in _branches)
-                {
+            {
                 <option value="@branch.Name">@branch.Name</option>
-                }
+            }
+        </InputSelect>
+    </div>
+    
+    <div class="form-group">
+        <label for="endBranchName">End Branch</label>
+        <InputSelect id="branchName" @bind-Value="_reservation.EndBranchId" class="form-control">
+            @foreach (var branch in _branches)
+            {
+                <option value="@branch.Name">@branch.Name</option>
+            }
         </InputSelect>
     </div>
 
@@ -48,16 +56,6 @@
             @foreach (var vehicle in _fleetVehicles)
                 {
                 <option value="@vehicle.FleetVehicleLicensePlate">@vehicle.FleetVehicleLicensePlate - @GetModelMake(vehicle.FleetVehicleLicensePlate).Make @GetModelMake(vehicle.FleetVehicleLicensePlate).Model</option>
-                }
-        </InputSelect>
-    </div>
-
-    <div class="form-group">
-        <label for="fleetVehicleLicensePlate">Customer</label>
-        <InputSelect id="customerId" @bind-Value="_reservation.CustomerId" class="form-control">
-            @foreach (var customer in _customers)
-                {
-                <option value="@customer.CustomerId">@customer.LastName @customer.FirstName - @customer.Pesel</option>
                 }
         </InputSelect>
     </div>
@@ -72,7 +70,6 @@
     private Reservation _reservation;
     private List<FleetVehicle> _fleetVehicles;
     private List<Branch> _branches;
-    private List<Customer> _customers;
 
     protected override void OnInitialized()
     {
@@ -84,7 +81,6 @@
         // Set form input to initial values
         _reservation.StartDateTime = DateTime.Today;
         _reservation.EndDateTime = DateTime.Today.AddDays(1);
-        _reservation.BranchName = "";
         _reservation.FleetVehicleLicensePlate = "";
     }
 
@@ -109,7 +105,6 @@
     {
         _fleetVehicles = _viewFleetVehiclesUseCase.Execute()?.ToList();
         _branches = _viewBranchesUseCase.Execute()?.ToList();
-        _customers = _viewCustomersUseCase.Execute()?.ToList();
     }
 
 }

@@ -57,16 +57,17 @@ namespace WebApp
             services.AddScoped<IBranchRepository, BranchInMemoryRepository>();
             */
             services.AddScoped<ICustomerRepository, CustomerInMemoryRepository>();
-            services.AddScoped<IFleetVehicleRepository, FleetVehicleInMemoryRepository>();
+            //services.AddScoped<IFleetVehicleRepository, FleetVehicleInMemoryRepository>();
             //services.AddScoped<IReservationRepository, ReservationInMemoryRepository>();
             //services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeInMemoryRepository>();
             //services.AddScoped<IVehicleModelRepository, VehicleModelInMemoryRepository>();
 
             // Dependency Injection - EF Core Data Store for SQL
             services.AddScoped<IBranchRepository, BranchRepository>();
+            services.AddScoped<IFleetVehicleRepository, FleetVehicleRepository>();
+            services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
             services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeRepository>();
-            services.AddScoped<IReservationRepository, ReservationRepository>();
 
             // Dependency Injection - Use Cases and Repositories
             // Branches
