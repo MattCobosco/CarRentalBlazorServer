@@ -36,7 +36,7 @@ namespace Plugins.DataStore.SQL
             if (_carRentalContext.VehicleModels.Any(
                     x => x.Model == vehicleModel.Model &&
                          x.AutomaticGearbox == vehicleModel.AutomaticGearbox &&
-                         x.BodyTypeName == vehicleModel.BodyTypeName &&
+                         x.BodyTypeId == vehicleModel.BodyTypeId &&
                          x.Horsepower == vehicleModel.Horsepower))
             {
                 Console.WriteLine("Such Vehicle Model already exists!");
@@ -64,12 +64,12 @@ namespace Plugins.DataStore.SQL
 
             try
             {
-                var vehicleModelToEdit = _carRentalContext.VehicleModels.Find(vehicleModel.VehicleModelId);
+                var vehicleModelToEdit = GetVehicleModelById(vehicleModel.VehicleModelId);
 
                 vehicleModelToEdit.Make = vehicleModel.Make;
                 vehicleModelToEdit.Model = vehicleModel.Model;
                 vehicleModelToEdit.ModelYear = vehicleModel.ModelYear;
-                vehicleModelToEdit.BodyTypeName = vehicleModel.BodyTypeName;
+                vehicleModelToEdit.BodyTypeId = vehicleModel.BodyTypeId;
                 vehicleModelToEdit.Segment = vehicleModel.Segment;
                 vehicleModelToEdit.EngineType = vehicleModel.EngineType;
                 vehicleModelToEdit.Horsepower = vehicleModel.Horsepower;
@@ -84,7 +84,7 @@ namespace Plugins.DataStore.SQL
             catch (Exception ex)
             {
                 transaction.Rollback();
-                Console.WriteLine("Editing Branch failed:");
+                Console.WriteLine("Editing Vehicle Model failed:");
                 Console.WriteLine(ex.Message);
             }
         }
@@ -95,7 +95,7 @@ namespace Plugins.DataStore.SQL
 
             if (vehicleModel != null) return vehicleModel;
 
-            Console.WriteLine("Couldn't find the requested Vehicle Model");
+            Console.WriteLine("Couldn't find the requested Vehicle Model!");
             return null;
 
         }
