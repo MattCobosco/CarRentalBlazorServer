@@ -6,9 +6,9 @@ namespace UseCases.DataStorePluginInterfaces
     public interface IFleetVehicleRepository
     {
         void AddFleetVehicle(FleetVehicle fleetVehicle);
-        void DeleteFleetVehicle(string fleetVehicleId);
+        void DeleteFleetVehicle(string fleetVehicleLicensePlate);
         void EditFleetVehicle(FleetVehicle fleetVehicle);
-        FleetVehicle GetFleetVehicleByLicensePlate(string fleetVehicleId);
+        FleetVehicle GetFleetVehicleByLicensePlate(string fleetVehicleLicensePlate);
         IEnumerable<FleetVehicle> GetFleetVehicles();
     }
 }

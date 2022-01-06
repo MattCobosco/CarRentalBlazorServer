@@ -17,9 +17,9 @@ namespace UseCases.VehicleModelUseCases
             _fleetVehicleRepository = fleetVehicleRepository;
         }
 
-        public VehicleModel Execute(string licensePlate)
+        public VehicleModel Execute(string fleetVehcileLicensePlate)
         {
-            var fleetVehicle = _fleetVehicleRepository.GetFleetVehicleByLicensePlate(licensePlate);
+            var fleetVehicle = _fleetVehicleRepository.GetFleetVehicleByLicensePlate(fleetVehcileLicensePlate);
             var vehicleModel = _vehicleModelRepository.GetVehicleModelById(fleetVehicle.ModelVehicleId);
             return vehicleModel;
         }
