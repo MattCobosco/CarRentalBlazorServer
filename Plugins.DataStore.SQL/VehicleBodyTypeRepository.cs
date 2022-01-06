@@ -15,20 +15,6 @@ namespace Plugins.DataStore.SQL
             _carRentalContext = carRentalContext;
         }
 
-        public IEnumerable<VehicleBodyType> GetVehicleBodyTypes()
-        {
-            try
-            {
-                return _carRentalContext.VehicleBodyTypes.ToList();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Getting Vehicle Body Types failed:");
-                Console.WriteLine(ex.Message);
-                return null;
-            }
-        }
-
         public void AddVehicleBodyType(VehicleBodyType vehicleBodyType)
         {
             var transaction = _carRentalContext.Database.BeginTransaction();
@@ -36,8 +22,9 @@ namespace Plugins.DataStore.SQL
             if (_carRentalContext.VehicleBodyTypes.Any(
                     x => x.Name == vehicleBodyType.Name))
             {
-                Console.WriteLine("Such Vehicle Body Type already exists!");
+
                 transaction.Rollback();
+                Console.WriteLine("Such Vehicle Body Type already exists!");
                 return;
             }
 
@@ -51,6 +38,31 @@ namespace Plugins.DataStore.SQL
             {
                 transaction.Rollback();
                 Console.WriteLine("Adding Vehicle Body Type failed:");
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public void DeleteVehicleBodyType(int vehicleBodyTypeId)
+        {
+            var transaction = _carRentalContext.Database.BeginTransaction();
+
+            try
+            {
+                var vehicleBodyType = GetVehicleBodyTypeById(vehicleBodyTypeId);
+
+                if (vehicleBodyType == null)
+                {
+                    return;
+                }
+
+                _carRentalContext.VehicleBodyTypes.Remove(vehicleBodyType);
+                _carRentalContext.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                Console.WriteLine("Deleting Vehicle Body Type failed:");
                 Console.WriteLine(ex.Message);
             }
         }
@@ -89,28 +101,17 @@ namespace Plugins.DataStore.SQL
             return null;
         }
 
-        public void DeleteVehicleBodyType(int vehicleBodyTypeId)
+        public IEnumerable<VehicleBodyType> GetVehicleBodyTypes()
         {
-            var transaction = _carRentalContext.Database.BeginTransaction();
-
             try
             {
-                var vehicleBodyType = GetVehicleBodyTypeById(vehicleBodyTypeId);
-
-                if (vehicleBodyType == null)
-                {
-                    return;
-                }
-
-                _carRentalContext.VehicleBodyTypes.Remove(vehicleBodyType);
-                _carRentalContext.SaveChanges();
-                transaction.Commit();
+                return _carRentalContext.VehicleBodyTypes.ToList();
             }
             catch (Exception ex)
             {
-                transaction.Rollback();
-                Console.WriteLine("Deleting Vehicle Body Type failed:");
+                Console.WriteLine("Getting Vehicle Body Types failed:");
                 Console.WriteLine(ex.Message);
+                return null;
             }
         }
     }

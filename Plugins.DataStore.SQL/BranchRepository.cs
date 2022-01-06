@@ -15,30 +15,16 @@ namespace Plugins.DataStore.SQL
             _carRentalContext = carRentalContext;
         }
 
-        public IEnumerable<Branch> GetBranches()
-        {
-            try
-            {
-                return _carRentalContext.Branches.ToList();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Getting Branches failed:");
-                Console.WriteLine(ex.Message);
-                return null;
-            }
-        }
-
         public void AddBranch(Branch branch)
         {
             var transaction = _carRentalContext.Database.BeginTransaction();
 
             if (_carRentalContext.Branches.Any(
-                   x => x.Name == branch.Name || 
+                   x => x.Name == branch.Name ||
                         x.Address == branch.Address))
             {
-                Console.WriteLine("Warning: Such Branch already exists!");
                 transaction.Rollback();
+                Console.WriteLine("Warning: Such Branch already exists!");
                 return;
             }
 
@@ -52,6 +38,31 @@ namespace Plugins.DataStore.SQL
             {
                 transaction.Rollback();
                 Console.WriteLine("Adding Branch failed:");
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public void DeleteBranch(int branchId)
+        {
+            var transaction = _carRentalContext.Database.BeginTransaction();
+
+            try
+            {
+                var branch = GetBranchById(branchId);
+
+                if (branch == null)
+                {
+                    return;
+                }
+
+                _carRentalContext.Branches.Remove(branch);
+                _carRentalContext.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                Console.WriteLine("Deleting Branch failed:");
                 Console.WriteLine(ex.Message);
             }
         }
@@ -82,35 +93,27 @@ namespace Plugins.DataStore.SQL
         {
             var branch = _carRentalContext.Branches.Find(branchId);
 
-            if (branch != null) return branch;
+            if (branch != null)
+            {
+                return branch;
+            }
 
             Console.WriteLine("Couldn't find the requested Branch!");
             return null;
 
         }
 
-        public void DeleteBranch(int branchId)
+        public IEnumerable<Branch> GetBranches()
         {
-            var transaction = _carRentalContext.Database.BeginTransaction();
-
             try
             {
-                var branch = GetBranchById(branchId);
-
-                if (branch == null)
-                {
-                    return;
-                }
-
-                _carRentalContext.Branches.Remove(branch);
-                _carRentalContext.SaveChanges();
-                transaction.Commit();
+                return _carRentalContext.Branches.ToList();
             }
             catch (Exception ex)
             {
-                transaction.Rollback();
-                Console.WriteLine("Deleting Branch failed:");
+                Console.WriteLine("Getting Branches failed:");
                 Console.WriteLine(ex.Message);
+                return null;
             }
         }
     }

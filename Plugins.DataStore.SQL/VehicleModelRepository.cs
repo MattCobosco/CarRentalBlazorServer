@@ -15,20 +15,6 @@ namespace Plugins.DataStore.SQL
             _carRentalContext = carRentalContext;
         }
 
-        public IEnumerable<VehicleModel> GetVehicleModels()
-        {
-            try
-            {
-                return _carRentalContext.VehicleModels.ToList();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Getting Vehicle Models failed:");
-                Console.WriteLine(ex.Message);
-                return null;
-            }
-        }
-
         public void AddVehicleModel(VehicleModel vehicleModel)
         {
             var transaction = _carRentalContext.Database.BeginTransaction();
@@ -39,8 +25,8 @@ namespace Plugins.DataStore.SQL
                          x.BodyTypeId == vehicleModel.BodyTypeId &&
                          x.Horsepower == vehicleModel.Horsepower))
             {
-                Console.WriteLine("Such Vehicle Model already exists!");
                 transaction.Rollback();
+                Console.WriteLine("Such Vehicle Model already exists!");
                 return;
             }
 
@@ -54,6 +40,31 @@ namespace Plugins.DataStore.SQL
             {
                 transaction.Rollback();
                 Console.WriteLine("Adding Vehicle Model failed:");
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public void DeleteVehicleModel(int vehicleModelId)
+        {
+            var transaction = _carRentalContext.Database.BeginTransaction();
+
+            try
+            {
+                var vehicleModel = GetVehicleModelById(vehicleModelId);
+
+                if (vehicleModel == null)
+                {
+                    return;
+                }
+
+                _carRentalContext.VehicleModels.Remove(vehicleModel);
+                _carRentalContext.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                Console.WriteLine("Deleting Vehicle Model failed:");
                 Console.WriteLine(ex.Message);
             }
         }
@@ -93,35 +104,27 @@ namespace Plugins.DataStore.SQL
         {
             var vehicleModel = _carRentalContext.VehicleModels.Find(vehicleModelId);
 
-            if (vehicleModel != null) return vehicleModel;
+            if (vehicleModel != null)
+            {
+                return vehicleModel;
+            }
 
             Console.WriteLine("Couldn't find the requested Vehicle Model!");
             return null;
 
         }
 
-        public void DeleteVehicleModel(int vehicleModelId)
+        public IEnumerable<VehicleModel> GetVehicleModels()
         {
-            var transaction = _carRentalContext.Database.BeginTransaction();
-
             try
             {
-                var vehicleModel = GetVehicleModelById(vehicleModelId);
-
-                if (vehicleModel == null)
-                {
-                    return;
-                }
-
-                _carRentalContext.VehicleModels.Remove(vehicleModel);
-                _carRentalContext.SaveChanges();
-                transaction.Commit();
+                return _carRentalContext.VehicleModels.ToList();
             }
             catch (Exception ex)
             {
-                transaction.Rollback();
-                Console.WriteLine("Deleting Vehicle Model failed:");
+                Console.WriteLine("Getting Vehicle Models failed:");
                 Console.WriteLine(ex.Message);
+                return null;
             }
         }
     }
