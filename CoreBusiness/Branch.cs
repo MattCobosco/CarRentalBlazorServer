@@ -12,7 +12,7 @@ namespace CoreBusiness
         public string Address { get; set; }
         public string Description { get; set; }
 
-        //Navigation properties for EF Core
+        // Navigation properties for EF Core
         public List<FleetVehicle> FleetVehicles { get; set; }
     }
 }
