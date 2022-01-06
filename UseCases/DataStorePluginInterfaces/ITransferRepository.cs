@@ -5,10 +5,10 @@ namespace UseCases.DataStorePluginInterfaces
 {
     public interface ITransferRepository
     {
-        IEnumerable<Transfer> GetTransfers();
         void AddTransfer(Transfer transfer);
+        void DeleteTransfer(int transferId);
         void EditTransfer(Transfer transfer);
         Transfer GetTransferById(int transferId);
-        void DeleteTransfer(int transferId);
+        IEnumerable<Transfer> GetTransfers();
     }
 }

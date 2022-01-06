@@ -5,10 +5,10 @@ namespace UseCases.DataStorePluginInterfaces
 {
     public interface IFleetVehicleRepository
     {
-        IEnumerable<FleetVehicle> GetFleetVehicles();
         void AddFleetVehicle(FleetVehicle fleetVehicle);
+        void DeleteFleetVehicle(string fleetVehicleId);
         void EditFleetVehicle(FleetVehicle fleetVehicle);
         FleetVehicle GetFleetVehicleByLicensePlate(string fleetVehicleId);
-        void DeleteFleetVehicle(string fleetVehicleId);
+        IEnumerable<FleetVehicle> GetFleetVehicles();
     }
 }

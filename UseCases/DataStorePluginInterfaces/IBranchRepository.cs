@@ -5,10 +5,10 @@ namespace UseCases.DataStorePluginInterfaces
 {
     public interface IBranchRepository
     {
-        IEnumerable<Branch> GetBranches();
         void AddBranch(Branch branch);
+        void DeleteBranch(int branchId);
         void EditBranch(Branch branch);
         Branch GetBranchById(int branchId);
-        void DeleteBranch(int branchId);
+        IEnumerable<Branch> GetBranches();
     }
 }
