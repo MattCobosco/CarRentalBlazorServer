@@ -5,7 +5,8 @@
 @inject NavigationManager _navigationManager
 @inject IViewVehicleModelsUseCase _viewVehicleModelsUseCase
 @inject IDeleteVehicleModelUseCase _deleteVehicleModelUseCase
-@inject IViewVehicleBodyTypesUseCase _viewVehicleBodyTypesUseCase;
+@inject IViewVehicleBodyTypesUseCase _viewVehicleBodyTypesUseCase
+@inject IGetVehicleBodyTypeByIdUseCase _getVehicleBodyTypeByIdUseCase
 
 <h3>Manage Vehicle Models</h3>
 <br/>
@@ -36,7 +37,7 @@
                     <td>@model.Make</td>
                     <td>@model.Model</td>
                     <td>@model.ModelYear</td>
-                    <td>@model.BodyTypeName</td>
+                    <td>@GetVehicleBodyTypeById(model.BodyTypeId).Name</td>
                     <td>@model.AutomaticGearbox</td>
                     <td>@model.BaseDailyPrice</td>
                     <td>
@@ -79,5 +80,10 @@
     private void LoadVehicleModels()
     {
         _vehicleModels = _viewVehicleModelsUseCase.Execute()?.ToList();
+    }
+
+    private VehicleBodyType GetVehicleBodyTypeById(int vehicleBodyTypeId)
+    {
+        return _getVehicleBodyTypeByIdUseCase.Execute(vehicleBodyTypeId);
     }
 }

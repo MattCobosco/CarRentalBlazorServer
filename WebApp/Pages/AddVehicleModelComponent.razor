@@ -32,7 +32,7 @@
 
         <div class="form-group">
             <label for="bodyType">Body Type</label>
-            <InputSelect id="bodyType" @bind-Value="_vehicleModel.BodyTypeName" class="form-control">
+            <InputSelect id="bodyType" @bind-Value="_vehicleModel.BodyTypeId" class="form-control">
                 @foreach (var bodyType in _vehicleBodyTypes)
                     {
                     <option value="@bodyType.Name">@bodyType.Name</option>
@@ -91,9 +91,6 @@
 
         _vehicleModel = new VehicleModel();
         LoadLists();
-
-        // Empty initial Body Type Name
-        _vehicleModel.BodyTypeName = "";
     }
 
     private void OnValidSubmit()

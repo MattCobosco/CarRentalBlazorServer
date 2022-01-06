@@ -34,7 +34,7 @@
     
     <div class="form-group"> 
         <label for="bodyType">Body Type</label>
-        <InputSelect id="bodyType" @bind-Value="_vehicleModel.BodyTypeName" class="form-control">
+        <InputSelect id="bodyType" @bind-Value="_vehicleModel.BodyTypeId" class="form-control">
             @foreach (var bodyType in _vehicleBodyTypes)
             {
                 <option value ="@bodyType.Name">@bodyType.Name</option>
@@ -108,7 +108,7 @@
                 Make = model.Make,
                 Model = model.Model,
                 ModelYear = model.ModelYear,
-                BodyTypeName = model.BodyTypeName,
+                BodyTypeId = model.BodyTypeId,
                 Segment = model.Segment,
                 EngineType = model.EngineType,
                 Horsepower = model.Horsepower,
