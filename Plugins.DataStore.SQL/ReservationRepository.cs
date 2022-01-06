@@ -19,7 +19,6 @@ namespace Plugins.DataStore.SQL
         {
             var transaction = _carRentalContext.Database.BeginTransaction();
 
-
             try
             {
                 _carRentalContext.Add(reservation);
