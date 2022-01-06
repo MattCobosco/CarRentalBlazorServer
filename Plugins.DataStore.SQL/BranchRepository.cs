@@ -62,7 +62,7 @@ namespace Plugins.DataStore.SQL
 
             try
             {
-                var branchToEdit = _carRentalContext.Branches.Find(branch.BranchId);
+                var branchToEdit = GetBranchById(branch.BranchId);
                 branchToEdit.Name = branch.Name;
                 branchToEdit.Address = branch.Address;
                 branchToEdit.Description = branch.Description;
@@ -84,7 +84,7 @@ namespace Plugins.DataStore.SQL
 
             if (branch != null) return branch;
 
-            Console.WriteLine("Couldn't find the requested Branch");
+            Console.WriteLine("Couldn't find the requested Branch!");
             return null;
 
         }
@@ -112,7 +112,6 @@ namespace Plugins.DataStore.SQL
                 Console.WriteLine("Deleting Branch failed:");
                 Console.WriteLine(ex.Message);
             }
-
         }
     }
 }
