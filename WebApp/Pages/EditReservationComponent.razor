@@ -1,0 +1,125 @@
+﻿@page "/editreservation/{reservationGuid}"
+@using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
+
+@inject NavigationManager _navigationManager
+@inject IViewBranchesUseCase _viewBranchesUseCase
+@inject IViewFleetVehiclesUseCase _viewFleetVehiclesUseCase
+@inject IGetReservationPriceUseCase _getReservationPriceUseCase
+@inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase
+@inject IEditReservationUseCase _editReservationUseCase
+@inject IGetReservationByGuidUseCase _getReservationByGuidUseCase
+
+<h3>Edit Reservation</h3>
+<br />
+
+@if(_reservation != null)
+{
+<EditForm Model="_reservation" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+
+    <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <InputDate id="startDate" @bind-Value="_reservation.StartDateTime" class="form-control"></InputDate>
+    </div>
+
+    <div class="form-group">
+        <label for="endDate">End Date</label>
+        <InputDate id="endDate" @bind-Value="_reservation.EndDateTime" class="form-control"></InputDate>
+    </div>
+
+    <div class="form-group">
+        <label for="startBranchName">Start Branch</label>
+        <InputSelect id="startBranchName" @bind-Value="_reservation.StartBranchId" class="form-control">
+            @foreach (var branch in _branches)
+            {
+                <option value="@branch.BranchId">@branch.Name</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="form-group">
+        <label for="endBranchName">End Branch</label>
+        <InputSelect id="endBranchName" @bind-Value="_reservation.EndBranchId" class="form-control">
+            @foreach (var branch in _branches)
+            {
+                <option value="@branch.BranchId">@branch.Name</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="form-group">
+        <label for="fleetVehicleLicensePlate">Vehicle</label>
+        <InputSelect id="fleetVehicleLicensePlate" @bind-Value="_reservation.FleetVehicleLicensePlate" class="form-control">
+            @foreach (var vehicle in _fleetVehicles)
+            {
+                <option value="@vehicle.FleetVehicleLicensePlate">@vehicle.FleetVehicleLicensePlate - @GetModelMake(vehicle.FleetVehicleLicensePlate).Make @GetModelMake(vehicle.FleetVehicleLicensePlate).Model</option>
+            }
+        </InputSelect>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-primary" @onclick="OnCancel">Cancel</button>
+</EditForm>
+}
+
+@code {
+
+    [Parameter]
+    public string ReservationGuid { get; set; }
+
+    private Reservation _reservation;
+    private List<FleetVehicle> _fleetVehicles;
+    private List<Branch> _branches;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        LoadLists();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (!Guid.TryParse(ReservationGuid, out Guid guidReservationGuid)) return;
+
+        var reservation = _getReservationByGuidUseCase.Execute(guidReservationGuid);
+        _reservation = new Reservation
+        {
+            ReservationGuid = reservation.ReservationGuid,
+            StartDateTime = reservation.StartDateTime,
+            EndDateTime = reservation.EndDateTime,
+            StartBranchId = reservation.StartBranchId,
+            EndBranchId = reservation.EndBranchId,
+            FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate
+        };
+    }
+
+    private void OnValidSubmit()
+    {
+        _reservation.Price = _getReservationPriceUseCase.Execute(_reservation.FleetVehicleLicensePlate, _reservation.StartDateTime, _reservation.EndDateTime);
+        _editReservationUseCase.Execute(_reservation);
+        _navigationManager.NavigateTo("/reservations");
+    }
+
+    private void OnCancel()
+    {
+        _navigationManager.NavigateTo("/reservations");
+    }
+
+    private void LoadLists()
+    {
+        _fleetVehicles = _viewFleetVehiclesUseCase.Execute()?.ToList();
+        _branches = _viewBranchesUseCase.Execute()?.ToList();
+    }
+
+    private VehicleModel GetModelMake(string licensePlate)
+    {
+        return _getVehicleModelByLicensePlateUseCase.Execute(licensePlate);
+    }
+
+}

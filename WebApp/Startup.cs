@@ -90,6 +90,8 @@ namespace WebApp
             services.AddTransient<IViewFleetVehiclesUseCase, ViewFleetVehiclesUseCase>();
             //Reservations
             services.AddTransient<IAddReservationUseCase, AddReservationUseCase>();
+            services.AddTransient<IDeleteReservationUseCase, DeleteReservationUseCase>();
+            services.AddTransient<IEditReservationUseCase, EditReservationUseCase>();
             services.AddTransient<IGetReservationByGuidUseCase, GetReservationByGuidUseCase>();
             services.AddTransient<IGetReservationPriceUseCase, GetReservationPriceUseCase>();
             services.AddTransient<IViewReservationsUseCase, ViewReservationsUseCase>();
