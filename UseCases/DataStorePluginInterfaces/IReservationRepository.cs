@@ -6,8 +6,10 @@ namespace UseCases.DataStorePluginInterfaces
 {
     public interface IReservationRepository
     {
-        IEnumerable<Reservation> GetReservations();
         void AddReservation(Reservation reservation);
+        void DeleteReservation(Guid reservationGuid);
+        void EditReservation(Reservation reservation);
         Reservation GetReservationByGuid(Guid reservationGuid);
+        IEnumerable<Reservation> GetReservations();
     }
 }
