@@ -17,19 +17,19 @@ namespace Plugins.DataStore.InMemory
             {
                 new()
                 {
-                    VehicleModelId = 1, Make = "Toyota", Model = "Aygo", ModelYear = "2018", BodyTypeName = "hatchback", Segment = "A",
+                    VehicleModelId = 1, Make = "Toyota", Model = "Aygo", ModelYear = "2018", BodyTypeId = 3, Segment = "A",
                     EngineType = "petrol", Horsepower = "72", AutomaticGearbox = false, Doors = 3, Seats = 4,
                     BaseDailyPrice = 95
                 },
                 new()
                 {
-                    VehicleModelId = 2, Make = "Toyota", Model = "Yaris", ModelYear = "2020", BodyTypeName = "hatchback", Segment = "B",
+                    VehicleModelId = 2, Make = "Toyota", Model = "Yaris", ModelYear = "2020", BodyTypeId = 3, Segment = "B",
                     EngineType = "hybrid", Horsepower = "116", AutomaticGearbox = true, Doors = 5, Seats = 5,
                     BaseDailyPrice = 112
                 },
                 new()
                 {
-                    VehicleModelId = 3, Make = "Toyota", Model = "Corolla", ModelYear = "2018", BodyTypeName = "sedan", Segment = "C",
+                    VehicleModelId = 3, Make = "Toyota", Model = "Corolla", ModelYear = "2018", BodyTypeId = 9, Segment = "C",
                     EngineType = "hybrid", Horsepower = "184", AutomaticGearbox = true, Doors = 5, Seats = 5,
                     BaseDailyPrice = 149
                 }
@@ -45,7 +45,7 @@ namespace Plugins.DataStore.InMemory
         {
             if (_vehicleModels.Any(x => x.Model.Equals(vehicleModel.Model, StringComparison.OrdinalIgnoreCase))
             && _vehicleModels.Any(x => x.AutomaticGearbox.Equals(vehicleModel.AutomaticGearbox))
-            && _vehicleModels.Any(x => x.BodyTypeName.Equals(vehicleModel.BodyTypeName))
+            && _vehicleModels.Any(x => x.BodyTypeId.Equals(vehicleModel.BodyTypeId))
             && _vehicleModels.Any(x => x.Horsepower.Equals(vehicleModel.Horsepower)))
             {
                 return;
@@ -74,7 +74,7 @@ namespace Plugins.DataStore.InMemory
             vehicleModelToEdit.Make = vehicleModel.Make;
             vehicleModelToEdit.Model = vehicleModel.Model;
             vehicleModelToEdit.ModelYear = vehicleModel.ModelYear;
-            vehicleModelToEdit.BodyTypeName = vehicleModel.BodyTypeName;
+            vehicleModelToEdit.BodyTypeId = vehicleModel.BodyTypeId;
             vehicleModelToEdit.Segment = vehicleModel.Segment;
             vehicleModelToEdit.EngineType = vehicleModel.EngineType;
             vehicleModelToEdit.Horsepower = vehicleModel.Horsepower;
