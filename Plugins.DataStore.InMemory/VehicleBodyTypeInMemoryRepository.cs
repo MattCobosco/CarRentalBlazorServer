@@ -17,11 +17,11 @@ namespace Plugins.DataStore.InMemory
             {
 
                 new() {VehicleBodyTypeId = 1, Name = "Sedan"},
-                new() {VehicleBodyTypeId = 1, Name = "Hatchback"},
-                new() {VehicleBodyTypeId = 1, Name = "SUV"},
-                new() {VehicleBodyTypeId = 1, Name = "Coupe"},
-                new() {VehicleBodyTypeId = 1, Name = "Convertible"},
-                new() {VehicleBodyTypeId = 1, Name = "Other"}
+                new() {VehicleBodyTypeId = 2, Name = "Hatchback"},
+                new() {VehicleBodyTypeId = 3, Name = "SUV"},
+                new() {VehicleBodyTypeId = 4, Name = "Coupe"},
+                new() {VehicleBodyTypeId = 5, Name = "Convertible"},
+                new() {VehicleBodyTypeId = 6, Name = "Other"}
             };
         }
 
