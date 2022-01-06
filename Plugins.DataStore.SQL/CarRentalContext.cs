@@ -30,31 +30,103 @@ namespace Plugins.DataStore.SQL
                 .WithOne(br => br.Branch)
                 .HasForeignKey(br => br.CurrentBranchId);
 
+            modelBuilder.Entity<VehicleBodyType>()
+                .HasMany(vbt => vbt.VehicleModels)
+                .WithOne(vm => vm.VehicleBodyType)
+                .HasForeignKey(vm => vm.BodyTypeId);
+
             // Data seed
             modelBuilder.Entity<Branch>().HasData(
                 new Branch
                 {
-                    BranchId = 1, 
-                    Name = "Gdańsk", 
+                    BranchId = 1,
+                    Name = "Gdańsk",
                     Address = "Szklary 138 80-835 Gdańsk"
                 },
                 new Branch
                 {
-                    BranchId = 2, 
-                    Name = "Warszawa", 
+                    BranchId = 2,
+                    Name = "Warszawa",
                     Address = "Rozłogi 1 01-323 Warszawa"
                 },
                 new Branch
                 {
-                    BranchId = 3, 
-                    Name = "Kraków - Airport", 
+                    BranchId = 3,
+                    Name = "Kraków - Airport",
                     Address = "Olszanicka 174 30-241 Kraków"
                 },
                 new Branch
                 {
-                    BranchId = 4, 
-                    Name = "Kraków - City", 
+                    BranchId = 4,
+                    Name = "Kraków - City",
                     Address = "Conrada 63 31-357 Kraków"
+                });
+
+            modelBuilder.Entity<VehicleBodyType>().HasData(
+                new VehicleBodyType
+                {
+                    VehicleBodyTypeId = 1,
+                    Name = "Convertible"
+                },
+                new VehicleBodyType
+                {
+                    VehicleBodyTypeId = 2,
+                    Name = "Cabriolet"
+                },
+                new VehicleBodyType
+                {
+                    VehicleBodyTypeId = 3,
+                    Name = "Hatchback"
+                },
+                new VehicleBodyType
+                {
+                    VehicleBodyTypeId = 4,
+                    Name = "Liftback"
+                },
+                new VehicleBodyType
+                {
+                    VehicleBodyTypeId = 5,
+                    Name = "Microvan"
+                },
+                new VehicleBodyType
+                {
+                    VehicleBodyTypeId = 6,
+                    Name = "Minivan"
+                },
+                new VehicleBodyType
+                {
+                    VehicleBodyTypeId = 7,
+                    Name = "Pickup"
+                },
+                new VehicleBodyType
+                {
+                    VehicleBodyTypeId = 8,
+                    Name = "Roadster"
+                },
+                new VehicleBodyType
+                {
+                    VehicleBodyTypeId = 9,
+                    Name = "Sedan"
+                },
+                new VehicleBodyType
+                {
+                    VehicleBodyTypeId = 10,
+                    Name = "Station Wagon"
+                },
+                new VehicleBodyType
+                {
+                    VehicleBodyTypeId = 11,
+                    Name = "SUV"
+                },
+                new VehicleBodyType
+                {
+                    VehicleBodyTypeId = 12,
+                    Name = "Targa"
+                },
+                new VehicleBodyType
+                {
+                    VehicleBodyTypeId = 13,
+                    Name = "Van"
                 });
 
             modelBuilder.Entity<VehicleModel>().HasData(
@@ -64,7 +136,7 @@ namespace Plugins.DataStore.SQL
                     Make = "Toyota",
                     Model = "Aygo",
                     ModelYear = "2018",
-                    BodyTypeName = "hatchback",
+                    BodyTypeId = 3,
                     Segment = "A",
                     EngineType = "petrol",
                     Horsepower = "72",
@@ -79,7 +151,7 @@ namespace Plugins.DataStore.SQL
                     Make = "Toyota",
                     Model = "Yaris",
                     ModelYear = "2020",
-                    BodyTypeName = "hatchback",
+                    BodyTypeId = 3,
                     Segment = "B",
                     EngineType = "hybrid",
                     Horsepower = "116",
@@ -94,7 +166,7 @@ namespace Plugins.DataStore.SQL
                     Make = "Toyota",
                     Model = "Corolla",
                     ModelYear = "2018",
-                    BodyTypeName = "sedan",
+                    BodyTypeId = 9,
                     Segment = "C",
                     EngineType = "hybrid",
                     Horsepower = "184",
