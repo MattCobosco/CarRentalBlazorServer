@@ -13,7 +13,7 @@ namespace CoreBusiness
         [Required]
         public string ModelYear { get; set; }
         [Required]
-        public string BodyTypeName { get; set; }
+        public int BodyTypeId { get; set; }
         [Required]
         public string Segment { get; set; }
         [Required]
@@ -29,7 +29,8 @@ namespace CoreBusiness
         [Required]
         public int BaseDailyPrice { get; set; }
 
-        //Navigation properties for EF Core
+        // Navigation properties for EF Core
         public List<FleetVehicle> FleetVehicles { get; set; }
+        public VehicleBodyType VehicleBodyType { get; set; }
     }
 }
