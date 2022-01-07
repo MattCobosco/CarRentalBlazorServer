@@ -1,0 +1,97 @@
+﻿@page "/fleetvehicles"
+@using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
+
+
+@inject NavigationManager _navigationManager
+@inject IDeleteFleetVehicleUseCase _deleteFleetVehicleUseCase
+@inject IViewFleetVehiclesUseCase _viewFleetVehiclesUseCase
+@inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlate
+@inject IGetBranchByIdUseCase _getBranchByIdUseCase
+
+<h3>Fleet Vehicles</h3>
+<br/>
+<button type="button" @onclick="AddFleetVehicleOnClick" class="btn btn-primary">Add Fleet Vehicle</button>
+<br/>
+<br/>
+
+@if (_fleetVehicles != null)
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>License Plate</th>
+            <th>Make&Model</th>
+            <th>Current Branch</th>
+            <th>Odometer</th>
+            <th>Maintenance Odo</th>
+            <th>Maintenance Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var fleetVehicle in _fleetVehicles)
+            {
+                <tr>
+                    <td>@fleetVehicle.FleetVehicleLicensePlate</td>
+                    <td>
+                        @GetVehicleModelByLicensePlate(fleetVehicle.FleetVehicleLicensePlate).Make
+                        @GetVehicleModelByLicensePlate(fleetVehicle.FleetVehicleLicensePlate).Model
+                    </td>
+                    <td>@GetBranchById(fleetVehicle.CurrentBranchId).Name</td>
+                    <td>@fleetVehicle.Odometer</td>
+                    <td>@fleetVehicle.MaintenanceOdometer</td>
+                    <td>@fleetVehicle.MaintenanceDate.ToShortDateString()</td>
+                    <td>
+                        <button type="button" class="btn btn-link" @onclick="@(() => EditFleetVehicle(fleetVehicle))">Edit</button>
+                        <button type="button" class="btn btn-link" @onclick="@(() => DeleteFleetVehicle(fleetVehicle.FleetVehicleLicensePlate))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private List<FleetVehicle> _fleetVehicles;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        LoadData();
+    }
+
+    private void AddFleetVehicleOnClick()
+    {
+        _navigationManager.NavigateTo("/addfleetvehicle");
+    }
+
+    private void EditFleetVehicle(FleetVehicle fleetVehicle)
+    {
+        _navigationManager.NavigateTo($"/editfleetvehicle/{fleetVehicle.FleetVehicleLicensePlate}");
+    }
+
+    private void DeleteFleetVehicle(string fleetVehicleLicensePlate)
+    {
+        _deleteFleetVehicleUseCase.Delete(fleetVehicleLicensePlate);
+        LoadData();
+    }
+
+    private void LoadData()
+    {
+        _fleetVehicles = _viewFleetVehiclesUseCase.Execute()?.ToList();
+    }
+
+    private VehicleModel GetVehicleModelByLicensePlate(string fleetVehicleLicensePlate)
+    {
+        return _getVehicleModelByLicensePlate.Execute(fleetVehicleLicensePlate);
+    }
+
+    private Branch GetBranchById(int branchId)
+    {
+        return _getBranchByIdUseCase.Execute(branchId);
+    }
+
+}
