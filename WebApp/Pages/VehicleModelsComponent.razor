@@ -10,7 +10,7 @@
 
 <h3>Manage Vehicle Models</h3>
 <br/>
-<button type="button" @onclick="AddModelOnClick" class="btn btn-primary">Add Model</button>
+<button type="button" @onclick="AddVehicleModelOnClick" class="btn btn-primary">Add Model</button>
 <br/>
 <br/>
 
@@ -30,26 +30,25 @@
         </tr>
         </thead>
         <tbody>
-            @foreach (var model in _vehicleModels)
+            @foreach (var vehicleModel in _vehicleModels)
             {
                 <tr>
-                    <td>@model.VehicleModelId</td>
-                    <td>@model.Make</td>
-                    <td>@model.Model</td>
-                    <td>@model.ModelYear</td>
-                    <td>@GetVehicleBodyTypeById(model.BodyTypeId).Name</td>
-                    <td>@model.AutomaticGearbox</td>
-                    <td>@model.BaseDailyPrice</td>
+                    <td>@vehicleModel.VehicleModelId</td>
+                    <td>@vehicleModel.Make</td>
+                    <td>@vehicleModel.Model</td>
+                    <td>@vehicleModel.ModelYear</td>
+                    <td>@GetVehicleBodyTypeById(vehicleModel.BodyTypeId).Name</td>
+                    <td>@vehicleModel.AutomaticGearbox</td>
+                    <td>@vehicleModel.BaseDailyPrice</td>
                     <td>
-                        <button type="button" class="btn btn-link" @onclick="@(() => EditVehicleModel(model))">Edit</button>
-                        <button type="button" class="btn btn-link" @onclick="@(() => DeleteVehicleModel(model.VehicleModelId))">Delete</button>
+                        <button type="button" class="btn btn-link" @onclick="@(() => EditVehicleModel(vehicleModel))">Edit</button>
+                        <button type="button" class="btn btn-link" @onclick="@(() => DeleteVehicleModel(vehicleModel.VehicleModelId))">Delete</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 }
-
 
 @code {
 
@@ -61,7 +60,7 @@
         LoadData();
     }
 
-    private void AddModelOnClick()
+    private void AddVehicleModelOnClick()
     {
         _navigationManager.NavigateTo("/addvehiclemodel");
     }
