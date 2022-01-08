@@ -1,7 +1,7 @@
-﻿using System;
+﻿using CoreBusiness;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using CoreBusiness;
 using UseCases.DataStorePluginInterfaces;
 
 namespace Plugins.DataStore.SQL
@@ -19,24 +19,86 @@ namespace Plugins.DataStore.SQL
         {
             var transaction = _carRentalContext.Database.BeginTransaction();
 
+            if (_carRentalContext.FleetVehicles.Any(
+                    x => x.FleetVehicleLicensePlate == fleetVehicle.FleetVehicleLicensePlate ||
+                         x.Vin == fleetVehicle.Vin))
+            {
+                transaction.Rollback();
+                Console.WriteLine("Such Fleet Vehicle already exists!");
+                return;
+            }
 
+            try
+            {
+                _carRentalContext.Add(fleetVehicle);
+                _carRentalContext.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                Console.WriteLine("Adding Fleet Vehicle failed:");
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public void DeleteFleetVehicle(string fleetVehicleLicensePlate)
         {
-            throw new System.NotImplementedException();
+            var transaction = _carRentalContext.Database.BeginTransaction();
+
+            try
+            {
+                var fleetVehicle = GetFleetVehicleByLicensePlate(fleetVehicleLicensePlate);
+
+                if (fleetVehicle == null)
+                {
+                    return;
+                }
+
+                _carRentalContext.FleetVehicles.Remove(fleetVehicle);
+                _carRentalContext.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                Console.WriteLine("Deleting Fleet Vehicle failed:");
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public void EditFleetVehicle(FleetVehicle fleetVehicle)
         {
-            throw new System.NotImplementedException();
+            var transaction = _carRentalContext.Database.BeginTransaction();
+
+            try
+            {
+                var fleetVehicleToEdit = GetFleetVehicleByLicensePlate(fleetVehicle.FleetVehicleLicensePlate);
+
+                fleetVehicleToEdit.FleetVehicleLicensePlate = fleetVehicle.FleetVehicleLicensePlate;
+                fleetVehicleToEdit.Odometer = fleetVehicle.Odometer;
+                fleetVehicleToEdit.Vin = fleetVehicleToEdit.Vin;
+                fleetVehicleToEdit.MaintenanceDate = fleetVehicleToEdit.MaintenanceDate;
+                fleetVehicleToEdit.MaintenanceOdometer = fleetVehicle.MaintenanceOdometer;
+                fleetVehicleToEdit.VehicleModelId = fleetVehicle.VehicleModelId;
+                fleetVehicleToEdit.CurrentBranchId = fleetVehicle.CurrentBranchId;
+
+                _carRentalContext.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                Console.WriteLine("Editing Fleet Vehicle failed:");
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public FleetVehicle GetFleetVehicleByLicensePlate(string fleetVehicleLicensePlate)
         {
             var fleetVehicle = _carRentalContext.FleetVehicles.Find(fleetVehicleLicensePlate);
 
-            if(fleetVehicle != null)
+            if (fleetVehicle != null)
             {
                 return fleetVehicle;
             }
