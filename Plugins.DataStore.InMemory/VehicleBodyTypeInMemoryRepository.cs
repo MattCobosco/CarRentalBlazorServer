@@ -32,12 +32,12 @@ namespace Plugins.DataStore.InMemory
 
         public void AddVehicleBodyType(VehicleBodyType bodyType)
         {
-            if (_vehicleBodyTypes.Any(x => x.Name.Equals(bodyType.Name, StringComparison.OrdinalIgnoreCase)))
+            if(_vehicleBodyTypes.Any(x => x.Name.Equals(bodyType.Name, StringComparison.OrdinalIgnoreCase)))
             {
                 return;
             }
 
-            if (_vehicleBodyTypes is {Count: > 0})
+            if(_vehicleBodyTypes is {Count: > 0})
             {
                 var maxId = _vehicleBodyTypes.Max(x => x.VehicleBodyTypeId);
 
@@ -55,7 +55,7 @@ namespace Plugins.DataStore.InMemory
         {
             var vehicleBodyTypeToEdit = GetVehicleBodyTypeById(vehicleBodyType.VehicleBodyTypeId);
 
-            if (vehicleBodyTypeToEdit != null)
+            if(vehicleBodyTypeToEdit != null)
             {
                 vehicleBodyTypeToEdit.Name = vehicleBodyType.Name;
             }

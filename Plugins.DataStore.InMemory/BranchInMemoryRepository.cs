@@ -29,12 +29,12 @@ namespace Plugins.DataStore.InMemory
 
         public void AddBranch(Branch branch)
         {
-            if (_branches.Any(x => x.Name.Equals(branch.Name, StringComparison.OrdinalIgnoreCase)))
+            if(_branches.Any(x => x.Name.Equals(branch.Name, StringComparison.OrdinalIgnoreCase)))
             {
                 return;
             }
 
-            if (_branches is {Count: > 0})
+            if(_branches is {Count: > 0})
             {
                 var maxId = _branches.Max(x => x.BranchId);
 
@@ -52,7 +52,7 @@ namespace Plugins.DataStore.InMemory
         {
             var branchToEdit = GetBranchById(branch.BranchId);
 
-            if (branchToEdit == null) return;
+            if(branchToEdit == null) return;
 
             branchToEdit.Name = branch.Name;
             branchToEdit.Address = branch.Address;

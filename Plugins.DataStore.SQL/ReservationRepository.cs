@@ -42,7 +42,7 @@ namespace Plugins.DataStore.SQL
             {
                 var reservation = GetReservationByGuid(reservationGuid);
 
-                if (reservation == null)
+                if(reservation == null)
                 {
                     return;
                 }
@@ -89,7 +89,7 @@ namespace Plugins.DataStore.SQL
         {
             var reservation = _carRentalContext.Reservations.Find(reservationGuid);
 
-            if (reservation != null)
+            if(reservation != null)
             {
                 return reservation;
             }

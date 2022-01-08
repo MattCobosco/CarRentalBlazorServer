@@ -19,7 +19,7 @@ namespace Plugins.DataStore.SQL
         {
             var transaction = _carRentalContext.Database.BeginTransaction();
 
-            if (_carRentalContext.Branches.Any(
+            if(_carRentalContext.Branches.Any(
                    x => x.Name == branch.Name ||
                         x.Address == branch.Address))
             {
@@ -50,7 +50,7 @@ namespace Plugins.DataStore.SQL
             {
                 var branch = GetBranchById(branchId);
 
-                if (branch == null)
+                if(branch == null)
                 {
                     return;
                 }
@@ -93,7 +93,7 @@ namespace Plugins.DataStore.SQL
         {
             var branch = _carRentalContext.Branches.Find(branchId);
 
-            if (branch != null)
+            if(branch != null)
             {
                 return branch;
             }

@@ -19,7 +19,7 @@ namespace Plugins.DataStore.SQL
         {
             var transaction = _carRentalContext.Database.BeginTransaction();
 
-            if (_carRentalContext.VehicleModels.Any(
+            if(_carRentalContext.VehicleModels.Any(
                     x => x.Model == vehicleModel.Model &&
                          x.AutomaticGearbox == vehicleModel.AutomaticGearbox &&
                          x.BodyTypeId == vehicleModel.BodyTypeId &&
@@ -52,7 +52,7 @@ namespace Plugins.DataStore.SQL
             {
                 var vehicleModel = GetVehicleModelById(vehicleModelId);
 
-                if (vehicleModel == null)
+                if(vehicleModel == null)
                 {
                     return;
                 }
@@ -104,7 +104,7 @@ namespace Plugins.DataStore.SQL
         {
             var vehicleModel = _carRentalContext.VehicleModels.Find(vehicleModelId);
 
-            if (vehicleModel != null)
+            if(vehicleModel != null)
             {
                 return vehicleModel;
             }

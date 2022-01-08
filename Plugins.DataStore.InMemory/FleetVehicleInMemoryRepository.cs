@@ -43,7 +43,7 @@ namespace Plugins.DataStore.InMemory
 
         public void AddFleetVehicle(FleetVehicle fleetVehicle)
         {
-            if (_fleetVehicles.Any(x => x.Vin.Equals(fleetVehicle.Vin, StringComparison.OrdinalIgnoreCase)))
+            if(_fleetVehicles.Any(x => x.Vin.Equals(fleetVehicle.Vin, StringComparison.OrdinalIgnoreCase)))
             {
                 return;
             }
@@ -53,7 +53,7 @@ namespace Plugins.DataStore.InMemory
         {
             var fleetVehicleToEdit = GetFleetVehicleByLicensePlate(fleetVehicle.FleetVehicleLicensePlate);
 
-            if (fleetVehicleToEdit == null)
+            if(fleetVehicleToEdit == null)
             {
                 return;
             }

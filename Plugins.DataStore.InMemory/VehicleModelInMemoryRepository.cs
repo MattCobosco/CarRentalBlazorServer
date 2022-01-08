@@ -43,7 +43,7 @@ namespace Plugins.DataStore.InMemory
 
         public void AddVehicleModel(VehicleModel vehicleModel)
         {
-            if (_vehicleModels.Any(x => x.Model.Equals(vehicleModel.Model, StringComparison.OrdinalIgnoreCase))
+            if(_vehicleModels.Any(x => x.Model.Equals(vehicleModel.Model, StringComparison.OrdinalIgnoreCase))
             && _vehicleModels.Any(x => x.AutomaticGearbox.Equals(vehicleModel.AutomaticGearbox))
             && _vehicleModels.Any(x => x.BodyTypeId.Equals(vehicleModel.BodyTypeId))
             && _vehicleModels.Any(x => x.Horsepower.Equals(vehicleModel.Horsepower)))
@@ -51,7 +51,7 @@ namespace Plugins.DataStore.InMemory
                 return;
             }
 
-            if (_vehicleModels is {Count: > 0})
+            if(_vehicleModels is {Count: > 0})
             {
                 var maxId = _vehicleModels.Max(x => x.VehicleModelId);
 
@@ -69,7 +69,7 @@ namespace Plugins.DataStore.InMemory
         {
             var vehicleModelToEdit = GetVehicleModelById(vehicleModel.VehicleModelId);
 
-            if (vehicleModelToEdit == null) return;
+            if(vehicleModelToEdit == null) return;
 
             vehicleModelToEdit.Make = vehicleModel.Make;
             vehicleModelToEdit.Model = vehicleModel.Model;

@@ -32,7 +32,7 @@ namespace Plugins.DataStore.InMemory
         {
             var reservationToEdit = GetReservationByGuid(reservation.ReservationGuid);
 
-            if (reservationToEdit == null)
+            if(reservationToEdit == null)
             {
                 return;
             }

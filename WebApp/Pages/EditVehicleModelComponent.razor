@@ -100,7 +100,7 @@
     {
         base.OnParametersSet();
 
-        if (!int.TryParse(VehicleModelId, out int intVehicleModelId)) return;
+        if(!int.TryParse(VehicleModelId, out int intVehicleModelId)) return;
 
         var model = _getVehicleModelByIdUseCase.Execute(intVehicleModelId);
         _vehicleModel = new VehicleModel {

@@ -30,13 +30,13 @@ namespace Plugins.DataStore.InMemory
         
         public void AddTransfer(Transfer transfer)
         {
-            if (_transfers.Any(x => x.FleetVehicleLicensePlate.Equals(transfer.FleetVehicleLicensePlate))
+            if(_transfers.Any(x => x.FleetVehicleLicensePlate.Equals(transfer.FleetVehicleLicensePlate))
                 && _transfers.Any(x=>x.Date.Equals(transfer.Date)))
             {
                 return;
             }
 
-            if (_transfers is { Count: > 0 })
+            if(_transfers is { Count: > 0 })
             {
                 var maxId = _transfers.Max(x => x.TransferId);
 
@@ -54,7 +54,7 @@ namespace Plugins.DataStore.InMemory
         {
             var transferToEdit = GetTransferById(transfer.TransferId);
 
-            if (transferToEdit == null) return;
+            if(transferToEdit == null) return;
 
             transferToEdit.FromBranch = transfer.FromBranch;
             transferToEdit.ToBranch = transfer.ToBranch;

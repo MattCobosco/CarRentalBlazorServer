@@ -37,12 +37,12 @@ namespace Plugins.DataStore.InMemory
 
         public void AddCustomer(Customer customer)
         {
-            if (_customers.Any(x => x.DrivingLicenseNumber.Equals(customer.DrivingLicenseNumber, StringComparison.OrdinalIgnoreCase)))
+            if(_customers.Any(x => x.DrivingLicenseNumber.Equals(customer.DrivingLicenseNumber, StringComparison.OrdinalIgnoreCase)))
             {
                 return;
             }
 
-            if (_customers is { Count: > 0 })
+            if(_customers is { Count: > 0 })
             {
                 var maxId = _customers.Max(x => x.CustomerId);
 
@@ -60,7 +60,7 @@ namespace Plugins.DataStore.InMemory
         {
             var customerToEdit = GetCustomerById(customer.CustomerId);
 
-            if (customerToEdit == null) return;
+            if(customerToEdit == null) return;
 
             customerToEdit.FirstName = customer.FirstName;
             customerToEdit.LastName = customer.LastName;

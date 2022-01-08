@@ -46,7 +46,7 @@
     {
         base.OnParametersSet();
 
-        if (!int.TryParse(this.BranchId, out int intBranchId)) return;
+        if(!int.TryParse(this.BranchId, out int intBranchId)) return;
 
         var br = _getBranchByIdUseCase.Execute(intBranchId);
         _branch = new Branch

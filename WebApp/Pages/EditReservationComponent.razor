@@ -85,7 +85,7 @@
     {
         base.OnParametersSet();
 
-        if (!Guid.TryParse(ReservationGuid, out Guid guidReservationGuid)) return;
+        if(!Guid.TryParse(ReservationGuid, out Guid guidReservationGuid)) return;
 
         var reservation = _getReservationByGuidUseCase.Execute(guidReservationGuid);
         _reservation = new Reservation

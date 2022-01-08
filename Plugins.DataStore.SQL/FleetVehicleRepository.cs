@@ -17,6 +17,9 @@ namespace Plugins.DataStore.SQL
 
         public void AddFleetVehicle(FleetVehicle fleetVehicle)
         {
+            var transaction = _carRentalContext.Database.BeginTransaction();
+
+
         }
 
         public void DeleteFleetVehicle(string fleetVehicleLicensePlate)
@@ -33,7 +36,7 @@ namespace Plugins.DataStore.SQL
         {
             var fleetVehicle = _carRentalContext.FleetVehicles.Find(fleetVehicleLicensePlate);
 
-            if (fleetVehicle != null)
+            if(fleetVehicle != null)
             {
                 return fleetVehicle;
             }
