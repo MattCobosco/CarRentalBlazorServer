@@ -27,7 +27,7 @@ namespace CoreBusiness
 
         public FleetVehicle()
         {
-            DateAdded=DateTime.Today;
+            DateAdded = DateTime.Today;
         }
 
         // Navigation properties for EF Core
