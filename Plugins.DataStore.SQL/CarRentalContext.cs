@@ -54,7 +54,7 @@ namespace Plugins.DataStore.SQL
             modelBuilder.Entity<VehicleModel>()
                 .HasMany(vm => vm.FleetVehicles)
                 .WithOne(fv => fv.VehicleModel)
-                .HasForeignKey(fv => fv.ModelVehicleId);
+                .HasForeignKey(fv => fv.VehicleModelId);
 
             modelBuilder.Entity<Reservation>();
 
@@ -96,7 +96,7 @@ namespace Plugins.DataStore.SQL
                    MaintenanceOdometer = 15000,
                    DateAdded = DateTime.Today,
                    CurrentBranchId = 1,
-                   ModelVehicleId = 1
+                   VehicleModelId = 1
                },
                new FleetVehicle
                {
@@ -107,7 +107,7 @@ namespace Plugins.DataStore.SQL
                    MaintenanceOdometer = 30000,
                    DateAdded = DateTime.Today.AddYears(-1),
                    CurrentBranchId = 1,
-                   ModelVehicleId = 2
+                   VehicleModelId = 2
                },
                new FleetVehicle
                {
@@ -118,7 +118,7 @@ namespace Plugins.DataStore.SQL
                    MaintenanceOdometer = 15000,
                    DateAdded = DateTime.Today.AddMonths(-3),
                    CurrentBranchId = 1,
-                   ModelVehicleId = 3
+                   VehicleModelId = 3
                },
                // Warszawa
                new FleetVehicle
@@ -130,7 +130,7 @@ namespace Plugins.DataStore.SQL
                    MaintenanceOdometer = 15000,
                    DateAdded = DateTime.Today,
                    CurrentBranchId = 2,
-                   ModelVehicleId = 1
+                   VehicleModelId = 1
                },
                new FleetVehicle
                {
@@ -141,7 +141,7 @@ namespace Plugins.DataStore.SQL
                    MaintenanceOdometer = 30000,
                    DateAdded = DateTime.Today.AddYears(-1),
                    CurrentBranchId = 2,
-                   ModelVehicleId = 2
+                   VehicleModelId = 2
                },
                new FleetVehicle
                {
@@ -152,7 +152,7 @@ namespace Plugins.DataStore.SQL
                    MaintenanceOdometer = 15000,
                    DateAdded = DateTime.Today.AddMonths(-3),
                    CurrentBranchId = 2,
-                   ModelVehicleId = 3
+                   VehicleModelId = 3
                },
                // Kraków - airport
                new FleetVehicle
@@ -164,7 +164,7 @@ namespace Plugins.DataStore.SQL
                    MaintenanceOdometer = 15000,
                    DateAdded = DateTime.Today,
                    CurrentBranchId = 3,
-                   ModelVehicleId = 1
+                   VehicleModelId = 1
                },
                new FleetVehicle
                {
@@ -175,7 +175,7 @@ namespace Plugins.DataStore.SQL
                    MaintenanceOdometer = 30000,
                    DateAdded = DateTime.Today.AddYears(-1),
                    CurrentBranchId = 3,
-                   ModelVehicleId = 2
+                   VehicleModelId = 2
                },
                new FleetVehicle
                {
@@ -186,7 +186,7 @@ namespace Plugins.DataStore.SQL
                    MaintenanceOdometer = 15000,
                    DateAdded = DateTime.Today.AddMonths(-3),
                    CurrentBranchId = 3,
-                   ModelVehicleId = 3
+                   VehicleModelId = 3
                },
                // Krakow - city
                new FleetVehicle
@@ -198,7 +198,7 @@ namespace Plugins.DataStore.SQL
                    MaintenanceOdometer = 15000,
                    DateAdded = DateTime.Today,
                    CurrentBranchId = 4,
-                   ModelVehicleId = 1
+                   VehicleModelId = 1
                },
                new FleetVehicle
                {
@@ -209,7 +209,7 @@ namespace Plugins.DataStore.SQL
                    MaintenanceOdometer = 30000,
                    DateAdded = DateTime.Today.AddYears(-1),
                    CurrentBranchId = 4,
-                   ModelVehicleId = 2
+                   VehicleModelId = 2
                },
                new FleetVehicle
                {
@@ -220,7 +220,7 @@ namespace Plugins.DataStore.SQL
                    MaintenanceOdometer = 15000,
                    DateAdded = DateTime.Today.AddMonths(-3),
                    CurrentBranchId = 4,
-                   ModelVehicleId = 3
+                   VehicleModelId = 3
                });
 
             modelBuilder.Entity<Reservation>().HasData(

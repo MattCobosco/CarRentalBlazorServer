@@ -17,10 +17,10 @@ namespace UseCases.VehicleModelUseCases
             _fleetVehicleRepository = fleetVehicleRepository;
         }
 
-        public VehicleModel Execute(string fleetVehcileLicensePlate)
+        public VehicleModel Execute(string fleetVehicleLicensePlate)
         {
-            var fleetVehicle = _fleetVehicleRepository.GetFleetVehicleByLicensePlate(fleetVehcileLicensePlate);
-            var vehicleModel = _vehicleModelRepository.GetVehicleModelById(fleetVehicle.ModelVehicleId);
+            var fleetVehicle = _fleetVehicleRepository.GetFleetVehicleByLicensePlate(fleetVehicleLicensePlate);
+            var vehicleModel = _vehicleModelRepository.GetVehicleModelById(fleetVehicle.VehicleModelId);
             return vehicleModel;
         }
     }

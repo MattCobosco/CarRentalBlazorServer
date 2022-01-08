@@ -21,9 +21,14 @@ namespace CoreBusiness
         [Required]
         public DateTime DateAdded { get; set; }
         [Required]
-        public int ModelVehicleId { get; set; }
+        public int VehicleModelId { get; set; }
         [Required]
         public int CurrentBranchId { get; set; }
+
+        public FleetVehicle()
+        {
+            DateAdded=DateTime.Today;
+        }
 
         // Navigation properties for EF Core
         public VehicleModel VehicleModel { get; set; }
