@@ -6,7 +6,7 @@ using UseCases.DataStorePluginInterfaces;
 
 namespace Plugins.DataStore.InMemory
 {
-    public class FleetVehicleInMemoryRepository : IFleetVehicleRepository
+    public class FleetVehicleInMemoryRepository
     {
         private readonly List<FleetVehicle> _fleetVehicles;
 
