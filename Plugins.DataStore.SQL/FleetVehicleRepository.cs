@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualBasic;
 using UseCases.DataStorePluginInterfaces;
 
 namespace Plugins.DataStore.SQL
@@ -119,6 +120,24 @@ namespace Plugins.DataStore.SQL
                 Console.WriteLine(ex.Message);
                 return null;
             }
+        }
+
+        public IEnumerable<FleetVehicle> GetFleetVehicleMaintenanceDate()
+        {
+            DateTime listLimit = DateTime.Now.Add(new TimeSpan(14,0,0,0,0));
+
+            var vehiclesForMaintenance =
+                _carRentalContext.FleetVehicles.Where(f => f.MaintenanceDate < listLimit);
+
+            return vehiclesForMaintenance?.ToList();
+        }
+
+        public IEnumerable<FleetVehicle> GetFleetVehicleMaintenanceOdometer()
+        {
+            var vehiclesForMaintenance =
+                _carRentalContext.FleetVehicles.Where(f => f.MaintenanceOdometer - f.Odometer <= 1000).Select(f=>f);
+
+            return vehiclesForMaintenance?.ToList();
         }
     }
 }

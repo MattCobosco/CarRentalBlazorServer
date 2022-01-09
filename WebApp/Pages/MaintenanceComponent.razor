@@ -1,0 +1,125 @@
+﻿@page "/maintenance"
+@attribute [Authorize(Policy = "AdminLogisticianOnly")]
+@using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
+
+
+@inject NavigationManager _navigationManager
+@inject IGetBranchByIdUseCase _getBranchByIdUseCase
+@inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlate
+@inject IGetFleetVehiclesMaintenanceDateUseCase _getFleetVehiclesMaintenanceDateUseCase
+@inject IGetFleetVehiclesMaintenanceOdometerUseCase _getFleetVehiclesMaintenanceOdometerUseCase
+
+<h3>Maintenance</h3>
+<br/>
+
+@if (_fleetVehiclesDate != null)
+{
+    <h4>Maintenance due to Date</h4>
+    <br/>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>License Plate</th>
+                <th>Make&Model</th>
+                <th>Maintenance Date</th>
+                <th>Days left</th>
+                <th>Current Branch</th>
+                <th>Assignment</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var fleetVehicle in _fleetVehiclesDate)
+        {
+            <tr>
+                <td>@fleetVehicle.FleetVehicleLicensePlate</td>
+                <td>
+                    @GetVehicleModelByLicensePlate(fleetVehicle.FleetVehicleLicensePlate).Make
+                    @GetVehicleModelByLicensePlate(fleetVehicle.FleetVehicleLicensePlate).Model
+                </td>
+                <td>@fleetVehicle.MaintenanceDate.ToShortDateString()</td>
+                <td>@GetDaysLeft(fleetVehicle.MaintenanceDate)</td>
+                <td>@GetBranchById(fleetVehicle.CurrentBranchId).Name</td>
+                <td><button>Assign</button></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@if (_fleetVehiclesOdometer != null)
+{
+    <br/>
+    <h4>Maintenance due to Odometer</h4>
+    <br/>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>License Plate</th>
+            <th>Make&Model</th>
+            <th>Odometer</th>
+            <th>Maintenance Odo</th>
+            <th>Remaining</th>
+            <th>Current Branch</th>
+            <th>Assignment</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var fleetVehicle in _fleetVehiclesOdometer)
+        {
+            <tr>
+                <td>@fleetVehicle.FleetVehicleLicensePlate</td>
+                <td>
+                    @GetVehicleModelByLicensePlate(fleetVehicle.FleetVehicleLicensePlate).Make
+                    @GetVehicleModelByLicensePlate(fleetVehicle.FleetVehicleLicensePlate).Model
+                </td>
+                <td>@fleetVehicle.Odometer</td>
+                <td>@fleetVehicle.MaintenanceOdometer</td>
+                <td>@GetOdometerDifference(fleetVehicle)</td>
+                <td>@GetBranchById(fleetVehicle.CurrentBranchId).Name</td>
+                <td><button>Assign</button></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private List<FleetVehicle> _fleetVehiclesDate;
+    private List<FleetVehicle> _fleetVehiclesOdometer;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        LoadData();
+    }
+
+    private VehicleModel GetVehicleModelByLicensePlate(string fleetVehicleLicensePlate)
+    {
+        return _getVehicleModelByLicensePlate.Execute(fleetVehicleLicensePlate);
+    }
+
+    private Branch GetBranchById(int branchId)
+    {
+        return _getBranchByIdUseCase.Execute(branchId);
+    }
+
+    private int GetOdometerDifference(FleetVehicle fleetVehicle)
+    {
+        return Convert.ToInt32(fleetVehicle.MaintenanceOdometer) - Convert.ToInt32(fleetVehicle.Odometer);
+    }
+
+    private int GetDaysLeft(DateTime date)
+    {
+        return (date - DateTime.Today.Date).Days;
+    }
+
+    private void LoadData()
+    {
+        _fleetVehiclesDate = _getFleetVehiclesMaintenanceDateUseCase.Execute()?.ToList();
+        _fleetVehiclesOdometer = _getFleetVehiclesMaintenanceOdometerUseCase.Execute()?.ToList();
+    }
+
+}
