@@ -4,7 +4,7 @@
 <AuthorizeView>
     <Authorized>
         <a href="Identity/Account/Manage">Hello, @context.User.Identity.Name</a>
-        <form action="/Identity/Account/Logout?returnUrl=2%F" method="post">
+        <form action="/Identity/Account/Logout?returnUrl=%2F" method="post">
             <button type="submit" class="nav-link btn btn-link">Log out</button>
         </form>
     </Authorized>
