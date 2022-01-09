@@ -49,6 +49,7 @@ namespace WebApp
                 options.AddPolicy("LogisticianOnly", p=>p.RequireClaim("Position", "Logistician"));
                 options.AddPolicy("AgentOnly", p=>p.RequireClaim("Position","Agent"));
                 options.AddPolicy("AdminLogisticianOnly", p => p.RequireClaim("Position", "Admin", "Logistician"));
+                options.AddPolicy("AdminLogisticianAgentOnly", p=>p.RequireClaim("Position", "Admin", "Logistician", "Agent"));
             });
 
             // Car Rental Database
