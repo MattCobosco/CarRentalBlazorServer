@@ -1,4 +1,5 @@
 ﻿@page "/vehiclemodels"
+@attribute [Authorize(Policy = "AdminLogisticianAgentOnly")]
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleBodyTypeUseCaseInterfaces
 
@@ -9,25 +10,25 @@
 @inject IGetVehicleBodyTypeByIdUseCase _getVehicleBodyTypeByIdUseCase
 
 <h3>Manage Vehicle Models</h3>
-<br/>
+<br />
 <button type="button" @onclick="AddVehicleModelOnClick" class="btn btn-primary">Add Model</button>
-<br/>
-<br/>
+<br />
+<br />
 
-@if(_vehicleModels != null)
+@if (_vehicleModels != null)
 {
     <table class="table">
         <thead>
-        <tr>
-            <th>ID</th>
-            <th>Make</th>
-            <th>Model</th>
-            <th>ModelYear</th>
-            <th>Body Type</th>
-            <th>Automatic Gearbox</th>
-            <th>Daily Price</th>
-            <th>Actions</th>
-        </tr>
+            <tr>
+                <th>ID</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>ModelYear</th>
+                <th>Body Type</th>
+                <th>Automatic Gearbox</th>
+                <th>Daily Price</th>
+                <th>Actions</th>
+            </tr>
         </thead>
         <tbody>
             @foreach (var vehicleModel in _vehicleModels)

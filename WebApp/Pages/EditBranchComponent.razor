@@ -1,4 +1,5 @@
 ﻿@page "/editbranch/{branchId}"
+@attribute [Authorize(Policy = "AdminOnly")]
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
@@ -7,9 +8,9 @@
 @inject IEditBranchUseCase _editBranchUseCase
 
 <h3>Edit Branch</h3>
-<br/>
+<br />
 
-@if(_branch != null)
+@if (_branch != null)
 {
     <EditForm Model="_branch" OnValidSubmit="OnValidSubmit">
         <DataAnnotationsValidator></DataAnnotationsValidator>
@@ -24,12 +25,12 @@
             <label for="address">Address</label>
             <InputText id="address" @bind-Value="_branch.Address" class="form-control"></InputText>
         </div>
-    
+
         <div class="form-group">
             <label for="description">Description</label>
             <InputText id="description" @bind-Value="_branch.Description" class="form-control"></InputText>
         </div>
-    
+
         <button type="submit" class="btn btn-primary">Save</button>
         <button type="button" class="btn btn-primary" @onclick="OnCancel">Cancel</button>
     </EditForm>
@@ -37,7 +38,7 @@
 
 @code {
 
-    [Parameter] 
+    [Parameter]
     public string BranchId { get; set; }
 
     private Branch _branch;
@@ -46,14 +47,14 @@
     {
         base.OnParametersSet();
 
-        if(!int.TryParse(BranchId, out int intBranchId)) return;
+        if (!int.TryParse(BranchId, out int intBranchId)) return;
 
         var br = _getBranchByIdUseCase.Execute(intBranchId);
         _branch = new Branch
         {
-            BranchId = br.BranchId, 
-            Name = br.Name, 
-            Address = br.Address, 
+            BranchId = br.BranchId,
+            Name = br.Name,
+            Address = br.Address,
             Description = br.Description
         };
     }

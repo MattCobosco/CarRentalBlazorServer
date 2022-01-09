@@ -1,4 +1,5 @@
 ﻿@page "/branches"
+@attribute [Authorize(Policy = "AdminLogisticianAgentOnly")]
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
@@ -6,22 +7,22 @@
 @inject IDeleteBranchUseCase _deleteBranchUseCase
 
 <h3>Manage Branches</h3>
-<br/>
+<br />
 <button type="button" @onclick="AddBranchOnClick" class="btn btn-primary">Add Branch</button>
-<br/>
-<br/>
+<br />
+<br />
 
-@if(_branches != null)
+@if (_branches != null)
 {
     <table class="table">
         <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
         </thead>
         <tbody>
             @foreach (var branch in _branches)

@@ -1,4 +1,5 @@
 ﻿@page "/addvehiclemodel"
+@attribute [Authorize(Policy = "AdminOnly")]
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleBodyTypeUseCaseInterfaces
 
@@ -7,9 +8,9 @@
 @inject IViewVehicleBodyTypesUseCase _viewVehicleBodyTypesUseCase
 
 <h3>Add Vehicle Model</h3>
-<br/>
+<br />
 
-@if(_vehicleModel != null)
+@if (_vehicleModel != null)
 {
     <EditForm Model="_vehicleModel" OnValidSubmit="OnValidSubmit">
         <DataAnnotationsValidator></DataAnnotationsValidator>

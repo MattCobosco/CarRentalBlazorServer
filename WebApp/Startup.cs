@@ -42,6 +42,16 @@ namespace WebApp
 
             services.AddControllers();
 
+            // Identity
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", p=>p.RequireClaim("Position", "Admin"));
+                options.AddPolicy("LogisticianOnly", p=>p.RequireClaim("Position", "Logistician"));
+                options.AddPolicy("AgentOnly", p=>p.RequireClaim("Position","Agent"));
+                options.AddPolicy("AdminLogisticianOnly", p => p.RequireClaim("Position", "Admin", "Logistician"));
+            });
+
+            // Car Rental Database
             services.AddDbContext<CarRentalContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultDbConnection"));
@@ -129,6 +139,10 @@ namespace WebApp
 
             app.UseRouting();
 
+            // Identity
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             // Swagger
             var swaggerOptions = new SwaggerOptions();
             Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
@@ -146,6 +160,9 @@ namespace WebApp
 
                 // Controllers
                 endpoints.MapControllers();
+
+                // Identity
+                endpoints.MapRazorPages();
             });
         }
     }

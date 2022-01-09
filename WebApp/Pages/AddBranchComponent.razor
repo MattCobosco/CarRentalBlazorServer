@@ -1,4 +1,5 @@
 ﻿@page "/addbranch"
+@attribute [Authorize(Policy = "AdminOnly")]
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 
 @inject NavigationManager _navigationManager

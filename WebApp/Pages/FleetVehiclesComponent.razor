@@ -1,4 +1,5 @@
 ﻿@page "/fleetvehicles"
+@attribute [Authorize(Policy = "AdminLogisticianAgentOnly")]
 @using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
@@ -11,24 +12,24 @@
 @inject IGetBranchByIdUseCase _getBranchByIdUseCase
 
 <h3>Fleet Vehicles</h3>
-<br/>
+<br />
 <button type="button" @onclick="AddFleetVehicleOnClick" class="btn btn-primary">Add Fleet Vehicle</button>
-<br/>
-<br/>
+<br />
+<br />
 
-@if(_fleetVehicles != null)
+@if (_fleetVehicles != null)
 {
     <table class="table">
         <thead>
-        <tr>
-            <th>License Plate</th>
-            <th>Make&Model</th>
-            <th>Current Branch</th>
-            <th>Odometer</th>
-            <th>Maintenance Odo</th>
-            <th>Maintenance Date</th>
-            <th>Actions</th>
-        </tr>
+            <tr>
+                <th>License Plate</th>
+                <th>Make&Model</th>
+                <th>Current Branch</th>
+                <th>Odometer</th>
+                <th>Maintenance Odo</th>
+                <th>Maintenance Date</th>
+                <th>Actions</th>
+            </tr>
         </thead>
         <tbody>
             @foreach (var fleetVehicle in _fleetVehicles)
