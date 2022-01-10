@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UseCases", "UseCases\UseCas
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreBusiness", "CoreBusiness\CoreBusiness.csproj", "{4F1EF5AD-EEDB-4ED4-A3D4-EF8FAACC4EB5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.DataStore.InMemory", "Plugins.DataStore.InMemory\Plugins.DataStore.InMemory.csproj", "{C565AEBC-11A3-4420-BB65-D8FAE72E4822}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.DataStore.SQL", "Plugins.DataStore.SQL\Plugins.DataStore.SQL.csproj", "{BB5779CB-F70A-4EC2-A7BC-ECD05C8FAF7B}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{4F1EF5AD-EEDB-4ED4-A3D4-EF8FAACC4EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F1EF5AD-EEDB-4ED4-A3D4-EF8FAACC4EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F1EF5AD-EEDB-4ED4-A3D4-EF8FAACC4EB5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C565AEBC-11A3-4420-BB65-D8FAE72E4822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C565AEBC-11A3-4420-BB65-D8FAE72E4822}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C565AEBC-11A3-4420-BB65-D8FAE72E4822}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C565AEBC-11A3-4420-BB65-D8FAE72E4822}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BB5779CB-F70A-4EC2-A7BC-ECD05C8FAF7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BB5779CB-F70A-4EC2-A7BC-ECD05C8FAF7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB5779CB-F70A-4EC2-A7BC-ECD05C8FAF7B}.Release|Any CPU.ActiveCfg = Release|Any CPU

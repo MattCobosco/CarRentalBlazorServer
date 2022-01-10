@@ -2,6 +2,6 @@
 {
     public interface IDeleteCustomerUseCase
     {
-        void Delete(int CustomerId);
+        void Delete(string CustomerGuid);
     }
 }

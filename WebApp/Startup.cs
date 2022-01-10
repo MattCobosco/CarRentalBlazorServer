@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Plugins.DataStore.InMemory;
 using Plugins.DataStore.SQL;
 using UseCases.BranchUseCases;
 using UseCases.CustomerUseCases;
@@ -45,12 +44,12 @@ namespace WebApp
             // Identity
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminOnly", p=>p.RequireClaim("Position", "Admin"));
-                options.AddPolicy("LogisticianOnly", p=>p.RequireClaim("Position", "Logistician"));
-                options.AddPolicy("AgentOnly", p=>p.RequireClaim("Position","Agent"));
-                options.AddPolicy("CustomerOnly", p=>p.RequireClaim("Position", "Customer"));
+                options.AddPolicy("AdminOnly", p => p.RequireClaim("Position", "Admin"));
+                options.AddPolicy("LogisticianOnly", p => p.RequireClaim("Position", "Logistician"));
+                options.AddPolicy("AgentOnly", p => p.RequireClaim("Position", "Agent"));
+                options.AddPolicy("CustomerOnly", p => p.RequireClaim("Position", "Customer"));
                 options.AddPolicy("AdminLogisticianOnly", p => p.RequireClaim("Position", "Admin", "Logistician"));
-                options.AddPolicy("AdminLogisticianAgentOnly", p=>p.RequireClaim("Position", "Admin", "Logistician", "Agent"));
+                options.AddPolicy("AdminLogisticianAgentOnly", p => p.RequireClaim("Position", "Admin", "Logistician", "Agent"));
             });
 
             // Car Rental Database
@@ -68,7 +67,7 @@ namespace WebApp
             /* Dependency Injection - In-Memory Data Store
             services.AddScoped<IBranchRepository, BranchInMemoryRepository>();
             */
-            services.AddScoped<ICustomerRepository, CustomerInMemoryRepository>();
+            //services.AddScoped<ICustomerRepository, CustomerInMemoryRepository>();
             //services.AddScoped<IFleetVehicleRepository, FleetVehicleInMemoryRepository>();
             //services.AddScoped<IReservationRepository, ReservationInMemoryRepository>();
             //services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeInMemoryRepository>();
@@ -76,6 +75,7 @@ namespace WebApp
 
             // Dependency Injection - EF Core Data Store for SQL
             services.AddScoped<IBranchRepository, BranchRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IFleetVehicleRepository, FleetVehicleRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
@@ -92,7 +92,7 @@ namespace WebApp
             services.AddTransient<IAddCustomerUseCase, AddCustomerUseCase>();
             services.AddTransient<IDeleteCustomerUseCase, DeleteCustomerUseCase>();
             services.AddTransient<IEditCustomerUseCase, EditCustomerUseCase>();
-            services.AddTransient<IGetCustomerByIdUseCase, GetCustomerByIdUseCase>();
+            services.AddTransient<IGetCustomerByGuidUseCase, GetCustomerByGuidUseCase>();
             services.AddTransient<IViewCustomersUseCase, ViewCustomersUseCase>();
             // Fleet Vehicles
             services.AddTransient<IAddFleetVehicleUseCase, AddFleetVehicleUseCase>();

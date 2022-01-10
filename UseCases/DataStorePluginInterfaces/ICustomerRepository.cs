@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using CoreBusiness;
+﻿using CoreBusiness;
+using System.Collections.Generic;
 
 namespace UseCases.DataStorePluginInterfaces
 {
     public interface ICustomerRepository
     {
         void AddCustomer(Customer customer);
-        void DeleteCustomer(int customerId);
+        void DeleteCustomer(string customerGuid);
         void EditCustomer(Customer customer);
-        Customer GetCustomerById(int customerId);
+        Customer GetCustomerByGuid(string customerGuid);
         IEnumerable<Customer> GetCustomers();
     }
 }

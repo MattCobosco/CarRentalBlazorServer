@@ -12,9 +12,9 @@ namespace UseCases.CustomerUseCases
             _customerRepository = customerRepository;
         }
 
-        public void Delete(int CustomerId)
+        public void Delete(string customerGuid)
         {
-            _customerRepository.DeleteCustomer((CustomerId));
+            _customerRepository.DeleteCustomer(customerGuid);
         }
     }
 }

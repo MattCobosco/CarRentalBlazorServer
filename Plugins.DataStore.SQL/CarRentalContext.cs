@@ -12,6 +12,7 @@ namespace Plugins.DataStore.SQL
         }
 
         public DbSet<Branch> Branches { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<FleetVehicle> FleetVehicles { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
@@ -25,6 +26,12 @@ namespace Plugins.DataStore.SQL
                 .HasMany(br => br.FleetVehicles)
                 .WithOne(fv => fv.CurrentBranch)
                 .HasForeignKey(fv => fv.CurrentBranchId);
+
+            // Customer
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.Reservations)
+                .WithOne(f => f.Customer)
+                .HasForeignKey(f => f.CustomerGuid);
 
             // Reservation
             modelBuilder.Entity<Reservation>()
@@ -55,8 +62,6 @@ namespace Plugins.DataStore.SQL
                 .HasMany(vm => vm.FleetVehicles)
                 .WithOne(fv => fv.VehicleModel)
                 .HasForeignKey(fv => fv.VehicleModelId);
-
-            modelBuilder.Entity<Reservation>();
 
             // Data seed
             modelBuilder.Entity<Branch>().HasData(
@@ -222,18 +227,6 @@ namespace Plugins.DataStore.SQL
                    CurrentBranchId = 4,
                    VehicleModelId = 3
                });
-
-            modelBuilder.Entity<Reservation>().HasData(
-                new Reservation()
-                {
-                    ReservationGuid = Guid.NewGuid(),
-                    StartDateTime = DateTime.Now,
-                    EndDateTime = DateTime.Now.AddDays(2),
-                    Price = 69,
-                    StartBranchId = 2,
-                    EndBranchId = 1,
-                    FleetVehicleLicensePlate = "GD19791"
-                });
 
             modelBuilder.Entity<VehicleBodyType>().HasData(
                 new VehicleBodyType

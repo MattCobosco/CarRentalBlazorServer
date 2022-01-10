@@ -2,8 +2,8 @@
 
 namespace UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
 {
-    public interface IGetCustomerByIdUseCase
+    public interface IGetCustomerByGuidUseCase
     {
-        Customer Execute(int customerId);
+        Customer Execute(string customerGuid);
     }
 }
