@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using CoreBusiness;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces;
 
 namespace WebApp.Areas.Identity.Pages.Account
 {
@@ -23,17 +27,20 @@ namespace WebApp.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IAddCustomerUseCase _addCustomerUseCase;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, 
+            IAddCustomerUseCase addCustomerUseCase)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _addCustomerUseCase = addCustomerUseCase;
         }
 
         [BindProperty]
@@ -80,11 +87,13 @@ namespace WebApp.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = Input.UserName, Email = Input.Email };
+                var customer = new Customer { CustomerGuid = user.Id };
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
+                var claim = await _userManager.AddClaimAsync(user, new Claim("Position", "Customer"));
+                if (result.Succeeded && claim.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
+                    _addCustomerUseCase.Execute(customer);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
