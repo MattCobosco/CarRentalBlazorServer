@@ -48,6 +48,7 @@ namespace WebApp
                 options.AddPolicy("AdminOnly", p=>p.RequireClaim("Position", "Admin"));
                 options.AddPolicy("LogisticianOnly", p=>p.RequireClaim("Position", "Logistician"));
                 options.AddPolicy("AgentOnly", p=>p.RequireClaim("Position","Agent"));
+                options.AddPolicy("CustomerOnly", p=>p.RequireClaim("Position", "Customer"));
                 options.AddPolicy("AdminLogisticianOnly", p => p.RequireClaim("Position", "Admin", "Logistician"));
                 options.AddPolicy("AdminLogisticianAgentOnly", p=>p.RequireClaim("Position", "Admin", "Logistician", "Agent"));
             });
