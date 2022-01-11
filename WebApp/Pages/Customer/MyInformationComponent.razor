@@ -1,11 +1,9 @@
 ﻿@page "/myinformation"
 @attribute [Authorize(Policy = "CustomerOnly")]
-@using Microsoft.AspNetCore.Identity
 @using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.UserUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
-@inject UserManager<IdentityUser> _userManager
 @inject IGetCurrentUserGuidUseCase _getCurrentUserGuidUseCase
 @inject IGetCustomerByGuidUseCase _getCustomerByGuidUseCase
 
@@ -14,14 +12,14 @@
 <ul class="list-group">
     <li class="list-group-item">GUID: @_customer.CustomerGuid</li>
     <li class="list-group-item">First Name: @_customer.FirstName</li>
-    <li class="list-group-item">Last Name:@_customer.LastName</li>
+    <li class="list-group-item">Last Name: @_customer.LastName</li>
     <li class="list-group-item">Contact details: @_customer.ContactDetails</li>
     <li class="list-group-item">Address: @_customer.Address</li>
     <li class="list-group-item">ID#: @_customer.PersonalDocumentNumber</li>
     <li class="list-group-item">Driving License#: @_customer.DrivingLicenseNumber</li>
     <li class="list-group-item">Pesel: @_customer.Pesel</li>
 </ul>
-<button type="button" @onclick="@(() => EditCustomerInformationOnClick(_customer))" class="btn btn-primary">Edit</button>
+<button type="button" @onclick="EditCustomerInformationOnClick" class="btn btn-primary">Edit</button>
 
 
 @code
@@ -35,9 +33,9 @@
         LoadData();
     }
 
-    private void EditCustomerInformationOnClick(Customer customer)
+    private void EditCustomerInformationOnClick()
     {
-        _navigationManager.NavigateTo($"editmyinformation/{customer.CustomerGuid}");
+        _navigationManager.NavigateTo($"editmyinformation");
     }
 
     private void LoadData()
