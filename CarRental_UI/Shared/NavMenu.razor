@@ -5,17 +5,31 @@
     </button>
 </div>
 
+<AuthorizeView Policy="CustomerOnly">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </li>
+    </ul>
+</AuthorizeView>
 
 <AuthorizeView>
-    <Authorized>
+    <NotAuthorized>
         <ul class="nav flex-column">
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                     <span class="oi oi-home" aria-hidden="true"></span> Home
                 </NavLink>
             </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="checkreservation" Match="NavLinkMatch.All">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Check Reservation
+                </NavLink>
+            </li>
         </ul>
-    </Authorized>
+    </NotAuthorized>
 </AuthorizeView>
 
 <AuthorizeView Policy="CustomerOnly">

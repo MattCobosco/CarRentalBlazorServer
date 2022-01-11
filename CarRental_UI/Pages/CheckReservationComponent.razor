@@ -1,0 +1,43 @@
+﻿@page "/checkreservation"
+@using UseCases.ReservationUseCases
+@using UseCases.BranchUseCases
+
+@inject GetReservationByGuidUseCase _getReservationByGuidUseCase
+@inject GetBranchByIdUseCase _getBranchByIdUseCase
+
+<h3>Check Reservation</h3>
+
+<form onsubmit="@SearchOnClick(_searchGuid)">
+    <input type="text" name="" placeholder="Reservation GUID"  @bind="_searchGuid">
+    <input class="btn btn-primary" type="submit" name="" value="Search">
+</form>
+
+@if (_reservation != null)
+{
+    <ul class="">
+        <li>Start Branch: @GetBranchById(_reservation.StartBranchId)</li>
+        <li>End Branch: @GetBranchById(_reservation.EndBranchId)</li>
+        <li>Start Date&Time: @_reservation.StartDateTime</li>
+        <li>End Date&Time: @_reservation.EndDateTime</li>
+        <li>Price: @_reservation.Price</li>
+    </ul>
+    
+}
+
+@code {
+    private Reservation _reservation;
+    private string _searchGuid;
+
+
+    private Reservation SearchOnClick(string searchGuid)
+    {
+        _reservation = _getReservationByGuidUseCase.Execute(searchGuid);
+        return _reservation;
+    }
+
+    private Branch GetBranchById(int branchId)
+    {
+        return _getBranchByIdUseCase.Execute(branchId);
+    }
+
+}
