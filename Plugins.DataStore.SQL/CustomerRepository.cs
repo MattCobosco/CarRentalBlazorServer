@@ -94,7 +94,7 @@ namespace Plugins.DataStore.SQL
             {
                 return customer;
             }
-            Console.WriteLine(customerGuid);
+
             Console.WriteLine("Couldn't find the requested Customer!");
             return null;
         }

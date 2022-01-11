@@ -89,6 +89,7 @@
         base.OnParametersSet();
 
         var fleet = _getFleetVehicleByLicensePlateUseCase.Execute(FleetVehicleLicensePlate);
+
         _fleetVehicle = new FleetVehicle
         {
             FleetVehicleLicensePlate = fleet.FleetVehicleLicensePlate,
