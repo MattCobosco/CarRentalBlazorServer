@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using Plugins.DataStore.SQL;
 using Plugins.DataStore.SQL.Data;
 using Plugins.IdentityStore.SQL;
@@ -24,7 +23,6 @@ using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces;
 using UseCases.UserUseCases;
 using UseCases.VehicleBodyTypeUseCases;
 using UseCases.VehicleModelUseCases;
-using CarRental_UI.Swagger;
 
 namespace CarRental_UI
 {
@@ -42,6 +40,7 @@ namespace CarRental_UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
             services.AddServerSideBlazor();
 
             services.AddControllers();
@@ -65,11 +64,6 @@ namespace CarRental_UI
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultDbConnection"));
             });
 
-            // Swagger
-            services.AddSwaggerGen(x =>
-            {
-                x.SwaggerDoc("v1", new OpenApiInfo { Title = "Car Rental API", Version = "v1" });
-            });
 
             // Dependency Injection - Data Store
             services.AddScoped<IBranchRepository, BranchRepository>();
@@ -149,16 +143,6 @@ namespace CarRental_UI
             // Identity
             app.UseAuthentication();
             app.UseAuthorization();
-
-            // Swagger
-            var swaggerOptions = new SwaggerOptions();
-            Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
-            app.UseSwagger(option => { option.RouteTemplate = swaggerOptions.JsonRoute; });
-            app.UseSwaggerUI(option =>
-            {
-                option.SwaggerEndpoint(swaggerOptions.UIEndpoint,
-                    swaggerOptions.Description);
-            });
 
             app.UseEndpoints(endpoints =>
             {

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Plugins.DataStore.SQL.Data;
 using UseCases.DataStorePluginInterfaces;
 
@@ -127,6 +129,11 @@ namespace Plugins.DataStore.SQL
                 Console.WriteLine(ex.Message);
                 return null;
             }
+        }
+
+        public async Task<IEnumerable<VehicleModel>> GetVehicleModelsAsync()
+        {
+            return await _carRentalContext.VehicleModels.ToListAsync();
         }
     }
 }

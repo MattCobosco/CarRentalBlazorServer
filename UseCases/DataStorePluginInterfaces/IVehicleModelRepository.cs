@@ -1,5 +1,6 @@
 ﻿using CoreBusiness;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace UseCases.DataStorePluginInterfaces
 {
@@ -10,5 +11,6 @@ namespace UseCases.DataStorePluginInterfaces
         void EditVehicleModel(VehicleModel vehicleModel); 
         VehicleModel GetVehicleModelById(int vehicleModelId); 
         IEnumerable<VehicleModel> GetVehicleModels();
+        Task<IEnumerable<VehicleModel>> GetVehicleModelsAsync();
     }
 }

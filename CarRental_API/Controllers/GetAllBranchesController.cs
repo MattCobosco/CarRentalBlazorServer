@@ -6,8 +6,8 @@ using UseCases.DataStorePluginInterfaces;
 
 namespace CarRental_UI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class GetAllBranchesController : ControllerBase
     {
         private readonly IBranchRepository _branchRepository;

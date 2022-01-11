@@ -1,6 +1,7 @@
 ﻿using CoreBusiness;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UseCases.DataStorePluginInterfaces;
 
 namespace CarRental_UI.Controllers
@@ -17,9 +18,9 @@ namespace CarRental_UI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<VehicleModel> ShowAllVehicleModelsDetails()
+        public async Task<IEnumerable<VehicleModel>> ShowAllVehicleModelsDetails()
         {
-            return _vehicleModelRepository.GetVehicleModels();
+            return await _vehicleModelRepository.GetVehicleModelsAsync();
         }
     }
 }
