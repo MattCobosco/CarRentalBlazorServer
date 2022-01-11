@@ -35,7 +35,7 @@ namespace Plugins.DataStore.SQL
 
         }
 
-        public void DeleteReservation(Guid reservationGuid)
+        public void DeleteReservation(string reservationGuid)
         {
             var transaction = _carRentalContext.Database.BeginTransaction();
 
@@ -86,7 +86,7 @@ namespace Plugins.DataStore.SQL
             }
         }
 
-        public Reservation GetReservationByGuid(Guid reservationGuid)
+        public Reservation GetReservationByGuid(string reservationGuid)
         {
             var reservation = _carRentalContext.Reservations.Find(reservationGuid);
 

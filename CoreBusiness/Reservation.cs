@@ -8,12 +8,12 @@ namespace CoreBusiness
     {
         public Reservation()
         {
-            ReservationGuid = Guid.NewGuid();
+            ReservationGuid = Guid.NewGuid().ToString();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public Guid ReservationGuid { get; set; }
+        public string ReservationGuid { get; set; }
         [Required]
         public DateTime StartDateTime { get; set; }
         [Required]

@@ -14,7 +14,7 @@ namespace UseCases.ReservationUseCases
             _reservationRepository = reservationRepository;
         }
 
-        public Reservation Execute(Guid reservationGuid)
+        public Reservation Execute(string reservationGuid)
         {
             return _reservationRepository.GetReservationByGuid(reservationGuid);
         }

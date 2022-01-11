@@ -80,7 +80,7 @@
         _navigationManager.NavigateTo($"/editreservation/{reservation.ReservationGuid}");
     }
 
-    private void DeleteReservation(Guid reservationGuid)
+    private void DeleteReservation(string reservationGuid)
     {
         _deleteReservationUseCase.Delete(reservationGuid);
         LoadData();

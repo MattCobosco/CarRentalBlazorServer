@@ -4,6 +4,6 @@ namespace UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
 {
     public interface IDeleteReservationUseCase
     {
-        void Delete(Guid reservationGuid);
+        void Delete(string reservationGuid);
     }
 }

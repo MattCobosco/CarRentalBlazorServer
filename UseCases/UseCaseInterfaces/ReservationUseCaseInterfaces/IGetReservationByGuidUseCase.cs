@@ -5,6 +5,6 @@ namespace UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
 {
     public interface IGetReservationByGuidUseCase
     {
-        Reservation Execute(Guid reservationGuid);
+        Reservation Execute(string reservationGuid);
     }
 }
