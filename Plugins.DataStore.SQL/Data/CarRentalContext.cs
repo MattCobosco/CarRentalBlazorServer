@@ -1,8 +1,8 @@
-﻿using CoreBusiness;
+﻿using System;
+using CoreBusiness;
 using Microsoft.EntityFrameworkCore;
-using System;
 
-namespace Plugins.DataStore.SQL
+namespace Plugins.DataStore.SQL.Data
 {
     public class CarRentalContext : DbContext
     {

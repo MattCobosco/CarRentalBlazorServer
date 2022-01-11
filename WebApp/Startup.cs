@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Plugins.DataStore.SQL;
+using Plugins.DataStore.SQL.Data;
 using Plugins.IdentityStore.SQL;
 using UseCases.BranchUseCases;
 using UseCases.CustomerUseCases;

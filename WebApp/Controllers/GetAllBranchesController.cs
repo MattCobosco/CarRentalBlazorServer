@@ -1,6 +1,7 @@
 ﻿using CoreBusiness;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UseCases.DataStorePluginInterfaces;
 
 namespace WebApp.Controllers
@@ -17,9 +18,9 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Branch> ShowAllBranchesDetails()
+        public async Task<IEnumerable<Branch>> ShowAllBranchesDetails()
         {
-            return _branchRepository.GetBranches();
+            return await _branchRepository.GetBranchesAsync();
         }
     }
 }

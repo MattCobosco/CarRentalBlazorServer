@@ -1,5 +1,6 @@
 ﻿using CoreBusiness;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace UseCases.DataStorePluginInterfaces
 {
@@ -10,5 +11,6 @@ namespace UseCases.DataStorePluginInterfaces
         void EditBranch(Branch branch);
         Branch GetBranchById(int branchId);
         IEnumerable<Branch> GetBranches();
+        Task<IEnumerable<Branch>> GetBranchesAsync();
     }
 }
