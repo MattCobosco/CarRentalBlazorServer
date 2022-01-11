@@ -1,5 +1,5 @@
 ﻿@page "/reservations"
-@attribute [Authorize(Policy = "AdminLogisticianAgentOnly")]
+@attribute [Authorize(Policy = "EmployeeOnly")]
 @using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces

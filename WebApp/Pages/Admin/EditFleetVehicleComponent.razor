@@ -1,5 +1,5 @@
 ﻿@page "/editfleetvehicle/{fleetVehicleLicensePlate}"
-@attribute [Authorize(Policy = "AdminLogisticianAgentOnly")]
+@attribute [Authorize(Policy = "EmployeeOnly")]
 @using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces

@@ -1,0 +1,100 @@
+﻿@page "/editmyinformation/{customerGuid}"
+@attribute [Authorize(Policy = "CustomerOnly")]
+@using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
+
+
+@inject NavigationManager _navigationManager
+@inject IGetCustomerByGuidUseCase _getCustomerByGuidUseCase
+@inject IEditCustomerUseCase _editCustomerUseCase
+
+<h3>Edit My Information</h3>
+<br />
+
+@if (_customer != null)
+{
+<EditForm Model="_customer" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        <InputText id="firstName" @bind-Value="_customer.FirstName" class="form-control"></InputText>
+    </div>
+
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <InputText id="lastName" @bind-Value="_customer.LastName" class="form-control"></InputText>
+    </div>
+
+    <div class="form-group">
+        <label for="contactDetails">Contact Details</label>
+        <InputText id="contactDetails" @bind-Value="_customer.ContactDetails" class="form-control"></InputText>
+    </div>
+
+    <div class="form-group">
+        <label for="address">Address</label>
+        <InputText id="address" @bind-Value="_customer.Address" class="form-control"></InputText>
+    </div>
+
+    <div class="form-group">
+        <label for="id">ID#</label>
+        <InputText id="id" @bind-Value="_customer.PersonalDocumentNumber" class="form-control"></InputText>
+    </div>
+
+    <div class="form-group">
+        <label for="drivingLicense">Driving License#</label>
+        <InputText id="drivingLicense" @bind-Value="_customer.DrivingLicenseNumber" class="form-control"></InputText>
+    </div>
+
+    <div class="form-group">
+        <label for="pesel">Pesel</label>
+        <InputText id="pesel" @bind-Value="_customer.Pesel" class="form-control"></InputText>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-primary" @onclick="OnCancel">Cancel</button>
+</EditForm>
+}
+
+@code {
+
+    [Parameter]
+    public string CustomerGuid { get; set; }
+
+    private Customer _customer;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        var customer = _getCustomerByGuidUseCase.Execute(CustomerGuid);
+
+        _customer = new Customer
+        {
+            FirstName = customer.FirstName,
+            LastName = customer.LastName,
+            ContactDetails = customer.ContactDetails,
+            Address = customer.Address,
+            PersonalDocumentNumber = customer.PersonalDocumentNumber,
+            DrivingLicenseNumber = customer.DrivingLicenseNumber,
+            Pesel = customer.Pesel
+        };
+    }
+
+    private void OnValidSubmit()
+    {
+        _editCustomerUseCase.Execute(_customer);
+        _navigationManager.NavigateTo("/myinformation");
+    }
+
+    private void OnCancel()
+    {
+        _navigationManager.NavigateTo("/myinformation");
+    }
+
+}

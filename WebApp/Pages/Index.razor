@@ -1,0 +1,54 @@
+﻿@page "/"
+@using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
+
+@inject IViewBranchesUseCase _viewBranchesUseCase
+@inject IViewVehicleModelsUseCase _viewVehicleModelsUseCase
+
+<h2>Our branches</h2>
+@if (_branches != null)
+{
+    <ul class="list-group list-group-horizontal">
+        @{
+            foreach (var branch in _branches)
+            {
+                <li class="list-group-item">@branch.Name</li>
+            }
+        }
+    </ul>
+}
+<br />
+<iframe frameborder=0 style='width:75%;height:800px' src='//www.zeemaps.com/pub?group=4298778'> </iframe>
+<br />
+
+<h2>Our cars</h2>
+<br />
+
+@if (_vehicleModels != null)
+{
+    <ul class="list-group">
+        @foreach (var vehicleModel in _vehicleModels)
+        {
+            <li class="list-group-item">@vehicleModel.Make @vehicleModel.Model @vehicleModel.ModelYear</li>
+        }
+    </ul>
+}
+
+@code
+{
+    private List<Branch> _branches;
+    private List<VehicleModel> _vehicleModels;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        LoadData();
+    }
+
+    private void LoadData()
+    {
+        _branches = _viewBranchesUseCase.Execute()?.ToList();
+        _vehicleModels = _viewVehicleModelsUseCase.Execute()?.ToList();
+    }
+}
+

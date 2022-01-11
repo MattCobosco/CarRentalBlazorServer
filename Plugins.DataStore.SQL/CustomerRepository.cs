@@ -65,6 +65,7 @@ namespace Plugins.DataStore.SQL
             try
             {
                 var customerToEdit = GetCustomerByGuid(customer.CustomerGuid);
+
                 customerToEdit.FirstName = customer.FirstName;
                 customerToEdit.LastName = customer.LastName;
                 customerToEdit.ContactDetails = customer.ContactDetails;
@@ -92,7 +93,7 @@ namespace Plugins.DataStore.SQL
             {
                 return customer;
             }
-
+            Console.WriteLine(customerGuid);
             Console.WriteLine("Couldn't find the requested Customer!");
             return null;
         }

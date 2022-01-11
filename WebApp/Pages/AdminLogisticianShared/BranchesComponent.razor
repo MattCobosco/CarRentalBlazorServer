@@ -1,5 +1,5 @@
 ﻿@page "/branches"
-@attribute [Authorize(Policy = "AdminLogisticianAgentOnly")]
+@attribute [Authorize(Policy = "EmployeeOnly")]
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
