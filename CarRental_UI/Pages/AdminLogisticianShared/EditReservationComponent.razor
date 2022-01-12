@@ -12,6 +12,7 @@
 @inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase
 @inject IEditReservationUseCase _editReservationUseCase
 @inject IGetReservationByGuidUseCase _getReservationByGuidUseCase
+@inject IViewVehicleModelsUseCase _viewVehicleModelsUseCase
 
 <h3>Edit Reservation</h3>
 <br />
@@ -46,9 +47,19 @@
             <label for="endBranchName">End Branch</label>
             <InputSelect id="endBranchName" @bind-Value="_reservation.EndBranchId" class="form-control">
                 @foreach (var branch in _branches)
-                    {
+                {
                     <option value="@branch.BranchId">@branch.Name</option>
-                    }
+                }
+            </InputSelect>
+        </div>
+
+        <div class="form-group">
+            <label for="fleetVehicleLicensePlate">Model</label>
+            <InputSelect id="fleetVehicleLicensePlate" @bind-Value="_reservation.VehicleModelId" class="form-control">
+                @foreach (var model in _vehicleModels)
+                {
+                    <option value="@model.VehicleModelId"> @model.Make @model.Model</option>
+                }
             </InputSelect>
         </div>
 
@@ -57,7 +68,7 @@
             <InputSelect id="fleetVehicleLicensePlate" @bind-Value="_reservation.FleetVehicleLicensePlate" class="form-control">
                 @foreach (var vehicle in _fleetVehicles)
                     {
-                    <option value="@vehicle.FleetVehicleLicensePlate">@vehicle.FleetVehicleLicensePlate - @GetModelMake(vehicle.FleetVehicleLicensePlate).Make @GetModelMake(vehicle.FleetVehicleLicensePlate).Model</option>
+                    <option value="@vehicle.FleetVehicleLicensePlate">@vehicle.FleetVehicleLicensePlate - @vehicle.VehicleModel.Make @vehicle.VehicleModel.Model</option>
                     }
             </InputSelect>
         </div>
@@ -74,6 +85,7 @@
 
     private Reservation _reservation;
     private List<FleetVehicle> _fleetVehicles;
+    private List<VehicleModel> _vehicleModels;
     private List<Branch> _branches;
 
     protected override void OnInitialized()
@@ -94,13 +106,15 @@
             EndDateTime = reservation.EndDateTime,
             StartBranchId = reservation.StartBranchId,
             EndBranchId = reservation.EndBranchId,
-            FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate
+            VehicleModelId = reservation.VehicleModelId,
+            FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate,
+            CustomerGuid = reservation.CustomerGuid
         };
     }
 
     private void OnValidSubmit()
     {
-        _reservation.Price = _getReservationPriceUseCase.Execute(_reservation.FleetVehicleLicensePlate, _reservation.StartDateTime, _reservation.EndDateTime);
+        _reservation.Price = _getReservationPriceUseCase.Execute(_reservation.VehicleModelId, _reservation.StartDateTime, _reservation.EndDateTime);
         _editReservationUseCase.Execute(_reservation);
         _navigationManager.NavigateTo("/reservations");
     }
@@ -114,11 +128,7 @@
     {
         _fleetVehicles = _viewFleetVehiclesUseCase.Execute()?.ToList();
         _branches = _viewBranchesUseCase.Execute()?.ToList();
-    }
-
-    private VehicleModel GetModelMake(string licensePlate)
-    {
-        return _getVehicleModelByLicensePlateUseCase.Execute(licensePlate);
+        _vehicleModels = _viewVehicleModelsUseCase.Execute()?.ToList();
     }
 
 }

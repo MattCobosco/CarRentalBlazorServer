@@ -24,6 +24,8 @@ namespace CoreBusiness
         public int StartBranchId { get; set; }
         [Required]
         public int EndBranchId { get; set; }
+        [Required]
+        public int VehicleModelId { get; set; }
         public string FleetVehicleLicensePlate { get; set; }
         [Required]
         public string CustomerGuid { get; set; }
@@ -31,6 +33,7 @@ namespace CoreBusiness
         // Navigation properties for EF Core
         public Branch StartBranch { get; set; }
         public Branch EndBranch { get; set; }
+        public VehicleModel VehicleModel { get; set; }
         public FleetVehicle FleetVehicle { get; set; }
         public Customer Customer { get; set; }
         //TODO: Employee with Identity

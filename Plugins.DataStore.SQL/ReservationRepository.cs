@@ -73,7 +73,9 @@ namespace Plugins.DataStore.SQL
                 reservationToEdit.Price = reservation.Price;
                 reservationToEdit.StartBranchId = reservation.StartBranchId;
                 reservationToEdit.EndBranch = reservation.EndBranch;
+                reservationToEdit.VehicleModelId = reservation.VehicleModelId;
                 reservationToEdit.FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate;
+                reservationToEdit.CustomerGuid = reservation.CustomerGuid;
 
                 _carRentalContext.SaveChanges();
                 transaction.Commit();

@@ -51,6 +51,11 @@ namespace Plugins.DataStore.SQL.Data
                 .WithMany(fv => fv.Reservations)
                 .HasForeignKey(res => res.FleetVehicleLicensePlate);
 
+            modelBuilder.Entity<Reservation>()
+                .HasOne(res => res.VehicleModel)
+                .WithMany(vm => vm.Reservations)
+                .HasForeignKey(res => res.VehicleModelId);
+
             // Vehicle Body Type
             modelBuilder.Entity<VehicleBodyType>()
                 .HasMany(vbt => vbt.VehicleModels)

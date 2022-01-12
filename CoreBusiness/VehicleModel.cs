@@ -31,6 +31,7 @@ namespace CoreBusiness
 
         // Navigation properties for EF Core
         public List<FleetVehicle> FleetVehicles { get; set; }
+        public List<Reservation> Reservations { get; set; }
         public VehicleBodyType VehicleBodyType { get; set; }
     }
 }

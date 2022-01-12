@@ -2,6 +2,7 @@
 @attribute [Authorize(Policy = "AdminLogisticianOnly")]
 @using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 
@@ -11,6 +12,8 @@
 @inject IViewFleetVehiclesUseCase _viewFleetVehiclesUseCase
 @inject IGetReservationPriceUseCase _getReservationPriceUseCase
 @inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase
+@inject IViewVehicleModelsUseCase _viewVehicleModelsUseCase
+@inject IViewCustomersUseCase _viewCustomersUseCase
 
 <h3>Add Reservation</h3>
 <br />
@@ -45,22 +48,50 @@
             <label for="endBranchName">End Branch</label>
             <InputSelect id="endBranchName" @bind-Value="_reservation.EndBranchId" class="form-control">
                 @foreach (var branch in _branches)
-                    {
+                {
                     <option value="@branch.BranchId">@branch.Name</option>
-                    }
+                }
             </InputSelect>
         </div>
+        
+        <div class="form-group">
+            <label for="vehicleModel">Model</label>
+            <InputSelect id="vehicleModel" @bind-Value="_reservation.VehicleModelId" class="form-control">
+                @foreach (var model in _vehicleModels)
+                {
+                    <option value="@model.VehicleModelId">
+                        @model.Make
+                        @model.Model
+                    </option>
+                }
+            </InputSelect>
+        </div>
+
 
         <div class="form-group">
             <label for="fleetVehicleLicensePlate">Vehicle</label>
             <InputSelect id="fleetVehicleLicensePlate" @bind-Value="_reservation.FleetVehicleLicensePlate" class="form-control">
                 @foreach (var vehicle in _fleetVehicles)
+                {
+                    <option value="@vehicle.FleetVehicleLicensePlate">@vehicle.FleetVehicleLicensePlate - 
+                        @vehicle.VehicleModel.Make 
+                        @vehicle.VehicleModel.Model
+                    </option>
+                }
+            </InputSelect>
+        </div>
+        
+        <div class="form-group">
+            <label for="customer">Customer</label>
+            <InputSelect id="customer" @bind-Value="_reservation.CustomerGuid" class="form-control">
+                @foreach (var customer in _customers)
                     {
-                        <option value="@vehicle.FleetVehicleLicensePlate">@vehicle.FleetVehicleLicensePlate - 
-                            @GetVehicleModelByLicensePlate(vehicle.FleetVehicleLicensePlate).Make 
-                            @GetVehicleModelByLicensePlate(vehicle.FleetVehicleLicensePlate).Model
-                        </option>
-                    }
+                    <option value="@customer.CustomerGuid">
+                        @customer.LastName
+                        @customer.FirstName -
+                        @customer.Pesel
+                    </option>
+                }
             </InputSelect>
         </div>
 
@@ -74,6 +105,8 @@
     private Reservation _reservation;
     private List<FleetVehicle> _fleetVehicles;
     private List<Branch> _branches;
+    private List<VehicleModel> _vehicleModels;
+    private List<Customer> _customers;
 
     protected override void OnInitialized()
     {
@@ -86,11 +119,12 @@
         _reservation.StartDateTime = DateTime.Today;
         _reservation.EndDateTime = DateTime.Today.AddDays(1);
         _reservation.FleetVehicleLicensePlate = "";
+        _reservation.CustomerGuid = "";
     }
 
     private void OnValidSubmit()
     {
-        _reservation.Price = _getReservationPriceUseCase.Execute(_reservation.FleetVehicleLicensePlate, _reservation.StartDateTime, _reservation.EndDateTime);
+        _reservation.Price = _getReservationPriceUseCase.Execute(_reservation.VehicleModelId, _reservation.StartDateTime, _reservation.EndDateTime);
         _addReservationUseCase.Execute(_reservation);
         _navigationManager.NavigateTo("/reservations");
     }
@@ -104,11 +138,8 @@
     {
         _fleetVehicles = _viewFleetVehiclesUseCase.Execute()?.ToList();
         _branches = _viewBranchesUseCase.Execute()?.ToList();
-    }
-
-    private VehicleModel GetVehicleModelByLicensePlate(string licensePlate)
-    {
-        return _getVehicleModelByLicensePlateUseCase.Execute(licensePlate);
+        _vehicleModels = _viewVehicleModelsUseCase.Execute()?.ToList();
+        _customers = _viewCustomersUseCase.Execute()?.ToList();
     }
 
 }
