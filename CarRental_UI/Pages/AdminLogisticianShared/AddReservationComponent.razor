@@ -56,7 +56,10 @@
             <InputSelect id="fleetVehicleLicensePlate" @bind-Value="_reservation.FleetVehicleLicensePlate" class="form-control">
                 @foreach (var vehicle in _fleetVehicles)
                     {
-                    <option value="@vehicle.FleetVehicleLicensePlate">@vehicle.FleetVehicleLicensePlate - @GetModelMake(vehicle.FleetVehicleLicensePlate).Make @GetModelMake(vehicle.FleetVehicleLicensePlate).Model</option>
+                        <option value="@vehicle.FleetVehicleLicensePlate">@vehicle.FleetVehicleLicensePlate - 
+                            @GetVehicleModelByLicensePlate(vehicle.FleetVehicleLicensePlate).Make 
+                            @GetVehicleModelByLicensePlate(vehicle.FleetVehicleLicensePlate).Model
+                        </option>
                     }
             </InputSelect>
         </div>
@@ -103,7 +106,7 @@
         _branches = _viewBranchesUseCase.Execute()?.ToList();
     }
 
-    private VehicleModel GetModelMake(string licensePlate)
+    private VehicleModel GetVehicleModelByLicensePlate(string licensePlate)
     {
         return _getVehicleModelByLicensePlateUseCase.Execute(licensePlate);
     }
