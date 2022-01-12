@@ -51,8 +51,8 @@
                 </td>
                 <td>
                     @GetCustomerByGuid(reservation.CustomerGuid).FirstName
-                    @GetCustomerByGuid(reservation.CustomerGuid).LastName
-                    @GetCustomerByGuid(reservation.CustomerGuid).PersonalDocumentNumber
+                    @GetCustomerByGuid(reservation.CustomerGuid).LastName -
+                    @GetCustomerByGuid(reservation.CustomerGuid).Pesel
                 </td>
                 <td>
                     <button type="button" class="btn btn-link" @onclick="@(() => EditReservation(reservation))">Edit</button>
