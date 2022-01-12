@@ -108,20 +108,6 @@ namespace Plugins.DataStore.SQL
             return null;
         }
 
-        public IEnumerable<FleetVehicle> GetFleetVehicles()
-        {
-            try
-            {
-                return _carRentalContext.FleetVehicles.ToList();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Getting Fleet Vehicles failed:");
-                Console.WriteLine(ex.Message);
-                return null;
-            }
-        }
-
         public IEnumerable<FleetVehicle> GetFleetVehicleMaintenanceDate()
         {
             DateTime listLimit = DateTime.Now.Add(new TimeSpan(14,0,0,0,0));
@@ -138,6 +124,20 @@ namespace Plugins.DataStore.SQL
                 _carRentalContext.FleetVehicles.Where(f => f.MaintenanceOdometer - f.Odometer <= 1000).Select(f=>f);
 
             return vehiclesForMaintenance?.ToList();
+        }
+
+        public IEnumerable<FleetVehicle> GetFleetVehicles()
+        {
+            try
+            {
+                return _carRentalContext.FleetVehicles.ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Getting Fleet Vehicles failed:");
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
     }
 }
