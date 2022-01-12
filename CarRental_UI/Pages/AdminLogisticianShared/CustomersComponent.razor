@@ -1,0 +1,56 @@
+﻿@page "/customers"
+@attribute [Authorize(Policy = "EmployeeOnly")]
+@using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
+
+@inject IViewCustomersUseCase _viewCustomersUseCase
+
+<h3>Customers</h3>
+
+@if (_customers != null)
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>GUID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>Personal ID#</th>
+            <th>Driving License#</th>
+            <th>Pesel</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in _customers)
+        {
+        <tr>
+            <td>@customer.CustomerGuid</td>
+            <td>@customer.FirstName</td>
+            <td>@customer.LastName</td>
+            <td>@customer.ContactDetails</td>
+            <td>@customer.Address</td>
+            <td>@customer.PersonalDocumentNumber</td>
+            <td>@customer.DrivingLicenseNumber</td>
+            <td>@customer.Pesel</td>
+        </tr>
+        }
+    </tbody>
+</table>
+}
+
+@code {
+
+    private List<Customer> _customers;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        LoadCustomers();
+    }
+
+    private void LoadCustomers()
+    {
+        _customers = _viewCustomersUseCase.Execute()?.ToList();
+    }
+}
