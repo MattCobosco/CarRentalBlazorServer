@@ -12,34 +12,34 @@
 @inject IGetCurrentUserGuidUseCase _getCurrentUserGuidUseCase
 
 <h3>My Reservations</h3>
-<br />
+<br/>
 
 @{
     if (_myReservations != null && _myReservations.Count != 0)
     {
         <table class="table">
             <thead>
-                <tr>
-                    <th>Start Branch</th>
-                    <th>End Branch</th>
-                    <th>Start Date&Time</th>
-                    <th>End Date&Time</th>
-                    <th>Vehicle</th>
-                    <th>Price</th>
-                </tr>
+            <tr>
+                <th>Start Branch</th>
+                <th>End Branch</th>
+                <th>Start Date&Time</th>
+                <th>End Date&Time</th>
+                <th>Vehicle</th>
+                <th>Price</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var reservation in _myReservations)
-                {
-                    <tr>
-                        <td>@GetBranchById(reservation.StartBranchId).Name</td>
-                        <td>@GetBranchById(reservation.EndBranchId).Name</td>
-                        <td>@reservation.StartDateTime</td>
-                        <td>@reservation.EndDateTime</td>
-                        <td>@GetVehicleModelByLicensePlate(reservation.FleetVehicleLicensePlate).Model</td>
-                        <td>@reservation.Price</td>
-                    </tr>
-                }
+            @foreach (var reservation in _myReservations)
+            {
+                <tr>
+                    <td>@GetBranchById(reservation.StartBranchId).Name</td>
+                    <td>@GetBranchById(reservation.EndBranchId).Name</td>
+                    <td>@reservation.StartDateTime</td>
+                    <td>@reservation.EndDateTime</td>
+                    <td>@GetVehicleModelByLicensePlate(reservation.FleetVehicleLicensePlate).Model</td>
+                    <td>@reservation.Price</td>
+                </tr>
+            }
             </tbody>
         </table>
     }
