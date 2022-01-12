@@ -1,9 +1,10 @@
-﻿<div class="top-row pl-4 navbar navbar-dark" height="100px">
-    <a class="navbar-brand" href="">XYZ</a>
-    <button class="navbar-toggler" @onclick="() => ToggleNavMenu(_navSubmenu)">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
+﻿
+    <div class="top-row pl-4 navbar navbar-dark" height="100px">
+        <a class="navbar-brand" href="">XYZ</a>
+        <button class="navbar-toggler" @onclick="() => ToggleNavMenu(_navSubmenu)">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
 
 <AuthorizeView Policy="CustomerOnly">
     <ul class="nav flex-column">
@@ -13,23 +14,6 @@
             </NavLink>
         </li>
     </ul>
-</AuthorizeView>
-
-<AuthorizeView>
-    <NotAuthorized>
-        <ul class="nav flex-column">
-            <li class="nav-item px-3">
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> Home
-                </NavLink>
-            </li>
-            <li class="nav-item px-3">
-                <NavLink class="nav-link" href="checkreservation" Match="NavLinkMatch.All">
-                    <span class="oi oi-plus" aria-hidden="true"></span> Check Reservation
-                </NavLink>
-            </li>
-        </ul>
-    </NotAuthorized>
 </AuthorizeView>
 
 <AuthorizeView Policy="CustomerOnly">
@@ -119,6 +103,7 @@
 </AuthorizeView>
 
 @code {
+
     private enum NavSubmenu
     {
         None,
@@ -141,4 +126,5 @@
     {
         _navSubmenu = _navSubmenu == submenu ? NavSubmenu.None : submenu;
     }
+
 }
