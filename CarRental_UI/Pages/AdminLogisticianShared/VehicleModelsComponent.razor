@@ -41,7 +41,9 @@
                     <td>@vehicleModel.BaseDailyPrice</td>
                     <td>
                         <button type="button" class="btn btn-link" @onclick="@(() => EditVehicleModel(vehicleModel))">Edit</button>
-                        <button type="button" class="btn btn-link" @onclick="@(() => DeleteVehicleModel(vehicleModel.VehicleModelId))">Delete</button>
+                        <AuthorizeView Policy="AdminOnly">
+                            <button type="button" class="btn btn-link" @onclick="@(() => DeleteVehicleModel(vehicleModel.VehicleModelId))">Delete</button>
+                        </AuthorizeView>
                     </td>
                 </tr>
             }

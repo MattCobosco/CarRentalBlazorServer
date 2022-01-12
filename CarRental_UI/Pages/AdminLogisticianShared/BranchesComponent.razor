@@ -32,7 +32,9 @@
                     <td>@branch.Description</td>
                     <td>
                         <button type="button" class="btn btn-link" @onclick="@(() => EditBranch(branch))">Edit</button>
-                        <button type="button" class="btn btn-link" @onclick="@(() => DeleteBranch(branch.BranchId))">Delete</button>
+                        <AuthorizeView Policy="AdminOnly">
+                            <button type="button" class="btn btn-link" @onclick="@(() => DeleteBranch(branch.BranchId))">Delete</button>
+                        </AuthorizeView>
                     </td>
                 </tr>
             }

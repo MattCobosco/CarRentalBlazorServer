@@ -46,7 +46,9 @@
                     <td>@fleetVehicle.MaintenanceDate.ToShortDateString()</td>
                     <td>
                         <button type="button" class="btn btn-link" @onclick="@(() => EditFleetVehicle(fleetVehicle))">Edit</button>
-                        <button type="button" class="btn btn-link" @onclick="@(() => DeleteFleetVehicle(fleetVehicle.FleetVehicleLicensePlate))">Delete</button>
+                        <AuthorizeView Policy="AdminOnly">
+                            <button type="button" class="btn btn-link" @onclick="@(() => DeleteFleetVehicle(fleetVehicle.FleetVehicleLicensePlate))">Delete</button>
+                        </AuthorizeView>
                     </td>
                 </tr>
             }
