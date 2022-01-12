@@ -24,7 +24,6 @@ namespace CoreBusiness
         public int StartBranchId { get; set; }
         [Required]
         public int EndBranchId { get; set; }
-        [Required]
         public string FleetVehicleLicensePlate { get; set; }
         [Required]
         public string CustomerGuid { get; set; }
