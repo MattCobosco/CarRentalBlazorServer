@@ -13,7 +13,7 @@ namespace UseCases.ReservationUseCases
             _reservationRepository = reservationRepository;
         }
 
-        public void Delete(Guid reservationGuid)
+        public void Delete(string reservationGuid)
         {
             _reservationRepository.DeleteReservation(reservationGuid);
         }

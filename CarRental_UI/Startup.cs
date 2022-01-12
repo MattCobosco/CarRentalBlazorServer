@@ -103,6 +103,7 @@ namespace CarRental_UI
             services.AddTransient<IEditReservationUseCase, EditReservationUseCase>();
             services.AddTransient<IGetReservationByGuidUseCase, GetReservationByGuidUseCase>();
             services.AddTransient<IGetReservationPriceUseCase, GetReservationPriceUseCase>();
+            services.AddTransient<IViewCustomerReservationsUseCase, ViewCustomerReservationsUseCase>();
             services.AddTransient<IViewReservationsUseCase, ViewReservationsUseCase>();
             // Vehicle Body Types
             services.AddTransient<IAddVehicleBodyTypeUseCase, AddVehicleBodyTypeUseCase>();

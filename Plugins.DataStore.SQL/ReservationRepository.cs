@@ -1,8 +1,8 @@
 ﻿using CoreBusiness;
+using Plugins.DataStore.SQL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Plugins.DataStore.SQL.Data;
 using UseCases.DataStorePluginInterfaces;
 
 namespace Plugins.DataStore.SQL
@@ -43,7 +43,7 @@ namespace Plugins.DataStore.SQL
             {
                 var reservation = GetReservationByGuid(reservationGuid);
 
-                if(reservation == null)
+                if (reservation == null)
                 {
                     return;
                 }
@@ -90,13 +90,28 @@ namespace Plugins.DataStore.SQL
         {
             var reservation = _carRentalContext.Reservations.Find(reservationGuid);
 
-            if(reservation != null)
+            if (reservation != null)
             {
                 return reservation;
             }
 
             Console.WriteLine("Couldn't find the requested Reservation!");
             return null;
+        }
+
+        public IEnumerable<Reservation> GetCustomerReservations(string customerGuid)
+        {
+            try
+            {
+                return _carRentalContext.Reservations
+                    .Where(r => r.CustomerGuid == customerGuid);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Getting Customer Reservations failed:");
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         public IEnumerable<Reservation> GetReservations()

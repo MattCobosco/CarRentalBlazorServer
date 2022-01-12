@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.DataStore.SQL", "Pl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.IdentityStore.SQL", "Plugins.IdentityStore.SQL\Plugins.IdentityStore.SQL.csproj", "{E0CE6C57-0168-4CB2-8963-78307782B20A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRental_API", "CarRental_API\CarRental_API.csproj", "{8C4E8666-417E-450F-9942-4F0C3D046246}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental_API", "CarRental_API\CarRental_API.csproj", "{8C4E8666-417E-450F-9942-4F0C3D046246}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

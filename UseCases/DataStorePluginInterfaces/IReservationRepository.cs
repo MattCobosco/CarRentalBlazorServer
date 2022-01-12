@@ -10,6 +10,7 @@ namespace UseCases.DataStorePluginInterfaces
         void DeleteReservation(string reservationGuid);
         void EditReservation(Reservation reservation);
         Reservation GetReservationByGuid(string reservationGuid);
+        IEnumerable<Reservation> GetCustomerReservations(string customerGuid);
         IEnumerable<Reservation> GetReservations();
     }
 }

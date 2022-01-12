@@ -4,6 +4,7 @@
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.UserUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
 @inject IViewReservationsUseCase _viewReservationsUseCase
@@ -44,19 +45,21 @@
                     <td>@reservation.StartDateTime</td>
                     <td>@reservation.EndDateTime</td>
                     <td>@reservation.Price</td>
-                    <td>@reservation.FleetVehicleLicensePlate 
-                        @GetVehicleModelByLicensePlate(reservation.FleetVehicleLicensePlate).Model</td>
                     <td>
-                        @GetCustomerByGuid(reservation.CustomerGuid).FirstName
-                        @GetCustomerByGuid(reservation.CustomerGuid).LastName
-                        @GetCustomerByGuid(reservation.CustomerGuid).PersonalDocumentNumber
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-link" @onclick="@(() => EditReservation(reservation))">Edit</button>
-                        <button type="button" class="btn btn-link" @onclick="@(() => DeleteReservation(reservation.ReservationGuid))">Delete</button>
-                    </td>
-                </tr>
-            }
+                        @reservation.FleetVehicleLicensePlate
+                    @GetVehicleModelByLicensePlate(reservation.FleetVehicleLicensePlate).Model
+                </td>
+                <td>
+                    @GetCustomerByGuid(reservation.CustomerGuid).FirstName
+                    @GetCustomerByGuid(reservation.CustomerGuid).LastName
+                    @GetCustomerByGuid(reservation.CustomerGuid).PersonalDocumentNumber
+                </td>
+                <td>
+                    <button type="button" class="btn btn-link" @onclick="@(() => EditReservation(reservation))">Edit</button>
+                    <button type="button" class="btn btn-link" @onclick="@(() => DeleteReservation(reservation.ReservationGuid))">Delete</button>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 }

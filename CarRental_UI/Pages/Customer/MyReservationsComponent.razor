@@ -1,0 +1,87 @@
+﻿@page "/myreservations"
+@attribute [Authorize(Policy = "CustomerOnly")]
+@using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.UserUseCaseInterfaces
+
+@inject NavigationManager _navigationManager
+@inject IViewCustomerReservationsUseCase _viewCustomerReservationsUseCase
+@inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase
+@inject IGetBranchByIdUseCase _getBranchByIdUseCase
+@inject IGetCurrentUserGuidUseCase _getCurrentUserGuidUseCase
+
+<h3>My Reservations</h3>
+<br />
+
+@{
+    if (_myReservations != null && _myReservations.Count != 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Start Branch</th>
+                    <th>End Branch</th>
+                    <th>Start Date&Time</th>
+                    <th>End Date&Time</th>
+                    <th>Vehicle</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reservation in _myReservations)
+                {
+                    <tr>
+                        <td>@GetBranchById(reservation.StartBranchId).Name</td>
+                        <td>@GetBranchById(reservation.EndBranchId).Name</td>
+                        <td>@reservation.StartDateTime</td>
+                        <td>@reservation.EndDateTime</td>
+                        <td>@GetVehicleModelByLicensePlate(reservation.FleetVehicleLicensePlate).Model</td>
+                        <td>@reservation.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h4>It seems you have no reservations...</h4>
+    }
+    <button class="btn btn-primary" @onclick="AddNewReservationOnClick">New Reservation</button>
+}
+
+
+@code {
+
+    private List<Reservation> _myReservations;
+    private string _customerGuid;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        LoadData();
+    }
+
+
+    private VehicleModel GetVehicleModelByLicensePlate(string licensePlate)
+    {
+        return _getVehicleModelByLicensePlateUseCase.Execute(licensePlate);
+    }
+
+    private Branch GetBranchById(int branchId)
+    {
+        return _getBranchByIdUseCase.Execute(branchId);
+    }
+
+    private void AddNewReservationOnClick()
+    {
+        _navigationManager.NavigateTo("/newreservation");
+    }
+
+    private void LoadData()
+    {
+        _customerGuid = _getCurrentUserGuidUseCase.Execute();
+        _myReservations = _viewCustomerReservationsUseCase.Execute(_customerGuid)?.ToList();
+    }
+
+}
