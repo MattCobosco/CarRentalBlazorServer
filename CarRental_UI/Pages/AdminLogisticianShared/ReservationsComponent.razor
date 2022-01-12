@@ -4,7 +4,6 @@
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
-@using UseCases.UseCaseInterfaces.UserUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
 @inject IViewReservationsUseCase _viewReservationsUseCase
@@ -12,7 +11,7 @@
 @inject IGetBranchByIdUseCase _getBranchByIdUseCase
 @inject IDeleteReservationUseCase _deleteReservationUseCase
 @inject IGetCustomerByGuidUseCase _getCustomerByGuidUseCase
-
+@inject IGetVehicleModelByIdUseCase _getVehicleModelByIdUseCase
 
 <h3>Manage Reservations</h3>
 <br />
@@ -47,7 +46,7 @@
                     <td>@reservation.Price</td>
                     <td>
                         @reservation.FleetVehicleLicensePlate
-                    @GetVehicleModelByLicensePlate(reservation.FleetVehicleLicensePlate).Model
+                        @GetVehicleModelById(reservation.VehicleModelId).Model
                 </td>
                 <td>
                     @GetCustomerByGuid(reservation.CustomerGuid).FirstName
@@ -90,9 +89,9 @@
         LoadData();
     }
 
-    private VehicleModel GetVehicleModelByLicensePlate(string licensePlate)
+    private VehicleModel GetVehicleModelById(int vehicleModelId)
     {
-        return _getVehicleModelByLicensePlateUseCase.Execute(licensePlate);
+        return _getVehicleModelByIdUseCase.Execute(vehicleModelId);
     }
 
     private Branch GetBranchById(int branchId)
