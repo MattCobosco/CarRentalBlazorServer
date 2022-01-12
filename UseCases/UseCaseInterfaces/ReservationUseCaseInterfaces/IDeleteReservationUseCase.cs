@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
+﻿namespace UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
 {
     public interface IDeleteReservationUseCase
     {
