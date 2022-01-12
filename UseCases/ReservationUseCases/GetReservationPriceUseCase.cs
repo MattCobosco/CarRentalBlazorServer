@@ -6,17 +6,17 @@ namespace UseCases.ReservationUseCases
 {
     public class GetReservationPriceUseCase : IGetReservationPriceUseCase
     {
-        private readonly IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase;
+        private readonly IGetVehicleModelByIdUseCase _getVehicleModelByIdUseCase;
 
-        public GetReservationPriceUseCase(IGetVehicleModelByLicensePlateUseCase getVehicleModelByLicensePlateUseCase)
+        public GetReservationPriceUseCase(IGetVehicleModelByIdUseCase getVehicleModelByIdUseCase)
         {
-            _getVehicleModelByLicensePlateUseCase = getVehicleModelByLicensePlateUseCase;
+            _getVehicleModelByIdUseCase = getVehicleModelByIdUseCase;
         }
         
-        public int Execute(string licensePlate, DateTime startDate, DateTime endDate)
+        public int Execute(int vehicleModelId, DateTime startDate, DateTime endDate)
         {
             var numberOfDays = (int)(endDate - startDate).TotalDays;
-            var vehicleModel = _getVehicleModelByLicensePlateUseCase.Execute(licensePlate);
+            var vehicleModel = _getVehicleModelByIdUseCase.Execute(vehicleModelId);
             var basePrice = vehicleModel.BaseDailyPrice;
             return numberOfDays * basePrice;
         }
