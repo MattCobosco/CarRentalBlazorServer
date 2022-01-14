@@ -34,5 +34,6 @@ namespace CoreBusiness
         public VehicleModel VehicleModel { get; set; }
         public Branch CurrentBranch { get; set; }
         public List<Reservation> Reservations { get; set; }
+        public List<Transfer> Transfers { get; set; }
     }
 }

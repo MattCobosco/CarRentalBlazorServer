@@ -11,7 +11,8 @@ namespace CoreBusiness
         public string Guid { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string BranchId { get; set; }
+        public string Position { get; set; }
+        public int BranchId { get; set; }
 
         // Navigation properties for EF Core
         public Branch Branch { get; set; }

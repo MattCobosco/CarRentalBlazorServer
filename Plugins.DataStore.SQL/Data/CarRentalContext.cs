@@ -50,6 +50,12 @@ namespace Plugins.DataStore.SQL.Data
                 .WithOne(f => f.Customer)
                 .HasForeignKey(f => f.CustomerGuid);
 
+            // Employee
+            modelBuilder.Entity<Employee>()
+                .HasOne(em => em.Branch)
+                .WithMany(br => br.Employees)
+                .HasForeignKey(em => em.BranchId);
+
             // Reservation
             modelBuilder.Entity<Reservation>()
                 .HasOne(res => res.StartBranch)
@@ -84,6 +90,22 @@ namespace Plugins.DataStore.SQL.Data
                 .HasForeignKey<Reservation>(res => res.EndAssignmentGuid);
 
             // Transfer
+            modelBuilder.Entity<Transfer>()
+                .HasOne(tr => tr.FleetVehicle)
+                .WithMany(fv => fv.Transfers)
+                .HasForeignKey(tr => tr.FleetVehicleLicensePlate);
+
+            modelBuilder.Entity<Transfer>()
+                .HasOne(tr => tr.FromBranch)
+                .WithMany(br => br.OutgoingTransfers)
+                .HasForeignKey(tr => tr.FromBranchId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Transfer>()
+                .HasOne(tr => tr.ToBranch)
+                .WithMany(br => br.IncomingTransfers)
+                .HasForeignKey(tr => tr.ToBranchId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Vehicle Body Type
             modelBuilder.Entity<VehicleBodyType>()

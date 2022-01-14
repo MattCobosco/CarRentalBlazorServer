@@ -17,5 +17,7 @@ namespace CoreBusiness
         public List<Reservation> StartReservations { get; set; }
         public List<Reservation> EndReservations { get; set; }
         public List<Employee> Employees { get; set; }
+        public List<Transfer> IncomingTransfers { get; set; }
+        public List<Transfer> OutgoingTransfers { get; set; }
     }
 }
