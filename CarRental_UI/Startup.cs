@@ -10,11 +10,13 @@ using Plugins.IdentityStore.SQL;
 using UseCases.BranchUseCases;
 using UseCases.CustomerUseCases;
 using UseCases.DataStorePluginInterfaces;
+using UseCases.EmployeeUseCases;
 using UseCases.FleetVehicleUseCases;
 using UseCases.IdentityStoreUseCaseInterfaces;
 using UseCases.ReservationUseCases;
 using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces;
+using UseCases.UseCaseInterfaces.EmployeeUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.UserUseCaseInterfaces;
@@ -68,6 +70,7 @@ namespace CarRental_UI
             // Dependency Injection - Data Store
             services.AddScoped<IBranchRepository, BranchRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IFleetVehicleRepository, FleetVehicleRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
@@ -89,6 +92,9 @@ namespace CarRental_UI
             services.AddTransient<IEditCustomerUseCase, EditCustomerUseCase>();
             services.AddTransient<IGetCustomerByGuidUseCase, GetCustomerByGuidUseCase>();
             services.AddTransient<IViewCustomersUseCase, ViewCustomersUseCase>();
+            // Employees
+            services.AddTransient<IAddEmployeeUseCase, AddEmployeeUseCase>();
+            services.AddTransient<IViewEmployeesUseCase, ViewEmployeesUseCase>();
             // Fleet Vehicles
             services.AddTransient<IAddFleetVehicleUseCase, AddFleetVehicleUseCase>();
             services.AddTransient<IDeleteFleetVehicleUseCase, DeleteFleetVehicleUseCase>();
@@ -120,6 +126,7 @@ namespace CarRental_UI
             services.AddTransient<IViewVehicleModelsUseCase, ViewVehicleModelsUseCase>();
             //Users
             services.AddTransient<IGetCurrentUserGuidUseCase, GetCurrentUserGuidUseCase>();
+            services.AddTransient<IAddUserUseCase, AddUserUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

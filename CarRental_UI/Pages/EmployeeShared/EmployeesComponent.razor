@@ -1,0 +1,69 @@
+﻿@page "/employees"
+@attribute [Authorize(Policy = "EmployeeOnly")]
+@using UseCases.UseCaseInterfaces.EmployeeUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
+@using Microsoft.AspNetCore.Mvc
+
+@inject NavigationManager _navigationManager
+@inject IViewEmployeesUseCase _viewEmployeesUseCase
+@inject IGetBranchByIdUseCase _getBranchByIdUseCase
+
+<h3>Employees</h3>
+<br />
+
+<AuthorizeView Policy="AdminOnly">
+<button type="button" @onclick="AddEmployeeOnClick" class="btn btn-primary">Add Employee</button>
+<br />
+<br />
+</AuthorizeView>
+
+@if (_employees != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Guid</th>
+                <th>Full Name</th>
+                <th>Branch</th>
+                <th>Position</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in _employees)
+            {
+                <tr>
+                    <td>@employee.EmployeeGuid</td>
+                    <td>@employee.FirstName @employee.LastName</td>
+                    <td>@GetBranchNameById(employee.BranchId)</td>
+                    <td>@employee.Position</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private IEnumerable<Employee> _employees;
+
+    protected override Task OnInitializedAsync()
+    {
+        return LoadEmployeesAsync();
+    }
+
+    private void AddEmployeeOnClick()
+    {
+        _navigationManager.NavigateTo("/addemployee");
+    }
+
+    private async Task LoadEmployeesAsync()
+    {
+        _employees = await _viewEmployeesUseCase.Execute();
+    }
+
+    private string GetBranchNameById(int branchId)
+    {
+        return _getBranchByIdUseCase.Execute(branchId).Name;
+    }
+
+}

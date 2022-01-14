@@ -1,0 +1,96 @@
+﻿@page "/addemployee"
+@attribute [Authorize(Policy = "AdminOnly")]
+@using UseCases.UseCaseInterfaces.EmployeeUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
+
+@inject NavigationManager _navigationManager
+@inject IAddEmployeeUseCase _addEmployeeUseCase
+@inject IViewBranchesUseCase _viewBranchesUseCase
+
+<h3>Add Employee </h3>
+<br/>
+
+@if (_employee != null)
+{
+<EditForm Model="_employee" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+
+    <div class="form-group">
+        <label for="username">Username</label>
+        <InputText id="username" @bind-Value="_username" class="form-control"></InputText>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <InputText id="password" @bind-Value="_password" class="form-control"></InputText>
+    </div>
+
+    <div class="form-group">
+        <label for="startBranchName">Position</label>
+        <InputSelect id="startBranchName" @bind-Value="_employee.Position" class="form-control">
+            <option value="Admin">Administration</option>
+            <option value="Logistician">Logistician</option>
+            <option value="Agent">Agent</option>
+        </InputSelect>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <InputText id="email" @bind-Value="_email" class="form-control"></InputText>
+    </div>
+
+    <div class="form-group">
+        <label for="lastName">First Name</label>
+        <InputText id="lastName" @bind-Value="_employee.FirstName" class="form-control"></InputText>
+    </div>
+
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <InputText id="lastName" @bind-Value="_employee.LastName" class="form-control"></InputText>
+    </div>
+
+    <div class="form-group">
+        <label for="endBranchName">Branch</label>
+        <InputSelect id="endBranchName" @bind-Value="_employee.BranchId" class="form-control">
+            @foreach (var branch in _branches)
+            {
+            <option value="@branch.BranchId">@branch.Name</option>
+            }
+        </InputSelect>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-primary" @onclick="OnCancel">Cancel</button>
+</EditForm>
+}
+
+@code {
+    private Employee _employee;
+    private string _username, _email, _password;
+    private List<Branch> _branches;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _employee = new Employee();
+        LoadBranches();
+    }
+
+    private void LoadBranches()
+    {
+        _branches = _viewBranchesUseCase.Execute()?.ToList();
+    }
+
+    private void OnValidSubmit()
+    {
+        _addEmployeeUseCase.Execute(_employee, _username, _email, _password, _employee.Position);
+        _navigationManager.NavigateTo("/employees");
+    }
+
+    private void OnCancel()
+    {
+        _navigationManager.NavigateTo("/employees");
+    }
+
+}

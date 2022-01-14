@@ -1,8 +1,8 @@
 ﻿using CoreBusiness;
+using Plugins.DataStore.SQL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Plugins.DataStore.SQL.Data;
 using UseCases.DataStorePluginInterfaces;
 
 namespace Plugins.DataStore.SQL

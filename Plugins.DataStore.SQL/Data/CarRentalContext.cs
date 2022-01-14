@@ -14,6 +14,7 @@ namespace Plugins.DataStore.SQL.Data
         public DbSet<AssignmentType> AssignmentTypes { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         public DbSet<FleetVehicle> FleetVehicles { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Transfer> Transfers { get; set; }

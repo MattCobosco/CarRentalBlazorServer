@@ -8,7 +8,7 @@ namespace CoreBusiness
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public string Guid { get; set; }
+        public string EmployeeGuid { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Position { get; set; }
