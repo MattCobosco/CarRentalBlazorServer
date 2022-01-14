@@ -1,6 +1,6 @@
-﻿using System;
-using CoreBusiness;
+﻿using CoreBusiness;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Plugins.DataStore.SQL.Data
 {
@@ -10,7 +10,8 @@ namespace Plugins.DataStore.SQL.Data
         {
 
         }
-
+        public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<AssignmentType> AssignmentTypes { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<FleetVehicle> FleetVehicles { get; set; }
@@ -21,6 +22,22 @@ namespace Plugins.DataStore.SQL.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Assignment
+            modelBuilder.Entity<Assignment>()
+                .HasOne(a => a.AssignmentType)
+                .WithMany(aty => aty.Assignments)
+                .HasForeignKey(a => a.AssignmentTypeId);
+
+            modelBuilder.Entity<Assignment>()
+                .HasOne(a => a.Employee)
+                .WithMany(e => e.Assignments)
+                .HasForeignKey(a => a.EmployeeGuid);
+
+            modelBuilder.Entity<Assignment>()
+                .HasOne(a => a.Transfer)
+                .WithOne(t => t.Assignment)
+                .HasForeignKey<Transfer>(t => t.AssignmentGuid);
+
             // Branch
             modelBuilder.Entity<Branch>()
                 .HasMany(br => br.FleetVehicles)
@@ -56,6 +73,18 @@ namespace Plugins.DataStore.SQL.Data
                 .WithMany(vm => vm.Reservations)
                 .HasForeignKey(res => res.VehicleModelId);
 
+            modelBuilder.Entity<Reservation>()
+                .HasOne(res => res.StartAssignment)
+                .WithOne(a => a.StartReservation)
+                .HasForeignKey<Reservation>(res => res.StartAssignmentGuid);
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(res => res.EndAssignment)
+                .WithOne(a => a.EndReservation)
+                .HasForeignKey<Reservation>(res => res.EndAssignmentGuid);
+
+            // Transfer
+
             // Vehicle Body Type
             modelBuilder.Entity<VehicleBodyType>()
                 .HasMany(vbt => vbt.VehicleModels)
@@ -69,6 +98,28 @@ namespace Plugins.DataStore.SQL.Data
                 .HasForeignKey(fv => fv.VehicleModelId);
 
             // Data seed
+            modelBuilder.Entity<AssignmentType>().HasData(
+                new AssignmentType
+                {
+                    AssignmentTypeId = 1,
+                    Type = "ReservationStart"
+                },
+                new AssignmentType
+                {
+                    AssignmentTypeId = 2,
+                    Type = "ReservationEnd"
+                },
+                new AssignmentType
+                {
+                    AssignmentTypeId = 3,
+                    Type = "Maintenance"
+                },
+                new AssignmentType
+                {
+                    AssignmentTypeId = 4,
+                    Type = "Transfer"
+                });
+
             modelBuilder.Entity<Branch>().HasData(
                 new Branch
                 {

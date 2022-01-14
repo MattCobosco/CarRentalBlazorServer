@@ -16,5 +16,6 @@ namespace CoreBusiness
         public List<FleetVehicle> FleetVehicles { get; set; }
         public List<Reservation> StartReservations { get; set; }
         public List<Reservation> EndReservations { get; set; }
+        public List<Employee> Employees { get; set; }
     }
 }

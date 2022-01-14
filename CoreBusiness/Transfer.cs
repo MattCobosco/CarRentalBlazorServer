@@ -15,5 +15,9 @@ namespace CoreBusiness
         public int EmployeeId { get; set; }
         [Required]
         public string FleetVehicleLicensePlate { get; set; }
+        public string AssignmentGuid { get; set; }
+
+        // Navigation properties for EF Core
+        public Assignment Assignment { get; set; }
     }
 }
