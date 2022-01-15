@@ -31,6 +31,7 @@ namespace CoreBusiness
         public string CustomerGuid { get; set; }
         public string StartAssignmentGuid { get; set; }
         public string EndAssignmentGuid { get; set; }
+        public bool IsConfirmed { get; set; }
 
         // Navigation properties for EF Core
         public Branch StartBranch { get; set; }
