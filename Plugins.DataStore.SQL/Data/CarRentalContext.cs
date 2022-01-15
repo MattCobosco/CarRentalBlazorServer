@@ -42,7 +42,8 @@ namespace Plugins.DataStore.SQL.Data
             modelBuilder.Entity<Assignment>()
                 .HasOne(a => a.Reservation)
                 .WithMany(res => res.Assignments)
-                .HasForeignKey(a => a.ReservationGuid);
+                .HasForeignKey(a => a.ReservationGuid)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Branch
             modelBuilder.Entity<Branch>()
