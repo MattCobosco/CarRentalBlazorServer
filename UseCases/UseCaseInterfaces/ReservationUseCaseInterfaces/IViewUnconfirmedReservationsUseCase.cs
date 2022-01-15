@@ -1,10 +1,11 @@
 ﻿using CoreBusiness;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
 {
-    public interface IViewReservationsUseCase
+    public interface IViewUnconfirmedReservationsUseCase
     {
-        IEnumerable<Reservation> Execute();
+        Task<IEnumerable<Reservation>> Execute();
     }
 }

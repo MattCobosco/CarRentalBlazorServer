@@ -1,22 +1,23 @@
 ﻿using CoreBusiness;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces;
 
 namespace UseCases.ReservationUseCases
 {
-    public class ViewReservationsUseCase : IViewReservationsUseCase
+    public class ViewConfirmedReservationsUseCase : IViewConfirmedReservationsUseCase
     {
         private readonly IReservationRepository _reservationRepository;
 
-        public ViewReservationsUseCase(IReservationRepository reservationRepository)
+        public ViewConfirmedReservationsUseCase(IReservationRepository reservationRepository)
         {
             _reservationRepository = reservationRepository;
         }
 
-        public IEnumerable<Reservation> Execute()
+        public async Task<IEnumerable<Reservation>> Execute()
         {
-            return _reservationRepository.GetReservations();
+            return await _reservationRepository.GetConfirmedReservationsAsync();
         }
     }
 }

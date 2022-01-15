@@ -1,8 +1,10 @@
 ﻿using CoreBusiness;
+using Microsoft.EntityFrameworkCore;
 using Plugins.DataStore.SQL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UseCases.DataStorePluginInterfaces;
 
 namespace Plugins.DataStore.SQL
@@ -35,6 +37,31 @@ namespace Plugins.DataStore.SQL
 
         }
 
+        public void ConfirmReservation(string reservationGuid)
+        {
+            var transaction = _carRentalContext.Database.BeginTransaction();
+
+            try
+            {
+                var reservation = GetReservationByGuid(reservationGuid);
+
+                if (reservation == null)
+                {
+                    return;
+                }
+
+                reservation.IsConfirmed = true;
+                _carRentalContext.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                Console.WriteLine("Confirming Reservation failed:");
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         public void DeleteReservation(string reservationGuid)
         {
             var transaction = _carRentalContext.Database.BeginTransaction();
@@ -45,6 +72,7 @@ namespace Plugins.DataStore.SQL
 
                 if (reservation == null)
                 {
+                    transaction.Rollback();
                     return;
                 }
 
@@ -116,11 +144,25 @@ namespace Plugins.DataStore.SQL
             }
         }
 
-        public IEnumerable<Reservation> GetReservations()
+        public async Task<IEnumerable<Reservation>> GetConfirmedReservationsAsync()
         {
             try
             {
-                return _carRentalContext.Reservations.ToList();
+                return await _carRentalContext.Reservations.Where(r => r.IsConfirmed == true).OrderBy(r => r.StartDateTime).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Getting Reservations failed:");
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public async Task<IEnumerable<Reservation>> GetUnconfirmedReservationsAsync()
+        {
+            try
+            {
+                return await _carRentalContext.Reservations.Where(r => r.IsConfirmed == false).OrderBy(r => r.StartDateTime).ToListAsync();
             }
             catch (Exception ex)
             {
