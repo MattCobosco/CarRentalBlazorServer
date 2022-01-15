@@ -23,7 +23,7 @@
 
     <div class="form-group">
         <label for="password">Password</label>
-        <InputText id="password" @bind-Value="_password" class="form-control"></InputText>
+        <InputText id="password" type="password" @bind-Value="_password" class="form-control"></InputText>
     </div>
 
     <div class="form-group">
@@ -37,7 +37,7 @@
 
     <div class="form-group">
         <label for="email">Email</label>
-        <InputText id="email" @bind-Value="_email" class="form-control"></InputText>
+        <InputText id="email" type="email" @bind-Value="_email" class="form-control"></InputText>
     </div>
 
     <div class="form-group">
@@ -51,12 +51,17 @@
     </div>
 
     <div class="form-group">
+        <label for="contact">Contact Details</label>
+        <InputText id="contact" @bind-Value="_employee.ContactDetails" class="form-control"></InputText>
+    </div>
+
+    <div class="form-group">
         <label for="endBranchName">Branch</label>
         <InputSelect id="endBranchName" @bind-Value="_employee.BranchId" class="form-control">
             @foreach (var branch in _branches)
-            {
-            <option value="@branch.BranchId">@branch.Name</option>
-            }
+                {
+                <option value="@branch.BranchId">@branch.Name</option>
+                }
         </InputSelect>
     </div>
 
