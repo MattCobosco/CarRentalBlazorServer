@@ -74,7 +74,7 @@ namespace Plugins.DataStore.SQL
 
         public async Task<IEnumerable<Assignment>> GetAssignmentsAsync()
         {
-            return await _carRentalContext.Assignments.ToListAsync();
+            return await _carRentalContext.Assignments.OrderBy(a=>a.DateTime).ToListAsync();
         }
     }
 }
