@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace UseCases.IdentityStoreUseCaseInterfaces
+﻿namespace UseCases.IdentityStoreUseCaseInterfaces
 {
     public interface IUserRepository
     {

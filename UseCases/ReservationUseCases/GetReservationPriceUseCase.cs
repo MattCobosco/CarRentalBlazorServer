@@ -12,7 +12,7 @@ namespace UseCases.ReservationUseCases
         {
             _getVehicleModelByIdUseCase = getVehicleModelByIdUseCase;
         }
-        
+
         public int Execute(int vehicleModelId, DateTime startDate, DateTime endDate)
         {
             var numberOfDays = (int)(endDate - startDate).TotalDays;

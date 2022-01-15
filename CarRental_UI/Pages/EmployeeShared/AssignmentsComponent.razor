@@ -4,6 +4,7 @@
 @using UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.EmployeeUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.AssignmentTypeUseCaseInterfaces
+@using Microsoft.CodeAnalysis.CSharp.Syntax
 
 @inject IViewAssignmentsUseCase _viewAssignmentsUseCase
 @inject IGetEmployeeByGuidUseCase _getEmployeeByGuidUseCase
@@ -30,7 +31,10 @@
                     <td>@GetAssignmentTypeById(assignment.AssignmentTypeId)</td>
                     <td>@assignment.DateTime</td>
                     <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid)</td>
-                    <td>@assignment.IsDone</td>
+                    @if (@assignment.IsDone)
+                    {<td>Done</td>}
+                    else
+                    {<td>Undone</td>}
                 </tr>
             }
             </tbody>

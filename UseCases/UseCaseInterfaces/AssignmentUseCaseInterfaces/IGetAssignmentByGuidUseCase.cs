@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using CoreBusiness;
+﻿using CoreBusiness;
+using System.Threading.Tasks;
 
 namespace UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces
 {

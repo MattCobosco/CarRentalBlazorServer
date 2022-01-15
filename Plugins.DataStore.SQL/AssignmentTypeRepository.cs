@@ -1,6 +1,5 @@
 ﻿using CoreBusiness;
 using Plugins.DataStore.SQL.Data;
-using System.Threading.Tasks;
 using UseCases.DataStorePluginInterfaces;
 
 namespace Plugins.DataStore.SQL

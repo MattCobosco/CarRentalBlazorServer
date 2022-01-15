@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using UseCases.IdentityStoreUseCaseInterfaces;
-using UseCases.UseCaseInterfaces.EmployeeUseCaseInterfaces;
 
 namespace Plugins.IdentityStore.SQL
 {

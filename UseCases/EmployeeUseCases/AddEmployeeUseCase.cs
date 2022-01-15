@@ -1,6 +1,4 @@
 ﻿using CoreBusiness;
-using System;
-using System.Threading.Tasks;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.IdentityStoreUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.EmployeeUseCaseInterfaces;
@@ -26,7 +24,7 @@ namespace UseCases.EmployeeUseCases
 
             employee.EmployeeGuid = employeeGuid;
             _employeeRepository.AddEmployee(employee);
-            
+
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using CoreBusiness;
+using Plugins.DataStore.SQL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Plugins.DataStore.SQL.Data;
 using UseCases.DataStorePluginInterfaces;
 
 namespace Plugins.DataStore.SQL
@@ -20,7 +20,7 @@ namespace Plugins.DataStore.SQL
         {
             var transaction = _carRentalContext.Database.BeginTransaction();
 
-            if(_carRentalContext.VehicleBodyTypes.Any(
+            if (_carRentalContext.VehicleBodyTypes.Any(
                     x => x.Name == vehicleBodyType.Name))
             {
 
@@ -51,7 +51,7 @@ namespace Plugins.DataStore.SQL
             {
                 var vehicleBodyType = GetVehicleBodyTypeById(vehicleBodyTypeId);
 
-                if(vehicleBodyType == null)
+                if (vehicleBodyType == null)
                 {
                     return;
                 }
@@ -93,7 +93,7 @@ namespace Plugins.DataStore.SQL
         {
             var vehicleBodyType = _carRentalContext.VehicleBodyTypes.Find(vehicleBodyTypeId);
 
-            if(vehicleBodyType != null)
+            if (vehicleBodyType != null)
             {
                 return vehicleBodyType;
             }

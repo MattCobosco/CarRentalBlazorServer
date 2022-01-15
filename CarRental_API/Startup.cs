@@ -28,7 +28,7 @@ namespace CarRental_API
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("Open", builder => 
+                options.AddPolicy("Open", builder =>
                     builder.WithOrigins("https://localhost:5005", "http://localhost:5006").AllowAnyHeader().AllowAnyMethod());
             });
 

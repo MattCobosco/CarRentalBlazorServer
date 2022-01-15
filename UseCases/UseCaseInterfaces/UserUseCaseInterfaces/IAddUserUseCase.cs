@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace UseCases.UseCaseInterfaces.UserUseCaseInterfaces
+﻿namespace UseCases.UseCaseInterfaces.UserUseCaseInterfaces
 {
     public interface IAddUserUseCase
     {

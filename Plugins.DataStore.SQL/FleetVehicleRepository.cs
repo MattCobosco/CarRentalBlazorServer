@@ -1,8 +1,8 @@
 ﻿using CoreBusiness;
+using Plugins.DataStore.SQL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Plugins.DataStore.SQL.Data;
 using UseCases.DataStorePluginInterfaces;
 
 namespace Plugins.DataStore.SQL
@@ -110,7 +110,7 @@ namespace Plugins.DataStore.SQL
 
         public IEnumerable<FleetVehicle> GetFleetVehicleMaintenanceDate()
         {
-            DateTime listLimit = DateTime.Now.Add(new TimeSpan(14,0,0,0,0));
+            DateTime listLimit = DateTime.Now.Add(new TimeSpan(14, 0, 0, 0, 0));
 
             var vehiclesForMaintenance =
                 _carRentalContext.FleetVehicles.Where(f => f.MaintenanceDate < listLimit);
@@ -121,7 +121,7 @@ namespace Plugins.DataStore.SQL
         public IEnumerable<FleetVehicle> GetFleetVehicleMaintenanceOdometer()
         {
             var vehiclesForMaintenance =
-                _carRentalContext.FleetVehicles.Where(f => f.MaintenanceOdometer - f.Odometer <= 1000).Select(f=>f);
+                _carRentalContext.FleetVehicles.Where(f => f.MaintenanceOdometer - f.Odometer <= 1000).Select(f => f);
 
             return vehiclesForMaintenance?.ToList();
         }
