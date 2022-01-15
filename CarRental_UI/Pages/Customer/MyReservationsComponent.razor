@@ -10,6 +10,7 @@
 @inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase
 @inject IGetBranchByIdUseCase _getBranchByIdUseCase
 @inject IGetCurrentUserGuidUseCase _getCurrentUserGuidUseCase
+@inject IGetVehicleModelByIdUseCase _getVehicleModelByIdUseCase
 
 <h3>My Reservations</h3>
 <br/>
@@ -26,6 +27,7 @@
                 <th>End Date&Time</th>
                 <th>Vehicle</th>
                 <th>Price</th>
+                <th>Confirmed</th>
             </tr>
             </thead>
             <tbody>
@@ -36,8 +38,9 @@
                     <td>@GetBranchById(reservation.EndBranchId).Name</td>
                     <td>@reservation.StartDateTime</td>
                     <td>@reservation.EndDateTime</td>
-                    <td>@GetVehicleModelByLicensePlate(reservation.FleetVehicleLicensePlate).Model</td>
+                    <td>@GetMakeModelByVehicleModelId(reservation.VehicleModelId)</td>
                     <td>@reservation.Price</td>
+                    <td>@reservation.IsConfirmed</td>
                 </tr>
             }
             </tbody>
@@ -63,9 +66,10 @@
     }
 
 
-    private VehicleModel GetVehicleModelByLicensePlate(string licensePlate)
+    private string GetMakeModelByVehicleModelId(int vehicleModelId)
     {
-        return _getVehicleModelByLicensePlateUseCase.Execute(licensePlate);
+        var vehicle = _getVehicleModelByIdUseCase.Execute(vehicleModelId);
+        return vehicle.Make + vehicle.Model;
     }
 
     private Branch GetBranchById(int branchId)
