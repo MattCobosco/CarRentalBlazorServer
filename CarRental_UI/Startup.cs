@@ -95,6 +95,7 @@ namespace CarRental_UI
             // Employees
             services.AddTransient<IAddEmployeeUseCase, AddEmployeeUseCase>();
             services.AddTransient<IViewEmployeesUseCase, ViewEmployeesUseCase>();
+            services.AddTransient<IGetEmployeeByGuidUseCase, GetEmployeeByGuidUseCase>();
             // Fleet Vehicles
             services.AddTransient<IAddFleetVehicleUseCase, AddFleetVehicleUseCase>();
             services.AddTransient<IDeleteFleetVehicleUseCase, DeleteFleetVehicleUseCase>();
@@ -109,8 +110,10 @@ namespace CarRental_UI
             services.AddTransient<IEditReservationUseCase, EditReservationUseCase>();
             services.AddTransient<IGetReservationByGuidUseCase, GetReservationByGuidUseCase>();
             services.AddTransient<IGetReservationPriceUseCase, GetReservationPriceUseCase>();
+            services.AddTransient<IViewConfirmedReservationsUseCase, ViewConfirmedReservationsUseCase>();
             services.AddTransient<IViewCustomerReservationsUseCase, ViewCustomerReservationsUseCase>();
-            services.AddTransient<IViewReservationsUseCase, ViewReservationsUseCase>();
+            services.AddTransient<IViewUnconfirmedReservationsUseCase, ViewUnconfirmedReservationsUseCase>();
+            services.AddTransient<IConfirmReservationUseCase, ConfirmReservationUseCase>();
             // Vehicle Body Types
             services.AddTransient<IAddVehicleBodyTypeUseCase, AddVehicleBodyTypeUseCase>();
             services.AddTransient<IDeleteVehicleBodyTypeUseCase, DeleteVehicleBodyTypeUseCase>();
