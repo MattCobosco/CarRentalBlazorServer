@@ -26,4 +26,8 @@
     <ProjectReference Include="..\UseCases\UseCases.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Agent\" />
+  </ItemGroup>
+
 </Project>
