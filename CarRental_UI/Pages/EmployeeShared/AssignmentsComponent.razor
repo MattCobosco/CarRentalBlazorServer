@@ -1,0 +1,57 @@
+﻿@page "/assignments"
+@attribute [Authorize(Policy = "EmployeeOnly")]
+
+@using UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.EmployeeUseCaseInterfaces
+
+@inject IViewAssignmentsUseCase _viewAssignmentsUseCase
+@inject IGetEmployeeByGuidUseCase _getEmployeeByGuidUseCase
+
+<h3>Assignments</h3>
+
+@if (_assignments != null)
+{
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Date&Time</th>
+                    <th>Assigned Employee</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var assignment in _assignments)
+            {
+                <tr>
+                    <td>@assignment.AssignmentTypeId</td>
+                    <td>@assignment.DateTime</td>
+                    <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid)</td>
+                    <td>@assignment.IsDone</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    private List<Assignment> _assignments;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _assignments = (await _viewAssignmentsUseCase.Execute()).ToList();
+    }
+
+    private string GetEmployeeNameByGuid(string employeeGuid)
+    {
+        var employee = _getEmployeeByGuidUseCase.Execute(employeeGuid).Result;
+
+        if (employee != null)
+            return employee.FirstName + employee.LastName;
+         
+        return "";
+    }
+
+}

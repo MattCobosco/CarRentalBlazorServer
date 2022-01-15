@@ -3,8 +3,8 @@ using CoreBusiness;
 
 namespace UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces
 {
-    public interface IAddAssignmentUseCase
+    public interface IAddAssignmentFromReservationUseCase
     {
-        Task Execute(Assignment assignment);
+        Task Execute(string reservationGuid);
     }
 }

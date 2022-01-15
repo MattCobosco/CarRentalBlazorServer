@@ -5,6 +5,7 @@
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.EmployeeUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
 @inject IViewConfirmedReservationsUseCase _viewConfirmedReservationsUseCase
@@ -16,6 +17,7 @@
 @inject IGetVehicleModelByIdUseCase _getVehicleModelByIdUseCase
 @inject IGetEmployeeByGuidUseCase _getEmployeeByGuidUseCase
 @inject IConfirmReservationUseCase _confirmReservationUseCase
+@inject IAddAssignmentFromReservationUseCase _addAssignmentFromReservationUseCase
 
 <h3>Reservations</h3>
 <br/>
@@ -175,6 +177,7 @@
     private async Task ConfirmReservationOnClick(string reservationGuid)
     {
         _confirmReservationUseCase.Confirm(reservationGuid);
+        await _addAssignmentFromReservationUseCase.Execute(reservationGuid);
         await OnInitializedAsync();
     }
 

@@ -39,6 +39,11 @@ namespace Plugins.DataStore.SQL.Data
                 .WithOne(t => t.Assignment)
                 .HasForeignKey<Transfer>(t => t.AssignmentGuid);
 
+            modelBuilder.Entity<Assignment>()
+                .HasOne(a => a.Reservation)
+                .WithMany(res => res.Assignments)
+                .HasForeignKey(a => a.ReservationGuid);
+
             // Branch
             modelBuilder.Entity<Branch>()
                 .HasMany(br => br.FleetVehicles)
@@ -79,16 +84,6 @@ namespace Plugins.DataStore.SQL.Data
                 .HasOne(res => res.VehicleModel)
                 .WithMany(vm => vm.Reservations)
                 .HasForeignKey(res => res.VehicleModelId);
-
-            modelBuilder.Entity<Reservation>()
-                .HasOne(res => res.StartAssignment)
-                .WithOne(a => a.StartReservation)
-                .HasForeignKey<Reservation>(res => res.StartAssignmentGuid);
-
-            modelBuilder.Entity<Reservation>()
-                .HasOne(res => res.EndAssignment)
-                .WithOne(a => a.EndReservation)
-                .HasForeignKey<Reservation>(res => res.EndAssignmentGuid);
 
             // Transfer
             modelBuilder.Entity<Transfer>()

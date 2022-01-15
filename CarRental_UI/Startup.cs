@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Plugins.DataStore.SQL;
 using Plugins.DataStore.SQL.Data;
 using Plugins.IdentityStore.SQL;
+using UseCases.AssignmentUseCases;
 using UseCases.BranchUseCases;
 using UseCases.CustomerUseCases;
 using UseCases.DataStorePluginInterfaces;
@@ -14,6 +15,7 @@ using UseCases.EmployeeUseCases;
 using UseCases.FleetVehicleUseCases;
 using UseCases.IdentityStoreUseCaseInterfaces;
 using UseCases.ReservationUseCases;
+using UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.EmployeeUseCaseInterfaces;
@@ -68,6 +70,7 @@ namespace CarRental_UI
 
 
             // Dependency Injection - Data Store
+            services.AddScoped<IAssignmentRepository, AssignmentRepository>();
             services.AddScoped<IBranchRepository, BranchRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
@@ -80,6 +83,9 @@ namespace CarRental_UI
             services.AddScoped<IUserRepository, UserRepository>();
 
             // Dependency Injection - Use Cases and Repositories
+            // Assignments
+            services.AddTransient<IAddAssignmentFromReservationUseCase, AddAssignmentFromReservationUseCase>();
+            services.AddTransient<IViewAssignmentsUseCase, ViewAssignmentsUseCase>();
             // Branches
             services.AddTransient<IAddBranchUseCase, AddBranchUseCase>();
             services.AddTransient<IDeleteBranchUseCase, DeleteBranchUseCase>();
@@ -102,7 +108,9 @@ namespace CarRental_UI
             services.AddTransient<IEditFleetVehicleUseCase, EditFleetVehicleUseCase>();
             services.AddTransient<IGetFleetVehicleByLicensePlateUseCase, GetFleetVehicleByLicensePlate>();
             services.AddTransient<IGetFleetVehiclesMaintenanceDateUseCase, GetFleetVehiclesMaintenanceDateUseCase>();
-            services.AddTransient<IGetFleetVehiclesMaintenanceOdometerUseCase, GetFleetVehiclesMaintenanceOdometerUseCase>();
+            services
+                .AddTransient<IGetFleetVehiclesMaintenanceOdometerUseCase,
+                    GetFleetVehiclesMaintenanceOdometerUseCase>();
             services.AddTransient<IViewFleetVehiclesUseCase, ViewFleetVehiclesUseCase>();
             //Reservations
             services.AddTransient<IAddReservationUseCase, AddReservationUseCase>();

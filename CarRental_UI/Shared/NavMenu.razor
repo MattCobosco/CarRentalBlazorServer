@@ -80,6 +80,11 @@
             @if (_navSubmenu == NavSubmenu.Second)
             {
                 <li class="nav-item px-5">
+                    <NavLink class="nav-link" @onclick="() => ToggleNavMenu()" href="assignments">
+                        <span class="oi oi-plus" aria-hidden="true"></span> Assignments
+                    </NavLink>
+                </li>
+                <li class="nav-item px-5">
                     <NavLink class="nav-link" @onclick="() => ToggleNavMenu()" href="customers">
                         <span class="oi oi-plus" aria-hidden="true"></span> Customers
                     </NavLink>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -39,7 +40,6 @@ namespace CoreBusiness
         public VehicleModel VehicleModel { get; set; }
         public FleetVehicle FleetVehicle { get; set; }
         public Customer Customer { get; set; }
-        public Assignment StartAssignment { get; set; }
-        public Assignment EndAssignment { get; set; }
+        public List<Assignment> Assignments { get; set; }
     }
 }

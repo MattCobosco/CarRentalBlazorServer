@@ -5,6 +5,7 @@
 @using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
 @inject IAddReservationUseCase _addReservationUseCase
@@ -14,6 +15,7 @@
 @inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase
 @inject IViewVehicleModelsUseCase _viewVehicleModelsUseCase
 @inject IViewCustomersUseCase _viewCustomersUseCase
+@inject IAddAssignmentFromReservationUseCase _addAssignmentFromReservationUseCase
 
 <h3>Add Reservation</h3>
 <br />
@@ -107,12 +109,16 @@
     private List<Branch> _branches;
     private List<VehicleModel> _vehicleModels;
     private List<Customer> _customers;
+    private string _reservationGuid;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        _reservation = new Reservation{IsConfirmed = true};
+        _reservation = new Reservation
+        {
+            IsConfirmed = true
+        };
         LoadLists();
 
         // Set form input to initial values
@@ -122,10 +128,12 @@
         _reservation.CustomerGuid = "";
     }
 
-    private void OnValidSubmit()
+    private async Task OnValidSubmit()
     {
         _reservation.Price = _getReservationPriceUseCase.Execute(_reservation.VehicleModelId, _reservation.StartDateTime, _reservation.EndDateTime);
+        _reservationGuid = _reservation.ReservationGuid;
         _addReservationUseCase.Execute(_reservation);
+        await _addAssignmentFromReservationUseCase.Execute(_reservationGuid);
         _navigationManager.NavigateTo("/reservations");
     }
 

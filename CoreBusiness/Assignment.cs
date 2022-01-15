@@ -17,15 +17,15 @@ namespace CoreBusiness
         [Required]
         public int AssignmentTypeId { get; set; }
         [Required]
-        private bool IsDone { get; set; }
+        public bool IsDone { get; set; }
         public DateTime DateTime { get; set; }
         public string EmployeeGuid { get; set; }
+        public string ReservationGuid { get; set; }
 
         // Navigation properties for EF Core
         public AssignmentType AssignmentType { get; set; }
         public Employee Employee { get; set; }
-        public Reservation StartReservation { get; set; }
-        public Reservation EndReservation { get; set; }
+        public Reservation Reservation { get; set; }
         public Transfer Transfer { get; set; }
     }
 }
