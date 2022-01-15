@@ -35,7 +35,20 @@ namespace Plugins.DataStore.SQL
             }
         }
 
-        public async Task<IEnumerable<Employee>> GetEmployees()
+        public async Task<Employee> GetEmployeeByGuidAsync(string employeeGuid)
+        {
+            var employee = await _carRentalContext.Employees.FindAsync(employeeGuid);
+
+            if (employee != null)
+            {
+                return employee;
+            }
+
+            Console.WriteLine("Couldn't find the requested Employee!");
+            return null;
+        }
+
+        public async Task<IEnumerable<Employee>> GetEmployeesAsync()
         {
             try
             {
