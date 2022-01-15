@@ -4,16 +4,20 @@
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.EmployeeUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
-@inject IViewReservationsUseCase _viewReservationsUseCase
+@inject IViewConfirmedReservationsUseCase _viewConfirmedReservationsUseCase
+@inject IViewUnconfirmedReservationsUseCase _viewUnconfirmedReservationsUseCase
 @inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase
 @inject IGetBranchByIdUseCase _getBranchByIdUseCase
 @inject IDeleteReservationUseCase _deleteReservationUseCase
 @inject IGetCustomerByGuidUseCase _getCustomerByGuidUseCase
 @inject IGetVehicleModelByIdUseCase _getVehicleModelByIdUseCase
+@inject IGetEmployeeByGuidUseCase _getEmployeeByGuidUseCase
+@inject IConfirmReservationUseCase _confirmReservationUseCase
 
-<h3>Manage Reservations</h3>
+<h3>Reservations</h3>
 <br/>
 
 <AuthorizeView Policy="AdminLogisticianOnly">
@@ -22,8 +26,11 @@
     <br/>
 </AuthorizeView>
 
-@if (_reservations != null)
+@if (_reservationsConfirmed != null)
 {
+    <h4>
+        Confirmed
+    </h4>
     <table class="table">
         <thead>
         <tr>
@@ -40,7 +47,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var reservation in _reservations)
+        @foreach (var reservation in _reservationsConfirmed)
         {
             <tr>
                 <td>@GetBranchById(reservation.StartBranchId).Name</td>
@@ -57,7 +64,6 @@
                     @GetCustomerByGuid(reservation.CustomerGuid).LastName -
                     @GetCustomerByGuid(reservation.CustomerGuid).Pesel
                 </td>
-
                 <td>
                     <AuthorizeView Policy="AdminLogisticianOnly">
                         <button type="button" class="btn btn-link" @onclick="@(() => EditReservation(reservation))">Edit</button>
@@ -73,14 +79,68 @@
     </table>
 }
 
+@if (_reservationsUnconfirmed != null)
+{
+    <h4>
+        Unconfirmed
+    </h4>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Start Branch</th>
+            <th>End Branch</th>
+            <th>Start Date&Time</th>
+            <th>End Date&Time</th>
+            <th>Price</th>
+            <th>Vehicle</th>
+            <th>Customer</th>
+            <AuthorizeView Policy="AdminLogisticianOnly">
+                <th>Actions</th>
+            </AuthorizeView>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var reservation in _reservationsUnconfirmed)
+        {
+            <tr>
+                <td>@GetBranchById(reservation.StartBranchId).Name</td>
+                <td>@GetBranchById(reservation.EndBranchId).Name</td>
+                <td>@reservation.StartDateTime</td>
+                <td>@reservation.EndDateTime</td>
+                <td>@reservation.Price</td>
+                <td>
+                    @reservation.FleetVehicleLicensePlate
+                    @GetVehicleModelById(reservation.VehicleModelId).Model
+                </td>
+                <td>
+                    @GetCustomerByGuid(reservation.CustomerGuid).FirstName
+                    @GetCustomerByGuid(reservation.CustomerGuid).LastName -
+                    @GetCustomerByGuid(reservation.CustomerGuid).Pesel
+                </td>
+                <td>
+                    <AuthorizeView Policy="AdminLogisticianOnly">
+                        <button type="button" class="btn btn-link" @onclick="@(() => EditReservation(reservation))">Edit</button>
+                        <button type="button" class="btn btn-primary" @onclick="@(() => ConfirmReservationOnClick(reservation.ReservationGuid))">Confirm</button>
+                    </AuthorizeView>
+                    <AuthorizeView Policy="AdminOnly">
+                        <button type="button" class="btn btn-link" @onclick="@(() => DeleteReservation(reservation.ReservationGuid))">Delete</button>
+                    </AuthorizeView>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
 @code {
 
-    private List<Reservation> _reservations;
+    private List<Reservation> _reservationsConfirmed;
+    private List<Reservation> _reservationsUnconfirmed;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
-        LoadData();
+        _reservationsConfirmed = (await _viewConfirmedReservationsUseCase.Execute()).ToList();
+        _reservationsUnconfirmed = (await _viewUnconfirmedReservationsUseCase.Execute()).ToList();
     }
 
     private void AddReservationOnClick()
@@ -93,10 +153,10 @@
         _navigationManager.NavigateTo($"/editreservation/{reservation.ReservationGuid}");
     }
 
-    private void DeleteReservation(string reservationGuid)
+    private async Task DeleteReservation(string reservationGuid)
     {
         _deleteReservationUseCase.Delete(reservationGuid);
-        LoadData();
+        await OnInitializedAsync();
     }
 
     private VehicleModel GetVehicleModelById(int vehicleModelId)
@@ -114,9 +174,10 @@
         return _getCustomerByGuidUseCase.Execute(customerGuid);
     }
 
-    private void LoadData()
+    private async Task ConfirmReservationOnClick(string reservationGuid)
     {
-        _reservations = _viewReservationsUseCase.Execute()?.ToList();
+        _confirmReservationUseCase.Confirm(reservationGuid);
+        await OnInitializedAsync();
     }
 
 }
