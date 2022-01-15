@@ -121,12 +121,12 @@ namespace Plugins.DataStore.SQL.Data
                 new AssignmentType
                 {
                     AssignmentTypeId = 1,
-                    Type = "ReservationStart"
+                    Type = "Reservation Start"
                 },
                 new AssignmentType
                 {
                     AssignmentTypeId = 2,
-                    Type = "ReservationEnd"
+                    Type = "Reservation End"
                 },
                 new AssignmentType
                 {
