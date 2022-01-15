@@ -112,7 +112,7 @@
     {
         base.OnInitialized();
 
-        _reservation = new Reservation();
+        _reservation = new Reservation{IsConfirmed = true};
         LoadLists();
 
         // Set form input to initial values
