@@ -67,8 +67,6 @@
                 <td>
                     <AuthorizeView Policy="AdminLogisticianOnly">
                         <button type="button" class="btn btn-link" @onclick="@(() => EditReservation(reservation))">Edit</button>
-                    </AuthorizeView>
-                    <AuthorizeView Policy="AdminOnly">
                         <button type="button" class="btn btn-link" @onclick="@(() => DeleteReservation(reservation.ReservationGuid))">Delete</button>
                     </AuthorizeView>
                 </td>
