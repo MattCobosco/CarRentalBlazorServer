@@ -3,9 +3,11 @@
 
 @using UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.EmployeeUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.AssignmentTypeUseCaseInterfaces
 
 @inject IViewAssignmentsUseCase _viewAssignmentsUseCase
 @inject IGetEmployeeByGuidUseCase _getEmployeeByGuidUseCase
+@inject IGetAssignmentTypeByIdUseCase _getAssignmentTypeByIdUseCase
 
 <h3>Assignments</h3>
 
@@ -25,7 +27,7 @@
             @foreach (var assignment in _assignments)
             {
                 <tr>
-                    <td>@assignment.AssignmentTypeId</td>
+                    <td>@GetAssignmentTypeById(assignment.AssignmentTypeId)</td>
                     <td>@assignment.DateTime</td>
                     <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid)</td>
                     <td>@assignment.IsDone</td>
@@ -52,6 +54,11 @@
             return employee.FirstName + employee.LastName;
          
         return "";
+    }
+
+    private string GetAssignmentTypeById(int assignmentTypeId)
+    {
+       return _getAssignmentTypeByIdUseCase.Execute(assignmentTypeId).Type;
     }
 
 }

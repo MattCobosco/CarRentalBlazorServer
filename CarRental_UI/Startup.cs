@@ -8,6 +8,7 @@ using Plugins.DataStore.SQL;
 using Plugins.DataStore.SQL.Data;
 using Plugins.IdentityStore.SQL;
 using UseCases.AssignmentUseCases;
+using UseCases.AssignmentTypeUseCases;
 using UseCases.BranchUseCases;
 using UseCases.CustomerUseCases;
 using UseCases.DataStorePluginInterfaces;
@@ -15,6 +16,7 @@ using UseCases.EmployeeUseCases;
 using UseCases.FleetVehicleUseCases;
 using UseCases.IdentityStoreUseCaseInterfaces;
 using UseCases.ReservationUseCases;
+using UseCases.UseCaseInterfaces.AssignmentTypeUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces;
@@ -71,6 +73,7 @@ namespace CarRental_UI
 
             // Dependency Injection - Data Store
             services.AddScoped<IAssignmentRepository, AssignmentRepository>();
+            services.AddScoped<IAssignmentTypeRepository, AssignmentTypeRepository>();
             services.AddScoped<IBranchRepository, BranchRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
@@ -86,6 +89,8 @@ namespace CarRental_UI
             // Assignments
             services.AddTransient<IAddAssignmentFromReservationUseCase, AddAssignmentFromReservationUseCase>();
             services.AddTransient<IViewAssignmentsUseCase, ViewAssignmentsUseCase>();
+            // Assignment Types
+            services.AddTransient<IGetAssignmentTypeByIdUseCase, GetAssignmentTypeByIdUseCase>();
             // Branches
             services.AddTransient<IAddBranchUseCase, AddBranchUseCase>();
             services.AddTransient<IDeleteBranchUseCase, DeleteBranchUseCase>();
