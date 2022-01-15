@@ -7,70 +7,74 @@
 @inject IDeleteBranchUseCase _deleteBranchUseCase
 
 <h3>Manage Branches</h3>
+<br/>
+<AuthorizeView Policy="AdminOnly">
+    <button type="button" @onclick="AddBranchOnClick" class="btn btn-primary">Add Branch</button>
+    <br />
 <br />
-<button type="button" @onclick="AddBranchOnClick" class="btn btn-primary">Add Branch</button>
-<br />
-<br />
+</AuthorizeView>
 
-@if (_branches != null)
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var branch in _branches)
-            {
+    @if (_branches != null)
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@branch.Name</td>
-                    <td>@branch.Address</td>
-                    <td>@branch.Description</td>
-                    <td>
-                        <button type="button" class="btn btn-link" @onclick="@(() => EditBranch(branch))">Edit</button>
-                        <AuthorizeView Policy="AdminOnly">
-                            <button type="button" class="btn btn-link" @onclick="@(() => DeleteBranch(branch.BranchId))">Delete</button>
-                        </AuthorizeView>
-                    </td>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Description</th>
+                    <AuthorizeView Policy="AdminOnly">
+                        <th>Actions</th>
+                    </AuthorizeView>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
-
-@code {
-
-    private List<Branch> _branches;
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        LoadBranches();
+            </thead>
+            <tbody>
+                @foreach (var branch in _branches)
+                {
+                    <tr>
+                        <td>@branch.Name</td>
+                        <td>@branch.Address</td>
+                        <td>@branch.Description</td>
+                        <td>
+                            <AuthorizeView Policy="AdminOnly">
+                                <button type="button" class="btn btn-link" @onclick="@(() => EditBranch(branch))">Edit</button>
+                                <button type="button" class="btn btn-link" @onclick="@(() => DeleteBranch(branch.BranchId))">Delete</button>
+                            </AuthorizeView>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
 
-    private void AddBranchOnClick()
-    {
-        _navigationManager.NavigateTo("/addbranch");
-    }
+    @code {
 
-    private void EditBranch(Branch branch)
-    {
-        _navigationManager.NavigateTo($"/editbranch/{branch.BranchId}");
-    }
+        private List<Branch> _branches;
 
-    private void DeleteBranch(int branchId)
-    {
-        _deleteBranchUseCase.Delete(branchId);
-        LoadBranches();
-    }
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            LoadBranches();
+        }
 
-    private void LoadBranches()
-    {
-        _branches = _viewBranchesUseCase.Execute()?.ToList();
-    }
+        private void AddBranchOnClick()
+        {
+            _navigationManager.NavigateTo("/addbranch");
+        }
 
-}
+        private void EditBranch(Branch branch)
+        {
+            _navigationManager.NavigateTo($"/editbranch/{branch.BranchId}");
+        }
+
+        private void DeleteBranch(int branchId)
+        {
+            _deleteBranchUseCase.Delete(branchId);
+            LoadBranches();
+        }
+
+        private void LoadBranches()
+        {
+            _branches = _viewBranchesUseCase.Execute()?.ToList();
+        }
+
+    }

@@ -11,9 +11,11 @@
 
 <h3>Manage Vehicle Models</h3>
 <br />
-<button type="button" @onclick="AddVehicleModelOnClick" class="btn btn-primary">Add Model</button>
-<br />
-<br />
+<AuthorizeView Policy="AdminOnly">
+    <button type="button" @onclick="AddVehicleModelOnClick" class="btn btn-primary">Add Model</button>
+    <br />
+    <br />
+</AuthorizeView>
 
 @if (_vehicleModels != null)
 {
@@ -26,7 +28,9 @@
                 <th>Body Type</th>
                 <th>Automatic Gearbox</th>
                 <th>Daily Price</th>
+                <AuthorizeView Policy="AdminLogisticianOnly">
                 <th>Actions</th>
+                </AuthorizeView>
             </tr>
         </thead>
         <tbody>
@@ -39,9 +43,9 @@
                     <td>@GetVehicleBodyTypeById(vehicleModel.BodyTypeId).Name</td>
                     <td>@vehicleModel.AutomaticGearbox</td>
                     <td>@vehicleModel.BaseDailyPrice</td>
-                    <td>
+                <td>
+                    <AuthorizeView Policy="AdminOnly">
                         <button type="button" class="btn btn-link" @onclick="@(() => EditVehicleModel(vehicleModel))">Edit</button>
-                        <AuthorizeView Policy="AdminOnly">
                             <button type="button" class="btn btn-link" @onclick="@(() => DeleteVehicleModel(vehicleModel.VehicleModelId))">Delete</button>
                         </AuthorizeView>
                     </td>

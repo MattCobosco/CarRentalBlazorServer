@@ -16,9 +16,11 @@
 <h3>Manage Reservations</h3>
 <br/>
 
-<button type="button" @onclick="AddReservationOnClick" class="btn btn-primary">Add Reservation</button>
-<br/>
-<br/>
+<AuthorizeView Policy="AdminLogisticianOnly">
+    <button type="button" @onclick="AddReservationOnClick" class="btn btn-primary">Add Reservation</button>
+    <br/>
+    <br/>
+</AuthorizeView>
 
 @if (_reservations != null)
 {
@@ -32,7 +34,9 @@
             <th>Price</th>
             <th>Vehicle</th>
             <th>Customer</th>
-            <th>Actions</th>
+            <AuthorizeView Policy="AdminLogisticianOnly">
+                <th>Actions</th>
+            </AuthorizeView>
         </tr>
         </thead>
         <tbody>
@@ -55,7 +59,9 @@
                 </td>
 
                 <td>
-                    <button type="button" class="btn btn-link" @onclick="@(() => EditReservation(reservation))">Edit</button>
+                    <AuthorizeView Policy="AdminLogisticianOnly">
+                        <button type="button" class="btn btn-link" @onclick="@(() => EditReservation(reservation))">Edit</button>
+                    </AuthorizeView>
                     <AuthorizeView Policy="AdminOnly">
                         <button type="button" class="btn btn-link" @onclick="@(() => DeleteReservation(reservation.ReservationGuid))">Delete</button>
                     </AuthorizeView>

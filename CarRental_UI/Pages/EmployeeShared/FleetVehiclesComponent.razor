@@ -12,46 +12,50 @@
 @inject IGetBranchByIdUseCase _getBranchByIdUseCase
 
 <h3>Fleet Vehicles</h3>
-<br />
-<button type="button" @onclick="AddFleetVehicleOnClick" class="btn btn-primary">Add Fleet Vehicle</button>
-<br />
-<br />
+<br/>
+<AuthorizeView Policy="AdminOnly">
+    <button type="button" @onclick="AddFleetVehicleOnClick" class="btn btn-primary">Add Fleet Vehicle</button>
+    <br/>
+    <br/>
+</AuthorizeView>
 
 @if (_fleetVehicles != null)
 {
     <table class="table">
         <thead>
-            <tr>
-                <th>License Plate</th>
-                <th>Make&Model</th>
-                <th>Current Branch</th>
-                <th>Odometer</th>
-                <th>Maintenance Odo</th>
-                <th>Maintenance Date</th>
+        <tr>
+            <th>License Plate</th>
+            <th>Make&Model</th>
+            <th>Current Branch</th>
+            <th>Odometer</th>
+            <th>Maintenance Odo</th>
+            <th>Maintenance Date</th>
+            <AuthorizeView Policy="AdminLogisticianOnly">
                 <th>Actions</th>
-            </tr>
+            </AuthorizeView>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var fleetVehicle in _fleetVehicles)
-            {
-                <tr>
-                    <td>@fleetVehicle.FleetVehicleLicensePlate</td>
-                    <td>
-                        @GetVehicleModelByLicensePlate(fleetVehicle.FleetVehicleLicensePlate).Make
-                        @GetVehicleModelByLicensePlate(fleetVehicle.FleetVehicleLicensePlate).Model
-                    </td>
-                    <td>@GetBranchById(fleetVehicle.CurrentBranchId).Name</td>
-                    <td>@fleetVehicle.Odometer</td>
-                    <td>@fleetVehicle.MaintenanceOdometer</td>
-                    <td>@fleetVehicle.MaintenanceDate.ToShortDateString()</td>
-                    <td>
+        @foreach (var fleetVehicle in _fleetVehicles)
+        {
+            <tr>
+                <td>@fleetVehicle.FleetVehicleLicensePlate</td>
+                <td>
+                    @GetVehicleModelByLicensePlate(fleetVehicle.FleetVehicleLicensePlate).Make
+                    @GetVehicleModelByLicensePlate(fleetVehicle.FleetVehicleLicensePlate).Model
+                </td>
+                <td>@GetBranchById(fleetVehicle.CurrentBranchId).Name</td>
+                <td>@fleetVehicle.Odometer</td>
+                <td>@fleetVehicle.MaintenanceOdometer</td>
+                <td>@fleetVehicle.MaintenanceDate.ToShortDateString()</td>
+                <td>
+                    <AuthorizeView Policy="AdminOnly">
                         <button type="button" class="btn btn-link" @onclick="@(() => EditFleetVehicle(fleetVehicle))">Edit</button>
-                        <AuthorizeView Policy="AdminOnly">
-                            <button type="button" class="btn btn-link" @onclick="@(() => DeleteFleetVehicle(fleetVehicle.FleetVehicleLicensePlate))">Delete</button>
-                        </AuthorizeView>
-                    </td>
-                </tr>
-            }
+                        <button type="button" class="btn btn-link" @onclick="@(() => DeleteFleetVehicle(fleetVehicle.FleetVehicleLicensePlate))">Delete</button>
+                    </AuthorizeView>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 }

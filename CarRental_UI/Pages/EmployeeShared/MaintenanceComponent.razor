@@ -1,5 +1,5 @@
 ﻿@page "/maintenance"
-@attribute [Authorize(Policy = "AdminLogisticianOnly")]
+@attribute [Authorize(Policy = "EmployeeOnly")]
 @using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
@@ -20,14 +20,16 @@
     <br/>
     <table class="table">
         <thead>
-            <tr>
-                <th>License Plate</th>
-                <th>Make&Model</th>
-                <th>Maintenance Date</th>
-                <th>Days left</th>
-                <th>Current Branch</th>
+        <tr>
+            <th>License Plate</th>
+            <th>Make&Model</th>
+            <th>Maintenance Date</th>
+            <th>Days left</th>
+            <th>Current Branch</th>
+            <AuthorizeView Policy="AdminLogisticianOnly">
                 <th>Assignment</th>
-            </tr>
+            </AuthorizeView>
+        </tr>
         </thead>
         <tbody>
         @foreach (var fleetVehicle in _fleetVehiclesDate)
@@ -41,7 +43,11 @@
                 <td>@fleetVehicle.MaintenanceDate.ToShortDateString()</td>
                 <td>@GetDaysLeft(fleetVehicle.MaintenanceDate)</td>
                 <td>@GetBranchById(fleetVehicle.CurrentBranchId).Name</td>
-                <td><button>Assign</button></td>
+                <AuthorizeView Policy="AdminLogisticianOnly">
+                    <td>
+                        <button>Assign</button>
+                    </td>
+                </AuthorizeView>
             </tr>
         }
         </tbody>
@@ -62,7 +68,9 @@
             <th>Maintenance Odo</th>
             <th>Remaining</th>
             <th>Current Branch</th>
-            <th>Assignment</th>
+            <AuthorizeView Policy="AdminLogisticianOnly">
+                <th>Assignment</th>
+            </AuthorizeView>
         </tr>
         </thead>
         <tbody>
@@ -78,7 +86,11 @@
                 <td>@fleetVehicle.MaintenanceOdometer</td>
                 <td>@GetOdometerDifference(fleetVehicle)</td>
                 <td>@GetBranchById(fleetVehicle.CurrentBranchId).Name</td>
-                <td><button>Assign</button></td>
+                <AuthorizeView Policy="AdminLogisticianOnly">
+                    <td>
+                        <button>Assign</button>
+                    </td>
+                </AuthorizeView>
             </tr>
         }
         </tbody>
