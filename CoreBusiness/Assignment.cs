@@ -21,11 +21,15 @@ namespace CoreBusiness
         public DateTime DateTime { get; set; }
         public string EmployeeGuid { get; set; }
         public string ReservationGuid { get; set; }
+        public string FleetVehicleLicensePlate { get; set; }
+        public int VehicleModelId { get; set; }
 
         // Navigation properties for EF Core
         public AssignmentType AssignmentType { get; set; }
         public Employee Employee { get; set; }
         public Reservation Reservation { get; set; }
         public Transfer Transfer { get; set; }
+        public FleetVehicle FleetVehicle { get; set; }
+        public VehicleModel VehicleModel { get; set; }
     }
 }

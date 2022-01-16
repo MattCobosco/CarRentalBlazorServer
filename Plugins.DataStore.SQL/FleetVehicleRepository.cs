@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UseCases.DataStorePluginInterfaces;
+using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces;
+using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces;
 
 namespace Plugins.DataStore.SQL
 {

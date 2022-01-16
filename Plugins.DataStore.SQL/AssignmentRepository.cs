@@ -32,7 +32,9 @@ namespace Plugins.DataStore.SQL
                 IsDone = false,
                 DateTime = reservation.StartDateTime,
                 EmployeeGuid = null,
-                ReservationGuid = reservationGuid
+                ReservationGuid = reservationGuid,
+                FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate,
+                VehicleModelId = reservation.VehicleModelId
             };
 
             var assignmentEnd = new Assignment
@@ -41,7 +43,9 @@ namespace Plugins.DataStore.SQL
                 IsDone = false,
                 DateTime = reservation.EndDateTime,
                 EmployeeGuid = null,
-                ReservationGuid = reservationGuid
+                ReservationGuid = reservationGuid,
+                FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate,
+                VehicleModelId = reservation.VehicleModelId
             };
 
             var transaction = await _carRentalContext.Database.BeginTransactionAsync();
@@ -72,9 +76,41 @@ namespace Plugins.DataStore.SQL
             }
         }
 
+        public async Task<Assignment> GetAssignmentByGuidAsync(string assignmentGuid)
+        {
+            return await _carRentalContext.Assignments.FindAsync(assignmentGuid);
+        }
+
         public async Task<IEnumerable<Assignment>> GetAssignmentsAsync()
         {
             return await _carRentalContext.Assignments.OrderBy(a=>a.DateTime).ToListAsync();
+        }
+
+        public async Task UpdateTasksOnReservationUpdateAsync(Reservation reservation)
+        {
+            var transaction = await _carRentalContext.Database.BeginTransactionAsync();
+
+            try
+            {
+                var startAssignment = await GetAssignmentByGuidAsync(reservation.StartAssignmentGuid);
+                var endAssignment = await GetAssignmentByGuidAsync(reservation.EndAssignmentGuid);
+
+                startAssignment.DateTime = reservation.StartDateTime;
+                startAssignment.VehicleModelId = reservation.VehicleModelId;
+                startAssignment.FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate;
+
+                endAssignment.DateTime = reservation.EndDateTime;
+                endAssignment.VehicleModelId = reservation.VehicleModelId;
+                endAssignment.FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate;
+
+                await _carRentalContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

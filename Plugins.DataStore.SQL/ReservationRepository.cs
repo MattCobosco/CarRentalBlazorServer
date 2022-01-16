@@ -95,15 +95,17 @@ namespace Plugins.DataStore.SQL
             try
             {
                 var reservationToEdit = GetReservationByGuid(reservation.ReservationGuid);
-
+                
                 reservationToEdit.StartDateTime = reservation.StartDateTime;
                 reservationToEdit.EndDateTime = reservation.EndDateTime;
                 reservationToEdit.Price = reservation.Price;
                 reservationToEdit.StartBranchId = reservation.StartBranchId;
-                reservationToEdit.EndBranch = reservation.EndBranch;
+                reservationToEdit.EndBranchId = reservation.EndBranchId;
                 reservationToEdit.VehicleModelId = reservation.VehicleModelId;
                 reservationToEdit.FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate;
                 reservationToEdit.CustomerGuid = reservation.CustomerGuid;
+                reservationToEdit.StartAssignmentGuid = reservation.StartAssignmentGuid;
+                reservationToEdit.EndAssignmentGuid = reservation.EndAssignmentGuid;
 
                 _carRentalContext.SaveChanges();
                 transaction.Commit();

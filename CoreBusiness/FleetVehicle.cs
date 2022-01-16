@@ -35,5 +35,6 @@ namespace CoreBusiness
         public Branch CurrentBranch { get; set; }
         public List<Reservation> Reservations { get; set; }
         public List<Transfer> Transfers { get; set; }
+        public List<Assignment> Assignments { get; set; }
     }
 }

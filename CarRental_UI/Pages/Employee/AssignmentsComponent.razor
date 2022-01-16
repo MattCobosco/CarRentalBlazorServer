@@ -104,12 +104,12 @@
 
     private List<Assignment> GetDoneAssignments(List<Assignment> assignments)
     {
-        return assignments.Where(x => x.IsDone).ToList();
+        return assignments.Where(a => a.IsDone).OrderBy(x=>x).OrderBy(a=>a.DateTime).ToList();
     }
 
     private List<Assignment> GetUndoneAssignments(List<Assignment> assignments)
     {
-        return assignments.Where(x => !x.IsDone).ToList();
+        return assignments.Where(a => !a.IsDone).OrderBy(a=>a.DateTime).ToList();
     }
 
     private string GetMakeModelFromVehicleModelId(int vehicleModelId)

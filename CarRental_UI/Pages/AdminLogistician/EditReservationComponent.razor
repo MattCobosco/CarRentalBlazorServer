@@ -4,6 +4,7 @@
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
 @inject IViewBranchesUseCase _viewBranchesUseCase
@@ -13,6 +14,7 @@
 @inject IEditReservationUseCase _editReservationUseCase
 @inject IGetReservationByGuidUseCase _getReservationByGuidUseCase
 @inject IViewVehicleModelsUseCase _viewVehicleModelsUseCase
+@inject IUpdateTasksOnReservationUpdateUseCase _updateTasksOnReservationUpdateUseCase
 
 <h3>Edit Reservation</h3>
 <br />
@@ -108,14 +110,17 @@
             EndBranchId = reservation.EndBranchId,
             VehicleModelId = reservation.VehicleModelId,
             FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate,
-            CustomerGuid = reservation.CustomerGuid
+            CustomerGuid = reservation.CustomerGuid,
+            StartAssignmentGuid = reservation.StartAssignmentGuid,
+            EndAssignmentGuid = reservation.EndAssignmentGuid
         };
     }
 
-    private void OnValidSubmit()
+    private async void OnValidSubmit()
     {
         _reservation.Price = _getReservationPriceUseCase.Execute(_reservation.VehicleModelId, _reservation.StartDateTime, _reservation.EndDateTime);
         _editReservationUseCase.Execute(_reservation);
+        await _updateTasksOnReservationUpdateUseCase.Execute(_reservation);
         _navigationManager.NavigateTo("/reservations");
     }
 

@@ -45,6 +45,18 @@ namespace Plugins.DataStore.SQL.Data
                 .HasForeignKey(a => a.ReservationGuid)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Assignment>()
+                .HasOne(a => a.FleetVehicle)
+                .WithMany(fv => fv.Assignments)
+                .HasForeignKey(a => a.FleetVehicleLicensePlate)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Assignment>()
+                .HasOne(a => a.VehicleModel)
+                .WithMany(vm => vm.Assignments)
+                .HasForeignKey(a => a.VehicleModelId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             // Branch
             modelBuilder.Entity<Branch>()
                 .HasMany(br => br.FleetVehicles)
