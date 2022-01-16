@@ -99,7 +99,7 @@ namespace Plugins.DataStore.SQL
             return null;
         }
 
-        public IEnumerable<Customer> GetCustomers()
+        public IEnumerable<Customer> ViewCustomers()
         {
             try
             {

@@ -100,11 +100,6 @@ namespace Plugins.DataStore.SQL
             return await _carRentalContext.Assignments.FindAsync(assignmentGuid);
         }
 
-        public async Task<IEnumerable<Assignment>> GetAssignmentsAsync()
-        {
-            return await _carRentalContext.Assignments.OrderBy(a => a.DateTime).ToListAsync();
-        }
-
         public async Task UpdateTasksOnReservationUpdateAsync(Reservation reservation)
         {
             var transaction = await _carRentalContext.Database.BeginTransactionAsync();
@@ -130,6 +125,11 @@ namespace Plugins.DataStore.SQL
                 await transaction.RollbackAsync();
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        public async Task<IEnumerable<Assignment>> ViewAssignmentsAsync()
+        {
+            return await _carRentalContext.Assignments.OrderBy(a => a.DateTime).ToListAsync();
         }
     }
 }

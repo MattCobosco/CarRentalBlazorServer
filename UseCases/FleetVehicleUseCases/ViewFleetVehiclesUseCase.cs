@@ -16,7 +16,7 @@ namespace UseCases.FleetVehicleUseCases
 
         public IEnumerable<FleetVehicle> Execute()
         {
-            return _fleetVehicleRepository.GetFleetVehicles();
+            return _fleetVehicleRepository.ViewFleetVehicles();
         }
     }
 }

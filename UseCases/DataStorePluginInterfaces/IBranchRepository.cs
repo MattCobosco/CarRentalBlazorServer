@@ -10,7 +10,7 @@ namespace UseCases.DataStorePluginInterfaces
         void DeleteBranch(int branchId);
         void EditBranch(Branch branch);
         Branch GetBranchById(int branchId);
-        IEnumerable<Branch> GetBranches();
-        Task<IEnumerable<Branch>> GetBranchesAsync();
+        IEnumerable<Branch> ViewBranches();
+        Task<IEnumerable<Branch>> ViewBranchesAsync();
     }
 }

@@ -131,7 +131,7 @@ namespace Plugins.DataStore.SQL
             return null;
         }
 
-        public IEnumerable<Reservation> GetCustomerReservations(string customerGuid)
+        public IEnumerable<Reservation> ViewCustomerReservations(string customerGuid)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace Plugins.DataStore.SQL
             }
         }
 
-        public async Task<IEnumerable<Reservation>> GetConfirmedReservationsAsync()
+        public async Task<IEnumerable<Reservation>> ViewConfirmedReservationsAsync()
         {
             try
             {
@@ -160,7 +160,7 @@ namespace Plugins.DataStore.SQL
             }
         }
 
-        public async Task<IEnumerable<Reservation>> GetUnconfirmedReservationsAsync()
+        public async Task<IEnumerable<Reservation>> ViewUnconfirmedReservationsAsync()
         {
             try
             {

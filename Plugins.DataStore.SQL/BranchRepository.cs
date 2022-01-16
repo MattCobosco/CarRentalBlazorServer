@@ -106,7 +106,7 @@ namespace Plugins.DataStore.SQL
 
         }
 
-        public IEnumerable<Branch> GetBranches()
+        public IEnumerable<Branch> ViewBranches()
         {
             try
             {
@@ -120,7 +120,7 @@ namespace Plugins.DataStore.SQL
             }
         }
 
-        public async Task<IEnumerable<Branch>> GetBranchesAsync()
+        public async Task<IEnumerable<Branch>> ViewBranchesAsync()
         {
             return await _carRentalContext.Branches.ToListAsync();
         }

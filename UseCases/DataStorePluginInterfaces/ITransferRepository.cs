@@ -9,6 +9,6 @@ namespace UseCases.DataStorePluginInterfaces
         void DeleteTransfer(int transferId);
         void EditTransfer(Transfer transfer);
         Transfer GetTransferById(int transferId);
-        IEnumerable<Transfer> GetTransfers();
+        IEnumerable<Transfer> ViewTransfers();
     }
 }

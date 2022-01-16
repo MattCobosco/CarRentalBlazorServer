@@ -20,7 +20,7 @@ namespace CarRental_UI.Controllers
         [HttpGet]
         public async Task<IEnumerable<Branch>> ShowAllBranchesDetails()
         {
-            return await _branchRepository.GetBranchesAsync();
+            return await _branchRepository.ViewBranchesAsync();
         }
     }
 }

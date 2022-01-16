@@ -16,7 +16,7 @@ namespace UseCases.VehicleModelUseCases
 
         public IEnumerable<VehicleModel> Execute()
         {
-            return _vehicleModelRepository.GetVehicleModels();
+            return _vehicleModelRepository.ViewVehicleModels();
         }
     }
 }

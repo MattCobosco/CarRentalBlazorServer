@@ -20,7 +20,7 @@ namespace CarRental_UI.Controllers
         [HttpGet]
         public async Task<IEnumerable<VehicleModel>> ShowAllVehicleModelsDetails()
         {
-            return await _vehicleModelRepository.GetVehicleModelsAsync();
+            return await _vehicleModelRepository.ViewVehicleModelsAsync();
         }
     }
 }

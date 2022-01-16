@@ -102,7 +102,7 @@ namespace Plugins.DataStore.SQL
             return null;
         }
 
-        public IEnumerable<VehicleBodyType> GetVehicleBodyTypes()
+        public IEnumerable<VehicleBodyType> ViewVehicleBodyTypes()
         {
             try
             {

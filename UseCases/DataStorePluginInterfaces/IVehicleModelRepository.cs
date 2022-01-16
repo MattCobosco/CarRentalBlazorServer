@@ -10,7 +10,7 @@ namespace UseCases.DataStorePluginInterfaces
         void DeleteVehicleModel(int vehicleModelId);
         void EditVehicleModel(VehicleModel vehicleModel);
         VehicleModel GetVehicleModelById(int vehicleModelId);
-        IEnumerable<VehicleModel> GetVehicleModels();
-        Task<IEnumerable<VehicleModel>> GetVehicleModelsAsync();
+        IEnumerable<VehicleModel> ViewVehicleModels();
+        Task<IEnumerable<VehicleModel>> ViewVehicleModelsAsync();
     }
 }

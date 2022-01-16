@@ -17,7 +17,7 @@ namespace UseCases.AssignmentUseCases
 
         public Task<IEnumerable<Assignment>> Execute()
         {
-            return _assignmentRepository.GetAssignmentsAsync();
+            return _assignmentRepository.ViewAssignmentsAsync();
         }
     }
 }

@@ -117,7 +117,7 @@ namespace Plugins.DataStore.SQL
 
         }
 
-        public IEnumerable<VehicleModel> GetVehicleModels()
+        public IEnumerable<VehicleModel> ViewVehicleModels()
         {
             try
             {
@@ -131,7 +131,7 @@ namespace Plugins.DataStore.SQL
             }
         }
 
-        public async Task<IEnumerable<VehicleModel>> GetVehicleModelsAsync()
+        public async Task<IEnumerable<VehicleModel>> ViewVehicleModelsAsync()
         {
             return await _carRentalContext.VehicleModels.ToListAsync();
         }

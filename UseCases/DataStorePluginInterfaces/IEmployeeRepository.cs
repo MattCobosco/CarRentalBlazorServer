@@ -8,6 +8,6 @@ namespace UseCases.DataStorePluginInterfaces
     {
         void AddEmployee(Employee employee);
         Task<Employee> GetEmployeeByGuidAsync(string employeeGuid);
-        Task<IEnumerable<Employee>> GetEmployeesAsync();
+        Task<IEnumerable<Employee>> ViewEmployeesAsync();
     }
 }

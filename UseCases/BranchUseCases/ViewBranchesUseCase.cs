@@ -16,7 +16,7 @@ namespace UseCases.BranchUseCases
 
         public IEnumerable<Branch> Execute()
         {
-            return _branchRepository.GetBranches();
+            return _branchRepository.ViewBranches();
         }
     }
 }

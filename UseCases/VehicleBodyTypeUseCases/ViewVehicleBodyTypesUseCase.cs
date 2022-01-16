@@ -16,7 +16,7 @@ namespace UseCases.VehicleBodyTypeUseCases
 
         public IEnumerable<VehicleBodyType> Execute()
         {
-            return _vehicleBodyTypeRepository.GetVehicleBodyTypes();
+            return _vehicleBodyTypeRepository.ViewVehicleBodyTypes();
         }
     }
 }

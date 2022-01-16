@@ -17,7 +17,7 @@ namespace UseCases.ReservationUseCases
 
         public Task<IEnumerable<Reservation>> Execute()
         {
-            return _reservationRepository.GetUnconfirmedReservationsAsync();
+            return _reservationRepository.ViewUnconfirmedReservationsAsync();
         }
     }
 }

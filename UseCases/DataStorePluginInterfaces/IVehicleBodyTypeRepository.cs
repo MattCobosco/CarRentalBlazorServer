@@ -9,6 +9,6 @@ namespace UseCases.DataStorePluginInterfaces
         void DeleteVehicleBodyType(int vehicleBodyTypeId);
         void EditVehicleBodyType(VehicleBodyType vehicleBodyType);
         VehicleBodyType GetVehicleBodyTypeById(int vehicleBodyTypeId);
-        IEnumerable<VehicleBodyType> GetVehicleBodyTypes();
+        IEnumerable<VehicleBodyType> ViewVehicleBodyTypes();
     }
 }

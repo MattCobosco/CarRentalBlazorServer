@@ -128,7 +128,7 @@ namespace Plugins.DataStore.SQL
             return vehiclesForMaintenance?.ToList();
         }
 
-        public IEnumerable<FleetVehicle> GetFleetVehicles()
+        public IEnumerable<FleetVehicle> ViewFleetVehicles()
         {
             try
             {

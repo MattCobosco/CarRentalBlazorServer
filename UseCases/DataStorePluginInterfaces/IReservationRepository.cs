@@ -11,8 +11,8 @@ namespace UseCases.DataStorePluginInterfaces
         void DeleteReservation(string reservationGuid);
         void EditReservation(Reservation reservation);
         Reservation GetReservationByGuid(string reservationGuid);
-        IEnumerable<Reservation> GetCustomerReservations(string customerGuid);
-        Task<IEnumerable<Reservation>> GetConfirmedReservationsAsync();
-        Task<IEnumerable<Reservation>> GetUnconfirmedReservationsAsync();
+        IEnumerable<Reservation> ViewCustomerReservations(string customerGuid);
+        Task<IEnumerable<Reservation>> ViewConfirmedReservationsAsync();
+        Task<IEnumerable<Reservation>> ViewUnconfirmedReservationsAsync();
     }
 }

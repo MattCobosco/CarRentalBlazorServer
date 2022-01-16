@@ -9,6 +9,6 @@ namespace UseCases.DataStorePluginInterfaces
         void DeleteCustomer(string customerGuid);
         void EditCustomer(Customer customer);
         Customer GetCustomerByGuid(string customerGuid);
-        IEnumerable<Customer> GetCustomers();
+        IEnumerable<Customer> ViewCustomers();
     }
 }

@@ -16,7 +16,7 @@ namespace UseCases.ReservationUseCases
 
         public IEnumerable<Reservation> Execute(string customerGuid)
         {
-            return _reservationRepository.GetCustomerReservations(customerGuid);
+            return _reservationRepository.ViewCustomerReservations(customerGuid);
         }
     }
 }

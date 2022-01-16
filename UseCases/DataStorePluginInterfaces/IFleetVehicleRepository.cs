@@ -11,6 +11,6 @@ namespace UseCases.DataStorePluginInterfaces
         FleetVehicle GetFleetVehicleByLicensePlate(string fleetVehicleLicensePlate);
         IEnumerable<FleetVehicle> GetFleetVehicleMaintenanceDate();
         IEnumerable<FleetVehicle> GetFleetVehicleMaintenanceOdometer();
-        IEnumerable<FleetVehicle> GetFleetVehicles();
+        IEnumerable<FleetVehicle> ViewFleetVehicles();
     }
 }

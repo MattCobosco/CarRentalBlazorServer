@@ -17,7 +17,7 @@ namespace UseCases.EmployeeUseCases
 
         public async Task<IEnumerable<Employee>> Execute()
         {
-            return await _employeeRepository.GetEmployeesAsync();
+            return await _employeeRepository.ViewEmployeesAsync();
         }
     }
 }

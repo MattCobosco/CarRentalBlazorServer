@@ -48,7 +48,7 @@ namespace Plugins.DataStore.SQL
             return null;
         }
 
-        public async Task<IEnumerable<Employee>> GetEmployeesAsync()
+        public async Task<IEnumerable<Employee>> ViewEmployeesAsync()
         {
             try
             {

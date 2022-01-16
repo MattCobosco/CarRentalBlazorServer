@@ -16,7 +16,7 @@ namespace UseCases.CustomerUseCases
 
         public IEnumerable<Customer> Execute()
         {
-            return _customerRepository.GetCustomers();
+            return _customerRepository.ViewCustomers();
         }
     }
 }
