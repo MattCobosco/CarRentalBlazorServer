@@ -5,6 +5,7 @@
 @using UseCases.UseCaseInterfaces.AssignmentTypeUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 
+@inject NavigationManager _navigationManager
 @inject IGetCurrentUserGuidUseCase _getCurrentUserGuidUseCase
 @inject IGetAssignmentsByAgentGuidUseCase _getAssignmentsByAgentGuidUseCase
 @inject IGetAssignmentTypeByIdUseCase _getAssignmentTypeByIdUseCase
@@ -16,27 +17,34 @@
 {
     <table class="table">
         <thead>
-        <tr>
-            <th>Type</th>
-            <th>Date&Time</th>
-            <th>Model</th>
-            <th>Vehicle</th>
-            <th>Print</th>
-        </tr>
+            <tr>
+                <th>Type</th>
+                <th>Date&Time</th>
+                <th>Model</th>
+                <th>Vehicle</th>
+                <th>Actions</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var assignment in _assignments)
-        {
-            <tr>
-                <td>@GetAssignmentTypeById(assignment.AssignmentTypeId)</td>
-                <td>@assignment.DateTime</td>
-                <td>@GetMakeModelFromVehicleModelId(assignment.VehicleModelId)</td>
-                <td>@assignment.FleetVehicleLicensePlate</td>
-                <td>
-                    <button class="btn btn-primary">Print</button>
-                </td>
-            </tr>
-        }
+            @foreach (var assignment in _assignments)
+            {
+                <tr>
+                    <td>@GetAssignmentTypeById(assignment.AssignmentTypeId)</td>
+                    <td>@assignment.DateTime</td>
+                    <td>@GetMakeModelFromVehicleModelId(assignment.VehicleModelId)</td>
+                    <td>@assignment.FleetVehicleLicensePlate</td>
+                    @if(assignment.AssignmentTypeId==1)
+                    {
+                        <td>
+                            <button class="btn btn-primary" @onclick="(() => GeneratePdf(assignment.ReservationGuid))">Print</button>
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                </tr>
+            }
         </tbody>
     </table>
 }
@@ -61,5 +69,10 @@
     {
         var vehicleModel = _getVehicleModelByIdUseCase.Execute(vehicleModelId);
         return $"{vehicleModel.Make} {vehicleModel.Model}";
+    }
+
+    private void GeneratePdf(string reservationGuid)
+    {
+        _navigationManager.NavigateTo($"/agreement/{reservationGuid}");
     }
 }

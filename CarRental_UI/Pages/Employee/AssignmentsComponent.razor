@@ -56,7 +56,7 @@
                     <td>@assignment.DateTime</td>
                     <td>@GetMakeModelFromVehicleModelId(assignment.VehicleModelId)</td>
                     <td>@assignment.FleetVehicleLicensePlate</td>
-                    <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid).Result</td>
+                    <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid)</td>
                     <AuthorizeView Policy="AdminLogisticianOnly">
                         <td>
                             <button class="btn btn-primary" @onclick="() => OnClickAssign(assignment, _employeeGuid)">Assign</button>
@@ -92,7 +92,7 @@
                     <td>@assignment.DateTime</td>
                     <td>@GetMakeModelFromVehicleModelId(assignment.VehicleModelId)</td>
                     <td>@assignment.FleetVehicleLicensePlate</td>
-                    <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid).Result</td>
+                    <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid)</td>
                 </tr>
             }
             </tbody>
@@ -115,10 +115,10 @@
         _employees = (await _viewEmployeesUseCase.Execute()).ToList();
     }
 
-    private async Task<string> GetEmployeeNameByGuid(string employeeGuid)
+    private string GetEmployeeNameByGuid(string employeeGuid)
     {
         if (employeeGuid == null) return "";
-        var employee = await _getEmployeeByGuidUseCase.Execute(employeeGuid);
+        var employee = _getEmployeeByGuidUseCase.Execute(employeeGuid);
 
         if (employee != null)
         {

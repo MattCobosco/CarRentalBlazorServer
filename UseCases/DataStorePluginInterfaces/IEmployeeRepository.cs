@@ -7,7 +7,7 @@ namespace UseCases.DataStorePluginInterfaces
     public interface IEmployeeRepository
     {
         void AddEmployee(Employee employee);
-        Task<Employee> GetEmployeeByGuidAsync(string employeeGuid);
+        Employee GetEmployeeByGuid(string employeeGuid);
         Task<IEnumerable<Employee>> ViewEmployeesAsync();
     }
 }

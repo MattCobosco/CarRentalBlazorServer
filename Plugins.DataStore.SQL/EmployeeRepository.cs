@@ -35,9 +35,9 @@ namespace Plugins.DataStore.SQL
             }
         }
 
-        public async Task<Employee> GetEmployeeByGuidAsync(string employeeGuid)
+        public Employee GetEmployeeByGuid(string employeeGuid)
         {
-            var employee = await _carRentalContext.Employees.FindAsync(employeeGuid);
+            var employee = _carRentalContext.Employees.Find(employeeGuid);
 
             if (employee != null)
             {

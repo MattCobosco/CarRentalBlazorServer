@@ -1,0 +1,107 @@
+﻿@page "/agreement/{reservationGuid}"
+@attribute [Authorize(Policy = "AgentOnly")]
+@using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.CustomerUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.EmployeeUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.UserUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
+
+@inject NavigationManager _navigationManager
+@inject IGetReservationByGuidUseCase _getReservationByGuidUseCase
+@inject IGetBranchByIdUseCase _getBranchByIdUseCase
+@inject IGetCustomerByGuidUseCase _getCustomerByGuidUseCase
+@inject IGetEmployeeByGuidUseCase _getEmployeeByGuidUseCase
+@inject IGetAssignmentByGuidUseCase _getAssignmentByGuidUseCase
+@inject IGetCurrentUserGuidUseCase _getCurrentUserGuidUseCase
+@inject IGetFleetVehicleByLicensePlateUseCase _getFleetVehicleByLicensePlateUseCase
+@inject IGetVehicleModelByLicensePlateUseCase _getVehicleModelByLicensePlateUseCase
+@inject IJSRuntime IJS
+
+<div class="flex-row" id="printable">
+    <h2>Rental Agreement</h2>
+    <div class="row">
+        <div class="col">
+            <h4>Start:</h4>
+            <p>Date: @_reservation.StartDateTime.Date</p>
+            <p>Time: @_reservation.StartDateTime.ToString("HH:mm")</p>
+            <p>Place: @_startBranch.Name - @_startBranch.Address</p>
+        </div>
+        <div class="col">
+            <h4>End:</h4>
+            <p>Date: @_reservation.EndDateTime.Date</p>
+            <p>Time: @_reservation.EndDateTime.ToString("HH:mm")</p>
+            <p>Place: @_endBranch.Name - @_endBranch.Address</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h4>Vehicle:</h4>
+            <p>Make&Model: @_vehicleModel.Make @_vehicleModel.Model</p>
+            <p>License Plate: @_fleetVehicle.FleetVehicleLicensePlate</p>
+            <p>Odometer: @_fleetVehicle.Odometer</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h4>Customer:</h4>
+            <p>GUID: @_customer.CustomerGuid</p>
+            <p>Full name: @_customer.FirstName @_customer.LastName</p>
+            <p>Contact Details: @_customer.ContactDetails</p>
+            <p>Address: @_customer.Address</p>
+            <p>ID#: @_customer.Pesel</p>
+            <p>Driving License#: @_customer.DrivingLicenseNumber</p>
+            <p>Pesel: @_customer.Pesel</p>
+            <br />
+            <p>Signature:</p>
+            <br />
+            <p>..................................</p>
+        </div>
+        <div class="col">
+            <h4>Agent:</h4>
+            <p>Full Name: @_employee.FirstName @_employee.LastName</p>
+            <p>Contact Details: @_employee.ContactDetails</p>
+            <br />
+            <p>Signature:</p>
+            <br />
+            <p>..................................</p>
+        </div>
+    </div>
+</div>
+<br />
+<button class="btn btn-primary" @onclick="PrintAgreement">Print</button>
+<br />
+
+@code {
+    [Parameter]
+    public string ReservationGuid { get; set; }
+
+    private Branch _startBranch;
+    private Branch _endBranch;
+    private Customer _customer;
+    private Employee _employee;
+    private FleetVehicle _fleetVehicle;
+    private Reservation _reservation;
+    private VehicleModel _vehicleModel;
+    private string _userGuid;
+
+    protected override void OnInitialized()
+    {
+        _reservation = _getReservationByGuidUseCase.Execute(ReservationGuid);
+        _startBranch = _getBranchByIdUseCase.Execute(_reservation.StartBranchId);
+        _endBranch = _getBranchByIdUseCase.Execute(_reservation.EndBranchId);
+        _customer = _getCustomerByGuidUseCase.Execute(_reservation.CustomerGuid);
+        _userGuid = _getCurrentUserGuidUseCase.Execute();
+        _employee = _getEmployeeByGuidUseCase.Execute(_userGuid);
+        _fleetVehicle = _getFleetVehicleByLicensePlateUseCase.Execute(_reservation.FleetVehicleLicensePlate);
+        _vehicleModel = _getVehicleModelByLicensePlateUseCase.Execute(_reservation.FleetVehicleLicensePlate);
+    }
+
+    private async Task PrintAgreement()
+    {
+        await IJS.InvokeVoidAsync("printDiv");
+    }
+
+}

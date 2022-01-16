@@ -5,6 +5,6 @@ namespace UseCases.UseCaseInterfaces.EmployeeUseCaseInterfaces
 {
     public interface IGetEmployeeByGuidUseCase
     {
-        Task<Employee> Execute(string employeeGuid);
+        Employee Execute(string employeeGuid);
     }
 }

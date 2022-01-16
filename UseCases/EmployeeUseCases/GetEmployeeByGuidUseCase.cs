@@ -14,9 +14,9 @@ namespace UseCases.EmployeeUseCases
             _employeeRepository = employeeRepository;
         }
 
-        public Task<Employee> Execute(string employeeGuid)
+        public Employee Execute(string employeeGuid)
         {
-            return _employeeRepository.GetEmployeeByGuidAsync(employeeGuid);
+            return _employeeRepository.GetEmployeeByGuid(employeeGuid);
         }
 
     }
