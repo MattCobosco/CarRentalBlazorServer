@@ -56,8 +56,9 @@
         </div>
 
         <div class="form-group">
-            <label for="fleetVehicleLicensePlate">Model</label>
-            <InputSelect id="fleetVehicleLicensePlate" @bind-Value="_reservation.VehicleModelId" class="form-control">
+            <label for="vehicleModel">Model</label>
+            <InputSelect id="vehicleModel" @bind-Value="_reservation.VehicleModelId" class="form-control">
+                <option value="">Choose a model...</option>
                 @foreach (var model in _vehicleModels)
                 {
                     <option value="@model.VehicleModelId"> @model.Make @model.Model</option>
@@ -68,10 +69,11 @@
         <div class="form-group">
             <label for="fleetVehicleLicensePlate">Vehicle</label>
             <InputSelect id="fleetVehicleLicensePlate" @bind-Value="_reservation.FleetVehicleLicensePlate" class="form-control">
+                <option value="">Choose a vehicle...</option>
                 @foreach (var vehicle in _fleetVehicles)
-                    {
+                {
                     <option value="@vehicle.FleetVehicleLicensePlate">@vehicle.FleetVehicleLicensePlate - @vehicle.VehicleModel.Make @vehicle.VehicleModel.Model</option>
-                    }
+                }
             </InputSelect>
         </div>
 
