@@ -95,6 +95,11 @@ namespace Plugins.DataStore.SQL
 
         }
 
+        public async Task<IEnumerable<Assignment>> GetAssignmentsByAgentGuid(string agentGuid)
+        {
+            return await _carRentalContext.Assignments.Where(a => a.EmployeeGuid == agentGuid).OrderBy(a=>a.DateTime).ToListAsync();
+        }
+
         public async Task<Assignment> GetAssignmentByGuidAsync(string assignmentGuid)
         {
             return await _carRentalContext.Assignments.FindAsync(assignmentGuid);

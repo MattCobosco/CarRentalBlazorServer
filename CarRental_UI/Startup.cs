@@ -89,6 +89,7 @@ namespace CarRental_UI
             // Assignments
             services.AddTransient<IAddAssignmentFromReservationUseCase, AddAssignmentFromReservationUseCase>();
             services.AddTransient<IAddEmployeeToTheAssignmentUseCase, AddEmployeeToAssignmentUseCase>();
+            services.AddTransient<IGetAssignmentsByAgentGuidUseCase, GetAssignmentsByAgentGuidUseCase>();
             services.AddTransient<IGetAssignmentByGuidUseCase, GetAssignmentByGuidUseCase>();
             services.AddTransient<IUpdateTasksOnReservationUpdateUseCase, UpdateTasksOnReservationUpdateUseCase>();
             services.AddTransient<IViewAssignmentsUseCase, ViewAssignmentsUseCase>();

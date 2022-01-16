@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces
 {
-    public interface IViewAssignmentsByAgentGuidUseCase
+    public interface IGetAssignmentsByAgentGuidUseCase
     {
         Task<IEnumerable<Assignment>> Execute(string agentGuid);
     }

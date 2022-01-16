@@ -21,18 +21,20 @@
     {
         <h4>Undone</h4>
         <br/>
-        <select class="form-control" @bind="_employeeGuid">
-            <option value=null>Select employee...</option>
-            @foreach (var employee in _employees)
-            {
-                <option value="@employee.EmployeeGuid">
-                    @employee.Branch.Name
-                    @employee.FirstName
-                    @employee.LastName
-                </option>
-            }
-        </select>
-        <br/>
+        <AuthorizeView Policy="AdminLogisticianOnly">
+            <select class="form-control" @bind="_employeeGuid">
+                <option value=null>Select employee...</option>
+                @foreach (var employee in _employees)
+                {
+                    <option value="@employee.EmployeeGuid">
+                        @employee.Branch.Name
+                        @employee.FirstName
+                        @employee.LastName
+                    </option>
+                }
+            </select>
+            <br/>
+        </AuthorizeView>
         <table class="table">
             <thead>
             <tr>
@@ -41,7 +43,9 @@
                 <th>Model</th>
                 <th>Vehicle</th>
                 <th>Employee</th>
-                <th>Assign</th>
+                <AuthorizeView Policy="AdminLogisticianOnly">
+                    <th>Assign</th>
+                </AuthorizeView>
             </tr>
             </thead>
             <tbody>
@@ -53,9 +57,11 @@
                     <td>@GetMakeModelFromVehicleModelId(assignment.VehicleModelId)</td>
                     <td>@assignment.FleetVehicleLicensePlate</td>
                     <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid).Result</td>
-                    <td>
-                        <button class="btn btn-primary" @onclick="() => OnClickAssign(assignment, _employeeGuid)">Assign</button>
-                    </td>
+                    <AuthorizeView Policy="AdminLogisticianOnly">
+                        <td>
+                            <button class="btn btn-primary" @onclick="() => OnClickAssign(assignment, _employeeGuid)">Assign</button>
+                        </td>
+                    </AuthorizeView>
                 </tr>
             }
             </tbody>
@@ -71,13 +77,12 @@
         <h4>Done</h4>
         <table class="table">
             <thead>
-            <tr>
-                <th>Type</th>
-                <th>Date&Time</th>
-                <th>Model</th>
-                <th>Vehicle</th>
-                <th>Employee</th>
-            </tr>
+                <tr>
+                    <th>Type</th>
+                    <th>Date&Time</th>
+                    <th>Model</th>
+                    <th>Vehicle</th>
+                </tr>
             </thead>
             <tbody>
             @foreach (var assignment in _assignmentsDone)

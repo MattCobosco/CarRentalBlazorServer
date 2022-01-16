@@ -1,0 +1,65 @@
+﻿@page "/myassignments"
+@attribute [Authorize(Policy = "AgentOnly")]
+@using UseCases.UseCaseInterfaces.UserUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.AssignmentTypeUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
+
+@inject IGetCurrentUserGuidUseCase _getCurrentUserGuidUseCase
+@inject IGetAssignmentsByAgentGuidUseCase _getAssignmentsByAgentGuidUseCase
+@inject IGetAssignmentTypeByIdUseCase _getAssignmentTypeByIdUseCase
+@inject IGetVehicleModelByIdUseCase _getVehicleModelByIdUseCase
+
+<h3>My Assignments</h3>
+
+@if (_assignments != null)
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Type</th>
+            <th>Date&Time</th>
+            <th>Model</th>
+            <th>Vehicle</th>
+            <th>Print</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var assignment in _assignments)
+        {
+            <tr>
+                <td>@GetAssignmentTypeById(assignment.AssignmentTypeId)</td>
+                <td>@assignment.DateTime</td>
+                <td>@GetMakeModelFromVehicleModelId(assignment.VehicleModelId)</td>
+                <td>@assignment.FleetVehicleLicensePlate</td>
+                <td>
+                    <button class="btn btn-primary">Print</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private string _userGuid;
+    private List<Assignment> _assignments;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _userGuid = _getCurrentUserGuidUseCase.Execute();
+        _assignments = (await _getAssignmentsByAgentGuidUseCase.Execute(_userGuid)).ToList();
+    }
+
+    private string GetAssignmentTypeById(int assignmentTypeId)
+    {
+        return _getAssignmentTypeByIdUseCase.Execute(assignmentTypeId).Type;
+    }
+
+    private string GetMakeModelFromVehicleModelId(int vehicleModelId)
+    {
+        var vehicleModel = _getVehicleModelByIdUseCase.Execute(vehicleModelId);
+        return $"{vehicleModel.Make} {vehicleModel.Model}";
+    }
+}

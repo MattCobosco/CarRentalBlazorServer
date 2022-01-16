@@ -7,9 +7,10 @@ namespace UseCases.DataStorePluginInterfaces
     public interface IAssignmentRepository
     {
         Task AddAssignmentFromReservationAsync(string reservationGuid);
+        Task<IEnumerable<Assignment>> GetAssignmentsByAgentGuid(string agentGuid);
         Task<Assignment> GetAssignmentByGuidAsync(string assignmentGuid);
-        Task<IEnumerable<Assignment>> ViewAssignmentsAsync();
         Task UpdateTasksOnReservationUpdateAsync(Reservation reservation);
         Task AddEmployeeToTheAssignmentAsync(Assignment assignment, string employeeGuid);
+        Task<IEnumerable<Assignment>> ViewAssignmentsAsync();
     }
 }
