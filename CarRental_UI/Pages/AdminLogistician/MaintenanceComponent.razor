@@ -1,5 +1,5 @@
 ﻿@page "/maintenance"
-@attribute [Authorize(Policy = "EmployeeOnly")]
+@attribute [Authorize(Policy = "AdminLogisticianOnly")]
 @using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
@@ -26,9 +26,7 @@
             <th>Maintenance Date</th>
             <th>Days left</th>
             <th>Current Branch</th>
-            <AuthorizeView Policy="AdminLogisticianOnly">
-                <th>Assignment</th>
-            </AuthorizeView>
+            <th>Assignment</th>
         </tr>
         </thead>
         <tbody>
@@ -43,11 +41,9 @@
                 <td>@fleetVehicle.MaintenanceDate.ToShortDateString()</td>
                 <td>@GetDaysLeft(fleetVehicle.MaintenanceDate)</td>
                 <td>@GetBranchById(fleetVehicle.CurrentBranchId).Name</td>
-                <AuthorizeView Policy="AdminLogisticianOnly">
-                    <td>
-                        <button>Assign</button>
-                    </td>
-                </AuthorizeView>
+                <td>
+                    <button>Assign</button>
+                </td>
             </tr>
         }
         </tbody>
@@ -68,9 +64,7 @@
             <th>Maintenance Odo</th>
             <th>Remaining</th>
             <th>Current Branch</th>
-            <AuthorizeView Policy="AdminLogisticianOnly">
-                <th>Assignment</th>
-            </AuthorizeView>
+            <th>Assignment</th>
         </tr>
         </thead>
         <tbody>
@@ -86,11 +80,9 @@
                 <td>@fleetVehicle.MaintenanceOdometer</td>
                 <td>@GetOdometerDifference(fleetVehicle)</td>
                 <td>@GetBranchById(fleetVehicle.CurrentBranchId).Name</td>
-                <AuthorizeView Policy="AdminLogisticianOnly">
-                    <td>
-                        <button>Assign</button>
-                    </td>
-                </AuthorizeView>
+                <td>
+                    <button>Assign</button>
+                </td>
             </tr>
         }
         </tbody>
