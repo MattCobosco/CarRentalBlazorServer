@@ -6,10 +6,13 @@
 @using UseCases.UseCaseInterfaces.AssignmentTypeUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 
+@inject NavigationManager _navigationManager
 @inject IViewAssignmentsUseCase _viewAssignmentsUseCase
 @inject IGetEmployeeByGuidUseCase _getEmployeeByGuidUseCase
 @inject IGetAssignmentTypeByIdUseCase _getAssignmentTypeByIdUseCase
 @inject IGetVehicleModelByIdUseCase _getVehicleModelByIdUseCase
+@inject IViewEmployeesUseCase _viewEmployeesUseCase
+@inject IAddEmployeeToTheAssignmentUseCase _addEmployeeToTheAssignmentUseCase
 
 <h3>Assignments</h3>
 <br/>
@@ -17,6 +20,19 @@
 {
     {
         <h4>Undone</h4>
+        <br/>
+        <select class="form-control" @bind="_employeeGuid">
+            <option value=null>Select employee...</option>
+            @foreach (var employee in _employees)
+            {
+                <option value="@employee.EmployeeGuid">
+                    @employee.Branch.Name
+                    @employee.FirstName
+                    @employee.LastName
+                </option>
+            }
+        </select>
+        <br/>
         <table class="table">
             <thead>
             <tr>
@@ -24,7 +40,8 @@
                 <th>Date&Time</th>
                 <th>Model</th>
                 <th>Vehicle</th>
-                <th>Assigned Employee</th>
+                <th>Employee</th>
+                <th>Assign</th>
             </tr>
             </thead>
             <tbody>
@@ -35,7 +52,10 @@
                     <td>@assignment.DateTime</td>
                     <td>@GetMakeModelFromVehicleModelId(assignment.VehicleModelId)</td>
                     <td>@assignment.FleetVehicleLicensePlate</td>
-                    <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid)</td>
+                    <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid).Result</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => OnClickAssign(assignment, _employeeGuid)">Assign</button>
+                    </td>
                 </tr>
             }
             </tbody>
@@ -51,13 +71,13 @@
         <h4>Done</h4>
         <table class="table">
             <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>Date&Time</th>
-                    <th>Model</th>
-                    <th>Vehicle</th>
-                    <th>Assigned Employee</th>
-                </tr>
+            <tr>
+                <th>Type</th>
+                <th>Date&Time</th>
+                <th>Model</th>
+                <th>Vehicle</th>
+                <th>Employee</th>
+            </tr>
             </thead>
             <tbody>
             @foreach (var assignment in _assignmentsDone)
@@ -67,7 +87,7 @@
                     <td>@assignment.DateTime</td>
                     <td>@GetMakeModelFromVehicleModelId(assignment.VehicleModelId)</td>
                     <td>@assignment.FleetVehicleLicensePlate</td>
-                    <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid)</td>
+                    <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid).Result</td>
                 </tr>
             }
             </tbody>
@@ -79,21 +99,26 @@
     private List<Assignment> _assignments;
     private List<Assignment> _assignmentsDone;
     private List<Assignment> _assignmentsUndone;
+    private List<Employee> _employees;
+    private string _employeeGuid;
 
     protected override async Task OnInitializedAsync()
     {
         _assignments = (await _viewAssignmentsUseCase.Execute()).ToList();
         _assignmentsDone = GetDoneAssignments(_assignments);
         _assignmentsUndone = GetUndoneAssignments(_assignments);
+        _employees = (await _viewEmployeesUseCase.Execute()).ToList();
     }
 
-    private string GetEmployeeNameByGuid(string employeeGuid)
+    private async Task<string> GetEmployeeNameByGuid(string employeeGuid)
     {
-        var employee = _getEmployeeByGuidUseCase.Execute(employeeGuid).Result;
+        if (employeeGuid == null) return "";
+        var employee = await _getEmployeeByGuidUseCase.Execute(employeeGuid);
 
         if (employee != null)
-            return employee.FirstName + employee.LastName;
-
+        {
+            return $"{employee.FirstName} {employee.LastName}";
+        }
         return "";
     }
 
@@ -102,20 +127,26 @@
         return _getAssignmentTypeByIdUseCase.Execute(assignmentTypeId).Type;
     }
 
-    private List<Assignment> GetDoneAssignments(List<Assignment> assignments)
+    private List<Assignment> GetDoneAssignments(IEnumerable<Assignment> assignments)
     {
-        return assignments.Where(a => a.IsDone).OrderBy(x=>x).OrderBy(a=>a.DateTime).ToList();
+        return assignments.Where(a => a.IsDone).OrderBy(x => x).OrderBy(a => a.DateTime).ToList();
     }
 
-    private List<Assignment> GetUndoneAssignments(List<Assignment> assignments)
+    private List<Assignment> GetUndoneAssignments(IEnumerable<Assignment> assignments)
     {
-        return assignments.Where(a => !a.IsDone).OrderBy(a=>a.DateTime).ToList();
+        return assignments.Where(a => !a.IsDone).OrderBy(a => a.DateTime).ToList();
     }
 
     private string GetMakeModelFromVehicleModelId(int vehicleModelId)
     {
         var vehicleModel = _getVehicleModelByIdUseCase.Execute(vehicleModelId);
         return $"{vehicleModel.Make} {vehicleModel.Model}";
+    }
+
+    private void OnClickAssign(Assignment assignment, string employeeGuid)
+    {
+        _addEmployeeToTheAssignmentUseCase.Execute(assignment, employeeGuid);
+        StateHasChanged();
     }
 
 }

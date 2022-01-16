@@ -76,6 +76,25 @@ namespace Plugins.DataStore.SQL
             }
         }
 
+        public async Task AddEmployeeToTheAssignmentAsync(Assignment assignment, string employeeGuid)
+        {
+            var transaction = await _carRentalContext.Database.BeginTransactionAsync();
+
+            try
+            {
+                assignment.EmployeeGuid = employeeGuid;
+                await _carRentalContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                Console.WriteLine("Adding Employee to the Assignment failed:");
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+
         public async Task<Assignment> GetAssignmentByGuidAsync(string assignmentGuid)
         {
             return await _carRentalContext.Assignments.FindAsync(assignmentGuid);
@@ -83,7 +102,7 @@ namespace Plugins.DataStore.SQL
 
         public async Task<IEnumerable<Assignment>> GetAssignmentsAsync()
         {
-            return await _carRentalContext.Assignments.OrderBy(a=>a.DateTime).ToListAsync();
+            return await _carRentalContext.Assignments.OrderBy(a => a.DateTime).ToListAsync();
         }
 
         public async Task UpdateTasksOnReservationUpdateAsync(Reservation reservation)

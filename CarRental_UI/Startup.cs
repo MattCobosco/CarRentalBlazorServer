@@ -88,6 +88,7 @@ namespace CarRental_UI
             // Dependency Injection - Use Cases and Repositories
             // Assignments
             services.AddTransient<IAddAssignmentFromReservationUseCase, AddAssignmentFromReservationUseCase>();
+            services.AddTransient<IAddEmployeeToTheAssignmentUseCase, AddEmployeeToAssignmentUseCase>();
             services.AddTransient<IGetAssignmentByGuidUseCase, GetAssignmentByGuidUseCase>();
             services.AddTransient<IUpdateTasksOnReservationUpdateUseCase, UpdateTasksOnReservationUpdateUseCase>();
             services.AddTransient<IViewAssignmentsUseCase, ViewAssignmentsUseCase>();

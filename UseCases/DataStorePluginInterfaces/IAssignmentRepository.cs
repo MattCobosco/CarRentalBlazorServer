@@ -10,5 +10,6 @@ namespace UseCases.DataStorePluginInterfaces
         Task<Assignment> GetAssignmentByGuidAsync(string assignmentGuid);
         Task<IEnumerable<Assignment>> GetAssignmentsAsync();
         Task UpdateTasksOnReservationUpdateAsync(Reservation reservation);
+        Task AddEmployeeToTheAssignmentAsync(Assignment assignment, string employeeGuid);
     }
 }
