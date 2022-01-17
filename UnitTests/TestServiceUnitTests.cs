@@ -52,8 +52,7 @@ namespace UnitTests
                 MaintenanceOdometer = 15000,
                 DateAdded = DateTime.Today,
                 VehicleModelId = 1,
-                CurrentBranchId = 2
-                // Warsaw BranchID=2
+                CurrentBranchId = branchId
             };
 
             _testOutputHelper.WriteLine("Testing...");
