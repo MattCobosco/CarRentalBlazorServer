@@ -12,5 +12,10 @@ namespace CarRental_API
         {
             return fleetVehicle.CurrentBranchId == 2;
         }
+
+        public bool DoesThisCarNeedsMaintenance(FleetVehicle fleetVehicle)
+        {
+            return fleetVehicle.MaintenanceOdometer < fleetVehicle.Odometer;
+        }
     }
 }
