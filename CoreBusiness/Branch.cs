@@ -19,5 +19,6 @@ namespace CoreBusiness
         public List<Employee> Employees { get; set; }
         public List<Transfer> IncomingTransfers { get; set; }
         public List<Transfer> OutgoingTransfers { get; set; }
+        public List<Assignment> Assignments { get; set; }
     }
 }

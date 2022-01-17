@@ -34,7 +34,8 @@ namespace Plugins.DataStore.SQL
                 EmployeeGuid = null,
                 ReservationGuid = reservationGuid,
                 FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate,
-                VehicleModelId = reservation.VehicleModelId
+                VehicleModelId = reservation.VehicleModelId,
+                BranchId = reservation.StartBranchId
             };
 
             var assignmentEnd = new Assignment
@@ -45,7 +46,8 @@ namespace Plugins.DataStore.SQL
                 EmployeeGuid = null,
                 ReservationGuid = reservationGuid,
                 FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate,
-                VehicleModelId = reservation.VehicleModelId
+                VehicleModelId = reservation.VehicleModelId,
+                BranchId=reservation.EndBranchId
             };
 
             var transaction = await _carRentalContext.Database.BeginTransactionAsync();
@@ -105,7 +107,7 @@ namespace Plugins.DataStore.SQL
             return await _carRentalContext.Assignments.FindAsync(assignmentGuid);
         }
 
-        public async Task UpdateTasksOnReservationUpdateAsync(Reservation reservation)
+        public async Task UpdateAssignmentsOnReservationUpdateAsync(Reservation reservation)
         {
             var transaction = await _carRentalContext.Database.BeginTransactionAsync();
 
@@ -117,10 +119,12 @@ namespace Plugins.DataStore.SQL
                 startAssignment.DateTime = reservation.StartDateTime;
                 startAssignment.VehicleModelId = reservation.VehicleModelId;
                 startAssignment.FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate;
+                startAssignment.BranchId = reservation.StartBranchId;
 
                 endAssignment.DateTime = reservation.EndDateTime;
                 endAssignment.VehicleModelId = reservation.VehicleModelId;
                 endAssignment.FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate;
+                endAssignment.BranchId = reservation.EndBranchId;
 
                 await _carRentalContext.SaveChangesAsync();
                 await transaction.CommitAsync();

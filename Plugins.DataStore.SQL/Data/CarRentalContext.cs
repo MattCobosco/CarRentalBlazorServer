@@ -10,6 +10,7 @@ namespace Plugins.DataStore.SQL.Data
         {
 
         }
+
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<AssignmentType> AssignmentTypes { get; set; }
         public DbSet<Branch> Branches { get; set; }
@@ -56,6 +57,11 @@ namespace Plugins.DataStore.SQL.Data
                 .WithMany(vm => vm.Assignments)
                 .HasForeignKey(a => a.VehicleModelId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Assignment>()
+                .HasOne(a => a.Branch)
+                .WithMany(br => br.Assignments)
+                .HasForeignKey(a => a.BranchId);
 
             // Branch
             modelBuilder.Entity<Branch>()

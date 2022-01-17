@@ -19,6 +19,7 @@ namespace CoreBusiness
         [Required]
         public bool IsDone { get; set; }
         public DateTime DateTime { get; set; }
+        public int BranchId { get; set; }
         public string EmployeeGuid { get; set; }
         public string ReservationGuid { get; set; }
         public string FleetVehicleLicensePlate { get; set; }
@@ -26,6 +27,7 @@ namespace CoreBusiness
 
         // Navigation properties for EF Core
         public AssignmentType AssignmentType { get; set; }
+        public Branch Branch { get; set; }
         public Employee Employee { get; set; }
         public Reservation Reservation { get; set; }
         public Transfer Transfer { get; set; }

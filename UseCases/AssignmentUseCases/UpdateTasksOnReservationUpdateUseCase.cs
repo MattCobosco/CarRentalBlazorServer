@@ -16,7 +16,7 @@ namespace UseCases.AssignmentUseCases
 
         public Task Execute(Reservation reservation)
         {
-            return _assignmentRepository.UpdateTasksOnReservationUpdateAsync(reservation);
+            return _assignmentRepository.UpdateAssignmentsOnReservationUpdateAsync(reservation);
         }
     }
 }

@@ -16,6 +16,7 @@
 @inject IViewVehicleModelsUseCase _viewVehicleModelsUseCase
 @inject IViewCustomersUseCase _viewCustomersUseCase
 @inject IAddAssignmentFromReservationUseCase _addAssignmentFromReservationUseCase
+@inject IGetBranchByIdUseCase _getBranchByIdUseCase
 
 <h3>Add Reservation</h3>
 <br />
@@ -75,9 +76,10 @@
             <InputSelect id="fleetVehicleLicensePlate" @bind-Value="_reservation.FleetVehicleLicensePlate" class="form-control">
                 @foreach (var vehicle in _fleetVehicles)
                 {
-                    <option value="@vehicle.FleetVehicleLicensePlate">@vehicle.FleetVehicleLicensePlate - 
-                        @vehicle.VehicleModel.Make 
+                    <option value="@vehicle.FleetVehicleLicensePlate">
+                        @GetBranchNameFromBranchId(vehicle.CurrentBranchId) -
                         @vehicle.VehicleModel.Model
+                        @vehicle.FleetVehicleLicensePlate
                     </option>
                 }
             </InputSelect>
@@ -148,6 +150,11 @@
         _branches = _viewBranchesUseCase.Execute()?.ToList();
         _vehicleModels = _viewVehicleModelsUseCase.Execute()?.ToList();
         _customers = _viewCustomersUseCase.Execute()?.ToList();
+    }
+
+    private string GetBranchNameFromBranchId(int branchId)
+    {
+        return _getBranchByIdUseCase.Execute(branchId).Name;
     }
 
 }

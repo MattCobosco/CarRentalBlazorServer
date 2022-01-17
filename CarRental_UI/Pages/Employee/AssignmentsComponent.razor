@@ -44,6 +44,7 @@
                 <th>Date&Time</th>
                 <th>Model</th>
                 <th>Vehicle</th>
+                <th>Branch</th>
                 <th>Employee</th>
                 <AuthorizeView Policy="AdminLogisticianOnly">
                     <th>Assign</th>
@@ -58,6 +59,7 @@
                     <td>@assignment.DateTime</td>
                     <td>@GetMakeModelByVehicleModelId(assignment.VehicleModelId)</td>
                     <td>@assignment.FleetVehicleLicensePlate</td>
+                    <td>@GetBranchNameByBranchId(assignment.BranchId)</td>
                     <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid)</td>
                     <AuthorizeView Policy="AdminLogisticianOnly">
                         <td>
@@ -84,6 +86,8 @@
                     <th>Date&Time</th>
                     <th>Model</th>
                     <th>Vehicle</th>
+                    <th>Branch</th>
+                    <th>Employee</th>
                 </tr>
             </thead>
             <tbody>
@@ -94,6 +98,7 @@
                     <td>@assignment.DateTime</td>
                     <td>@GetMakeModelByVehicleModelId(assignment.VehicleModelId)</td>
                     <td>@assignment.FleetVehicleLicensePlate</td>
+                    <td>@GetBranchNameByBranchId(assignment.BranchId)</td>
                     <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid)</td>
                 </tr>
             }
