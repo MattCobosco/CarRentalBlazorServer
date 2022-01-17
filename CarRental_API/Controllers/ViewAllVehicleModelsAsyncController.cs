@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using CoreBusiness;
+﻿using CoreBusiness;
 using Microsoft.AspNetCore.Mvc;
-using UseCases.DataStorePluginInterfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces;
 
 namespace CarRental_API.Controllers
 {
@@ -10,17 +10,17 @@ namespace CarRental_API.Controllers
     [ApiController]
     public class ViewAllVehicleModelsAsyncController : ControllerBase
     {
-        private readonly IVehicleModelRepository _vehicleModelRepository;
+        private readonly IViewVehicleModelsAsyncUseCase _vueViewVehicleModelsAsyncUseCase;
 
-        public ViewAllVehicleModelsAsyncController(IVehicleModelRepository vehicleModelRepository)
+        public ViewAllVehicleModelsAsyncController(IViewVehicleModelsAsyncUseCase viewVehicleModelsAsyncUseCase)
         {
-            _vehicleModelRepository = vehicleModelRepository;
+            _vueViewVehicleModelsAsyncUseCase = viewVehicleModelsAsyncUseCase;
         }
 
         [HttpGet]
         public async Task<IEnumerable<VehicleModel>> ShowAllVehicleModelsDetails()
         {
-            return await _vehicleModelRepository.ViewVehicleModelsAsync();
+            return await _vueViewVehicleModelsAsyncUseCase.Execute();
         }
     }
 }

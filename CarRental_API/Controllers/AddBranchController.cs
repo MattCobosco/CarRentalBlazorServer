@@ -1,6 +1,6 @@
 ﻿using CoreBusiness;
 using Microsoft.AspNetCore.Mvc;
-using UseCases.DataStorePluginInterfaces;
+using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces;
 
 namespace CarRental_API.Controllers
 {
@@ -8,17 +8,17 @@ namespace CarRental_API.Controllers
     [ApiController]
     public class AddBranchController : ControllerBase
     {
-        private readonly IBranchRepository _branchRepository;
+        private readonly IAddBranchUseCase _addBranchUseCase;
 
-        public AddBranchController(IBranchRepository branchRepository)
+        public AddBranchController(IAddBranchUseCase addBranchUseCase)
         {
-            _branchRepository = branchRepository;
+            _addBranchUseCase = addBranchUseCase;
         }
 
         [HttpPost]
         public void AddNewBranch([FromForm] Branch branch)
-        { 
-            _branchRepository.AddBranch(branch);
+        {
+            _addBranchUseCase.Execute(branch);
         }
     }
 }

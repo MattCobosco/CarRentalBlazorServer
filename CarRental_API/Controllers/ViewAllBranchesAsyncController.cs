@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using CoreBusiness;
+﻿using CoreBusiness;
 using Microsoft.AspNetCore.Mvc;
-using UseCases.DataStorePluginInterfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces;
 
 namespace CarRental_API.Controllers
 {
@@ -10,17 +10,17 @@ namespace CarRental_API.Controllers
     [Route("api/[controller]")]
     public class ViewAllBranchesAsyncController : ControllerBase
     {
-        private readonly IBranchRepository _branchRepository;
+        private readonly IViewBranchesAsyncUseCase _viewBranchesAsyncUseCase;
 
-        public ViewAllBranchesAsyncController(IBranchRepository branchRepository)
+        public ViewAllBranchesAsyncController(IViewBranchesAsyncUseCase viewBranchesAsyncUseCase)
         {
-            _branchRepository = branchRepository;
+            _viewBranchesAsyncUseCase = viewBranchesAsyncUseCase;
         }
 
         [HttpGet]
         public async Task<IEnumerable<Branch>> ShowAllBranchesDetails()
         {
-            return await _branchRepository.ViewBranchesAsync();
+            return await _viewBranchesAsyncUseCase.Execute();
         }
     }
 }

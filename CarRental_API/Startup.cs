@@ -9,9 +9,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Plugins.DataStore.SQL;
 using Plugins.DataStore.SQL.Data;
+using UseCases.BranchUseCases;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.ReservationUseCases;
+using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces;
 using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces;
+using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces;
+using UseCases.VehicleModelUseCases;
 
 namespace CarRental_API
 {
@@ -54,15 +58,17 @@ namespace CarRental_API
 
             // Dependency Injection - Data Store
             services.AddScoped<IBranchRepository, BranchRepository>();
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<IFleetVehicleRepository, FleetVehicleRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
-            services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeRepository>();
 
-
+            // Dependency Injection - UseCases and Interfaces
+            // Branch
+            services.AddTransient<IAddBranchUseCase, AddBranchUseCase>();
+            services.AddTransient<IViewBranchesAsyncUseCase, ViewBranchesAsyncUseCase>();
+            // Reservation
             services.AddTransient<IGetReservationByGuidUseCase, GetReservationByGuidUseCase>();
-
+            // Vehicle Models
+            services.AddTransient<IViewVehicleModelsAsyncUseCase, ViewVehicleModelsAsyncUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
