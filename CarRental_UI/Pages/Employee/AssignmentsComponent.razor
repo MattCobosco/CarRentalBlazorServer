@@ -4,6 +4,7 @@
 @using UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.EmployeeUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.AssignmentTypeUseCaseInterfaces
+@using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 
 @inject NavigationManager _navigationManager
@@ -13,6 +14,7 @@
 @inject IGetVehicleModelByIdUseCase _getVehicleModelByIdUseCase
 @inject IViewEmployeesUseCase _viewEmployeesUseCase
 @inject IAddEmployeeToTheAssignmentUseCase _addEmployeeToTheAssignmentUseCase
+@inject IGetBranchByIdUseCase _getBranchByIdUseCase
 
 <h3>Assignments</h3>
 <br/>
@@ -27,7 +29,7 @@
                 @foreach (var employee in _employees)
                 {
                     <option value="@employee.EmployeeGuid">
-                        @employee.Branch.Name
+                        @GetBranchNameByBranchId(employee.BranchId)
                         @employee.FirstName
                         @employee.LastName
                     </option>
@@ -54,7 +56,7 @@
                 <tr>
                     <td>@GetAssignmentTypeById(assignment.AssignmentTypeId)</td>
                     <td>@assignment.DateTime</td>
-                    <td>@GetMakeModelFromVehicleModelId(assignment.VehicleModelId)</td>
+                    <td>@GetMakeModelByVehicleModelId(assignment.VehicleModelId)</td>
                     <td>@assignment.FleetVehicleLicensePlate</td>
                     <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid)</td>
                     <AuthorizeView Policy="AdminLogisticianOnly">
@@ -90,7 +92,7 @@
                 <tr>
                     <td>@GetAssignmentTypeById(assignment.AssignmentTypeId)</td>
                     <td>@assignment.DateTime</td>
-                    <td>@GetMakeModelFromVehicleModelId(assignment.VehicleModelId)</td>
+                    <td>@GetMakeModelByVehicleModelId(assignment.VehicleModelId)</td>
                     <td>@assignment.FleetVehicleLicensePlate</td>
                     <td>@GetEmployeeNameByGuid(assignment.EmployeeGuid)</td>
                 </tr>
@@ -142,10 +144,16 @@
         return assignments.Where(a => !a.IsDone).OrderBy(a => a.DateTime).ToList();
     }
 
-    private string GetMakeModelFromVehicleModelId(int vehicleModelId)
+    private string GetMakeModelByVehicleModelId(int vehicleModelId)
     {
         var vehicleModel = _getVehicleModelByIdUseCase.Execute(vehicleModelId);
         return $"{vehicleModel.Make} {vehicleModel.Model}";
+    }
+
+    private string GetBranchNameByBranchId(int branchId)
+    {
+        var branch = _getBranchByIdUseCase.Execute(branchId);
+        return branch.Name;
     }
 
     private void OnClickAssign(Assignment assignment, string employeeGuid)
