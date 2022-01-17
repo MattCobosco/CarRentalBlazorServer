@@ -10,6 +10,7 @@
 @inject IGetAssignmentsByAgentGuidUseCase _getAssignmentsByAgentGuidUseCase
 @inject IGetAssignmentTypeByIdUseCase _getAssignmentTypeByIdUseCase
 @inject IGetVehicleModelByIdUseCase _getVehicleModelByIdUseCase
+@inject ISetAssignmentToDoneUseCase _setAssignmentToDoneUseCase
 
 <h3>My Assignments</h3>
 
@@ -28,21 +29,22 @@
         <tbody>
             @foreach (var assignment in _assignments)
             {
-                <tr>
-                    <td>@GetAssignmentTypeById(assignment.AssignmentTypeId)</td>
-                    <td>@assignment.DateTime.ToString("g")</td>
-                    <td>@GetMakeModelFromVehicleModelId(assignment.VehicleModelId)</td>
-                    <td>@assignment.FleetVehicleLicensePlate</td>
-                    @if(assignment.AssignmentTypeId==1)
+            <tr>
+                <td>@GetAssignmentTypeById(assignment.AssignmentTypeId)</td>
+                <td>@assignment.DateTime.ToString("g")</td>
+                <td>@GetMakeModelFromVehicleModelId(assignment.VehicleModelId)</td>
+                <td>@assignment.FleetVehicleLicensePlate</td>
+                <td>
+                    @if (assignment.AssignmentTypeId == 1)
                     {
-                        <td>
-                            <button class="btn btn-primary" @onclick="(() => GeneratePdf(assignment.ReservationGuid))">Print</button>
-                        </td>
+
+                        <button class="btn btn-primary mr-1" @onclick="(() => GeneratePdf(assignment.ReservationGuid))">Print</button>
                     }
-                    else
+                    @if (!assignment.IsDone)
                     {
-                        <td></td>
+                        <button class="btn btn-danger" @onclick="(()=>AssignmentDone(assignment.AssignmentGuid))">Done</button>
                     }
+                </td>
                 </tr>
             }
         </tbody>
@@ -74,5 +76,10 @@
     private void GeneratePdf(string reservationGuid)
     {
         _navigationManager.NavigateTo($"/agreement/{reservationGuid}");
+    }
+
+    private async void AssignmentDone(string assignmentGuid)
+    {
+        await _setAssignmentToDoneUseCase.Execute(assignmentGuid);
     }
 }

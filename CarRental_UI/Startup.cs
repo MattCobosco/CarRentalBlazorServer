@@ -57,7 +57,7 @@ namespace CarRental_UI
             // Syncfusion
             services.AddSyncfusionBlazor(options => { options.IgnoreScriptIsolation = true; });
 
-            // Identity
+            // Identity Policies
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", p => p.RequireClaim("Position", "Admin"));
@@ -89,12 +89,13 @@ namespace CarRental_UI
             // Dependency injection - Identity Store
             services.AddScoped<IUserRepository, UserRepository>();
 
-            // Dependency Injection - Use Cases and Repositories
+            // Dependency Injection - Use Cases and Interfaces
             // Assignments
             services.AddTransient<IAddAssignmentFromReservationUseCase, AddAssignmentFromReservationUseCase>();
             services.AddTransient<IAddEmployeeToTheAssignmentUseCase, AddEmployeeToAssignmentUseCase>();
             services.AddTransient<IGetAssignmentsByAgentGuidUseCase, GetAssignmentsByAgentGuidUseCase>();
             services.AddTransient<IGetAssignmentByGuidUseCase, GetAssignmentByGuidUseCase>();
+            services.AddTransient<ISetAssignmentToDoneUseCase, SetAssignmentToDoneUseCase>();
             services.AddTransient<IUpdateTasksOnReservationUpdateUseCase, UpdateTasksOnReservationUpdateUseCase>();
             services.AddTransient<IViewAssignmentsUseCase, ViewAssignmentsUseCase>();
             // Assignment Types

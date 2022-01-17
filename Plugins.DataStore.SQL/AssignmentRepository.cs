@@ -6,25 +6,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UseCases.DataStorePluginInterfaces;
+using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces;
+using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces;
 
 namespace Plugins.DataStore.SQL
 {
     public class AssignmentRepository : IAssignmentRepository
     {
         private readonly CarRentalContext _carRentalContext;
-        private readonly IReservationRepository _reservationRepository;
+        private readonly IGetReservationByGuidUseCase _getReservationByGuidUseCase;
+        private readonly IGetFleetVehicleByLicensePlateUseCase _getFleetVehicleByLicensePlateUseCase;
 
         public AssignmentRepository(
             CarRentalContext carRentalContext,
-            IReservationRepository reservationRepository)
+            IGetReservationByGuidUseCase getReservationByGuidUseCase,
+            IGetFleetVehicleByLicensePlateUseCase getFleetVehicleByLicensePlateUseCase)
         {
             _carRentalContext = carRentalContext;
-            _reservationRepository = reservationRepository;
+            _getReservationByGuidUseCase = getReservationByGuidUseCase;
+            _getFleetVehicleByLicensePlateUseCase = getFleetVehicleByLicensePlateUseCase;
         }
 
         public async Task AddAssignmentFromReservationAsync(string reservationGuid)
         {
-            var reservation = _reservationRepository.GetReservationByGuid(reservationGuid);
+            var reservation = _getReservationByGuidUseCase.Execute(reservationGuid);
 
             var assignmentStart = new Assignment
             {
@@ -47,7 +52,7 @@ namespace Plugins.DataStore.SQL
                 ReservationGuid = reservationGuid,
                 FleetVehicleLicensePlate = reservation.FleetVehicleLicensePlate,
                 VehicleModelId = reservation.VehicleModelId,
-                BranchId=reservation.EndBranchId
+                BranchId = reservation.EndBranchId
             };
 
             var transaction = await _carRentalContext.Database.BeginTransactionAsync();
@@ -99,12 +104,37 @@ namespace Plugins.DataStore.SQL
 
         public async Task<IEnumerable<Assignment>> GetAssignmentsByAgentGuid(string agentGuid)
         {
-            return await _carRentalContext.Assignments.Where(a => a.EmployeeGuid == agentGuid).OrderBy(a=>a.DateTime).ToListAsync();
+            return await _carRentalContext.Assignments.Where(a => a.EmployeeGuid == agentGuid).OrderBy(a => a.DateTime).ToListAsync();
         }
 
         public async Task<Assignment> GetAssignmentByGuidAsync(string assignmentGuid)
         {
             return await _carRentalContext.Assignments.FindAsync(assignmentGuid);
+        }
+
+        public async Task SetAssignmentToDone(string assignmentGuid)
+        {
+            var transaction = await _carRentalContext.Database.BeginTransactionAsync();
+
+            try
+            {
+                var assignment = await GetAssignmentByGuidAsync(assignmentGuid);
+                assignment.IsDone = true;
+
+                if (assignment.AssignmentTypeId == 2)
+                {
+                    var vehicle = _getFleetVehicleByLicensePlateUseCase.Execute(assignment.FleetVehicleLicensePlate);
+                    vehicle.CurrentBranchId = assignment.BranchId;
+                }
+
+                await _carRentalContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public async Task UpdateAssignmentsOnReservationUpdateAsync(Reservation reservation)
