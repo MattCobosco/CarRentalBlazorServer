@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.IdentityStore.SQL",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental_API", "CarRental_API\CarRental_API.csproj", "{8C4E8666-417E-450F-9942-4F0C3D046246}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{EB8D4AFB-97E9-405D-91C1-E8E2916F632A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{8C4E8666-417E-450F-9942-4F0C3D046246}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C4E8666-417E-450F-9942-4F0C3D046246}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C4E8666-417E-450F-9942-4F0C3D046246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB8D4AFB-97E9-405D-91C1-E8E2916F632A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB8D4AFB-97E9-405D-91C1-E8E2916F632A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB8D4AFB-97E9-405D-91C1-E8E2916F632A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB8D4AFB-97E9-405D-91C1-E8E2916F632A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
