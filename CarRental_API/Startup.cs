@@ -10,6 +10,8 @@ using Microsoft.OpenApi.Models;
 using Plugins.DataStore.SQL;
 using Plugins.DataStore.SQL.Data;
 using UseCases.DataStorePluginInterfaces;
+using UseCases.ReservationUseCases;
+using UseCases.UseCaseInterfaces.ReservationUseCaseInterfaces;
 
 namespace CarRental_API
 {
@@ -57,7 +59,10 @@ namespace CarRental_API
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
             services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeRepository>();
-            
+
+
+            services.AddTransient<IGetReservationByGuidUseCase, GetReservationByGuidUseCase>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
