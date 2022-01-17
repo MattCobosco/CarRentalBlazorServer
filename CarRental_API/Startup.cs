@@ -26,6 +26,7 @@ namespace CarRental_API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // CORS
             services.AddCors(options =>
             {
                 options.AddPolicy("Open", builder =>
@@ -56,6 +57,7 @@ namespace CarRental_API
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
             services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeRepository>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

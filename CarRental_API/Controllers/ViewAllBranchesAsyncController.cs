@@ -1,18 +1,18 @@
-﻿using CoreBusiness;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CoreBusiness;
+using Microsoft.AspNetCore.Mvc;
 using UseCases.DataStorePluginInterfaces;
 
-namespace CarRental_UI.Controllers
+namespace CarRental_API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class GetAllBranchesController : ControllerBase
+    public class ViewAllBranchesAsyncController : ControllerBase
     {
         private readonly IBranchRepository _branchRepository;
 
-        public GetAllBranchesController(IBranchRepository branchRepository)
+        public ViewAllBranchesAsyncController(IBranchRepository branchRepository)
         {
             _branchRepository = branchRepository;
         }

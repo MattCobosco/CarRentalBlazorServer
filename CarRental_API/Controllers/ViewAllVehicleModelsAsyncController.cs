@@ -1,18 +1,18 @@
-﻿using CoreBusiness;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CoreBusiness;
+using Microsoft.AspNetCore.Mvc;
 using UseCases.DataStorePluginInterfaces;
 
-namespace CarRental_UI.Controllers
+namespace CarRental_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GetAllVehicleModelsController : ControllerBase
+    public class ViewAllVehicleModelsAsyncController : ControllerBase
     {
         private readonly IVehicleModelRepository _vehicleModelRepository;
 
-        public GetAllVehicleModelsController(IVehicleModelRepository vehicleModelRepository)
+        public ViewAllVehicleModelsAsyncController(IVehicleModelRepository vehicleModelRepository)
         {
             _vehicleModelRepository = vehicleModelRepository;
         }
