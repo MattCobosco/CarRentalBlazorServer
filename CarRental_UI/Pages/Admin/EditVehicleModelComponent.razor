@@ -38,7 +38,7 @@
             <InputSelect id="bodyType" @bind-Value="_vehicleModel.BodyTypeId" class="form-control">
                 @foreach (var bodyType in _vehicleBodyTypes)
                     {
-                    <option value="@bodyType.Name">@bodyType.Name</option>
+                    <option value="@bodyType.VehicleBodyTypeId">@bodyType.Name</option>
                     }
             </InputSelect>
         </div>
