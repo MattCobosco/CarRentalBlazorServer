@@ -4,6 +4,7 @@
 @using UseCases.UseCaseInterfaces.BranchUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.UserUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
+@using Syncfusion.Blazor.Calendars
 
 @inject NavigationManager _navigationManager
 @inject IAddReservationUseCase _addReservationUseCase
@@ -14,7 +15,7 @@
 @inject IGetCurrentUserGuidUseCase _getCurrentUserGuidUseCase
 
 <h3>New Reservation</h3>
-<br/>
+<br />
 
 @if (_reservation != null)
 {
@@ -23,22 +24,22 @@
         <ValidationSummary></ValidationSummary>
 
         <div class="form-group">
-            <label for="startDate">Start Date</label>
-            <InputDate id="startDate" @bind-Value="_reservation.StartDateTime" class="form-control"></InputDate>
+            <label>Start Date</label>
+            <SfDateTimePicker TValue="DateTime" @bind-Value="@StartDateTime" Placeholder='Select start date and time'></SfDateTimePicker>
         </div>
 
         <div class="form-group">
-            <label for="endDate">End Date</label>
-            <InputDate id="endDate" @bind-Value="_reservation.EndDateTime" class="form-control"></InputDate>
+            <label>End Date</label>
+            <SfDateTimePicker TValue="DateTime" @bind-Value="@EndDateTime" Placeholder='Select end date and time'></SfDateTimePicker>
         </div>
 
         <div class="form-group">
             <label for="startBranchName">Start Branch</label>
             <InputSelect id="startBranchName" @bind-Value="_reservation.StartBranchId" class="form-control">
                 @foreach (var branch in _branches)
-                {
+                    {
                     <option value="@branch.BranchId">@branch.Name</option>
-                }
+                    }
             </InputSelect>
         </div>
 
@@ -46,9 +47,9 @@
             <label for="endBranchName">End Branch</label>
             <InputSelect id="endBranchName" @bind-Value="_reservation.EndBranchId" class="form-control">
                 @foreach (var branch in _branches)
-                {
+                    {
                     <option value="@branch.BranchId">@branch.Name</option>
-                }
+                    }
             </InputSelect>
         </div>
 
@@ -56,9 +57,9 @@
             <label for="vehicleModel">Vehicle</label>
             <InputSelect id="vehicleModel" @bind-Value="_reservation.VehicleModelId" class="form-control">
                 @foreach (var model in _vehicleModels)
-                {
+                    {
                     <option value="@model.VehicleModelId">@model.Make @model.Model</option>
-                }
+                    }
             </InputSelect>
         </div>
 
@@ -72,6 +73,8 @@
     private Reservation _reservation;
     private List<VehicleModel> _vehicleModels;
     private List<Branch> _branches;
+    private DateTime StartDateTime { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 28, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+    private DateTime EndDateTime { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 28, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second).AddDays(1);
 
     protected override void OnInitialized()
     {
@@ -80,15 +83,15 @@
         _reservation = new Reservation();
         LoadLists();
 
-    // Set form input to initial values
+        // Set form input to initial values
         _reservation.VehicleModelId = 0;
-        _reservation.StartDateTime = DateTime.Today;
-        _reservation.EndDateTime = DateTime.Today.AddDays(1);
         _reservation.CustomerGuid = _getCurrentUserGuidUseCase.Execute();
     }
 
     private void OnValidSubmit()
     {
+        _reservation.StartDateTime = StartDateTime;
+        _reservation.EndDateTime = EndDateTime;
         _reservation.Price = _getReservationPriceUseCase.Execute(_reservation.VehicleModelId, _reservation.StartDateTime, _reservation.EndDateTime);
         _addReservationUseCase.Execute(_reservation);
         _navigationManager.NavigateTo("/myreservations");

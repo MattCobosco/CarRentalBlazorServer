@@ -54,8 +54,8 @@
             <tr>
                 <td>@GetBranchById(reservation.StartBranchId).Name</td>
                 <td>@GetBranchById(reservation.EndBranchId).Name</td>
-                <td>@reservation.StartDateTime</td>
-                <td>@reservation.EndDateTime</td>
+                <td>@reservation.StartDateTime.ToString("g")</td>
+                <td>@reservation.EndDateTime.ToString("g")</td>
                 <td>@reservation.Price</td>
                 <td>
                     @reservation.FleetVehicleLicensePlate

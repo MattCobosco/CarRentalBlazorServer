@@ -5,6 +5,7 @@
 @using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces
+@using Syncfusion.Blazor.Calendars
 
 @inject NavigationManager _navigationManager
 @inject IViewBranchesUseCase _viewBranchesUseCase
@@ -27,13 +28,13 @@
         <ValidationSummary></ValidationSummary>
 
         <div class="form-group">
-            <label for="startDate">Start Date</label>
-            <InputDate id="startDate" @bind-Value="_reservation.StartDateTime" class="form-control"></InputDate>
+            <label>Start Date</label>
+            <SfDateTimePicker TValue="DateTime" @bind-Value="@_reservation.StartDateTime" Placeholder='Select start date and time'></SfDateTimePicker>
         </div>
 
         <div class="form-group">
-            <label for="endDate">End Date</label>
-            <InputDate id="endDate" @bind-Value="_reservation.EndDateTime" class="form-control"></InputDate>
+            <label>End Date</label>
+            <SfDateTimePicker TValue="DateTime" @bind-Value="@_reservation.EndDateTime" Placeholder='Select end date and time'></SfDateTimePicker>
         </div>
 
         <div class="form-group">
@@ -50,9 +51,9 @@
             <label for="endBranchName">End Branch</label>
             <InputSelect id="endBranchName" @bind-Value="_reservation.EndBranchId" class="form-control">
                 @foreach (var branch in _branches)
-                {
+                    {
                     <option value="@branch.BranchId">@branch.Name</option>
-                }
+                    }
             </InputSelect>
         </div>
 
@@ -61,9 +62,9 @@
             <InputSelect id="vehicleModel" @bind-Value="_reservation.VehicleModelId" class="form-control">
                 <option value="">Choose a model...</option>
                 @foreach (var model in _vehicleModels)
-                {
+                    {
                     <option value="@model.VehicleModelId"> @model.Make @model.Model</option>
-                }
+                    }
             </InputSelect>
         </div>
 
@@ -72,13 +73,13 @@
             <InputSelect id="fleetVehicleLicensePlate" @bind-Value="_reservation.FleetVehicleLicensePlate" class="form-control">
                 <option value="">Choose a vehicle...</option>
                 @foreach (var vehicle in _fleetVehicles)
-                {
+                    {
                     <option value="@vehicle.FleetVehicleLicensePlate">
                         @GetBranchNameFromBranchId(vehicle.CurrentBranchId) -
                         @vehicle.VehicleModel.Model
                         @vehicle.FleetVehicleLicensePlate
                     </option>
-                }
+                    }
             </InputSelect>
         </div>
 

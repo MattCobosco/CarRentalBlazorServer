@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Plugins.DataStore.SQL;
 using Plugins.DataStore.SQL.Data;
 using Plugins.IdentityStore.SQL;
+using Syncfusion.Blazor;
 using UseCases.AssignmentTypeUseCases;
 using UseCases.AssignmentUseCases;
 using UseCases.BranchUseCases;
@@ -52,6 +53,9 @@ namespace CarRental_UI
             services.AddControllers();
 
             services.AddHttpContextAccessor();
+
+            // Syncfusion
+            services.AddSyncfusionBlazor(options => { options.IgnoreScriptIsolation = true; });
 
             // Identity
             services.AddAuthorization(options =>

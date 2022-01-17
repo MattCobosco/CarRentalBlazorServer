@@ -6,6 +6,7 @@
 @using UseCases.UseCaseInterfaces.FleetVehicleUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.VehicleModelUseCaseInterfaces
 @using UseCases.UseCaseInterfaces.AssignmentUseCaseInterfaces
+@using Syncfusion.Blazor.Calendars
 
 @inject NavigationManager _navigationManager
 @inject IAddReservationUseCase _addReservationUseCase
@@ -28,13 +29,13 @@
         <ValidationSummary></ValidationSummary>
 
         <div class="form-group">
-            <label for="startDate">Start Date</label>
-            <InputDate id="startDate" @bind-Value="_reservation.StartDateTime" class="form-control"></InputDate>
+            <label>Start Date</label>
+            <SfDateTimePicker TValue="DateTime" @bind-Value="@StartDateTime" Placeholder='Select start date and time'></SfDateTimePicker>
         </div>
 
         <div class="form-group">
-            <label for="endDate">End Date</label>
-            <InputDate id="endDate" @bind-Value="_reservation.EndDateTime" class="form-control"></InputDate>
+            <label>End Date</label>
+            <SfDateTimePicker TValue="DateTime" @bind-Value="@EndDateTime" Placeholder='Select end date and time'></SfDateTimePicker>
         </div>
 
         <div class="form-group">
@@ -63,7 +64,7 @@
                 @foreach (var model in _vehicleModels)
                 {
                     <option value="@model.VehicleModelId">
-                        @model.Make
+                        @model.Make 
                         @model.Model
                     </option>
                 }
@@ -112,6 +113,8 @@
     private List<VehicleModel> _vehicleModels;
     private List<Customer> _customers;
     private string _reservationGuid;
+    private DateTime StartDateTime { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 28, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+    private DateTime EndDateTime { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 28, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second).AddDays(1);
 
     protected override void OnInitialized()
     {
@@ -124,16 +127,17 @@
         LoadLists();
 
         // Set form input to initial values
-        _reservation.StartDateTime = DateTime.Today;
-        _reservation.EndDateTime = DateTime.Today.AddDays(1);
         _reservation.FleetVehicleLicensePlate = "";
         _reservation.CustomerGuid = "";
     }
 
     private async Task OnValidSubmit()
     {
-        _reservation.Price = _getReservationPriceUseCase.Execute(_reservation.VehicleModelId, _reservation.StartDateTime, _reservation.EndDateTime);
+
         _reservationGuid = _reservation.ReservationGuid;
+        _reservation.StartDateTime = StartDateTime;
+        _reservation.EndDateTime = EndDateTime;
+        _reservation.Price = _getReservationPriceUseCase.Execute(_reservation.VehicleModelId, _reservation.StartDateTime, _reservation.EndDateTime);
         _addReservationUseCase.Execute(_reservation);
         await _addAssignmentFromReservationUseCase.Execute(_reservationGuid);
         _navigationManager.NavigateTo("/reservations");

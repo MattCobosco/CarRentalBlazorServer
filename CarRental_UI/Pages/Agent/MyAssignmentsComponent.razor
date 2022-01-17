@@ -30,7 +30,7 @@
             {
                 <tr>
                     <td>@GetAssignmentTypeById(assignment.AssignmentTypeId)</td>
-                    <td>@assignment.DateTime</td>
+                    <td>@assignment.DateTime.ToString("g")</td>
                     <td>@GetMakeModelFromVehicleModelId(assignment.VehicleModelId)</td>
                     <td>@assignment.FleetVehicleLicensePlate</td>
                     @if(assignment.AssignmentTypeId==1)

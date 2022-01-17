@@ -15,7 +15,7 @@ namespace UseCases.ReservationUseCases
 
         public int Execute(int vehicleModelId, DateTime startDate, DateTime endDate)
         {
-            var numberOfDays = (int)(endDate - startDate).TotalDays;
+            var numberOfDays = (int)Math.Ceiling((endDate - startDate).TotalDays);
             var vehicleModel = _getVehicleModelByIdUseCase.Execute(vehicleModelId);
             var basePrice = vehicleModel.BaseDailyPrice;
             return numberOfDays * basePrice;
