@@ -68,7 +68,7 @@ namespace UnitTests
             _testOutputHelper.WriteLine("Testing...");
             var output = _sut.IsThisCarInWarsaw(fleetVehicleBis);
 
-            Assert.Equal(expectedOutput,output);
+            Assert.Equal(expectedOutput, output);
         }
 
         [Theory]
