@@ -1,4 +1,4 @@
-# Car Rental Web Application
+# :car: Car Rental Web Application :car:
 
 ## TLDR:
 An ASP.NET Core Blazor Server car rental web application that allows both business and car fleet management.
@@ -19,7 +19,7 @@ Streamlining the flow of information and process automation to save the time of 
 ## What did I learn?
 - API creation and testing with Swagger.
 - ASP.NET Identity for authorization and authentication, basics of User Claims.
-- Basics of EF Core.
+- Basics of EF Core => creating custom Business Models, CRUD operations and defining Relationships between database tables.
 - Basics of asynchronous tasks.
 - Basics of unit testing.
 
@@ -35,3 +35,8 @@ Streamlining the flow of information and process automation to save the time of 
   - Employee creation has been moved to a separate method, accessible only via the admin panel. It too, adds a User Claim adequate to the position of Employee associated with the User account. 
   - User in the User Database and Employee/Customer in the Business Database is linked via a common GUID.
   - If necessary, the GUID of the currently signed-in user is taken from the HTTP Context. Then the necessary information related to this user is downloaded from the Business Database.
+
+## TODO:
+- [ ] Seed database with users
+- [ ] Add instructions to README - how to run and use this app
+- [ ] Beautify the README - add some screenshots, icons, etc.
